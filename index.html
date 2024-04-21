@@ -2477,12 +2477,120 @@ concepts and relations as presented in Table 2.</p>
     </section>
             
 
+    <section id="semanticmapping">
+      <h2>Semantic Mapping</h2>
+          <p> Mapping between the concepts from the EU AI Act and the ISO 5259 based on different provisions:
+
+            1. **Provider (EU AI Act) - AI System (ISO 5259):**
+               - **Mapping Relationship:** exactMatch
+               - **Explanation:** The concept of a "Provider" in the EU AI Act refers to entities responsible for developing or deploying AI systems. This concept aligns with the broader concept of "AI System" in ISO 5259, which encompasses all types of artificial intelligence systems.
+            
+            2. **High-risk AI systems (EU AI Act) - AI System (ISO 5259):**
+               - **Mapping Relationship:** exactMatch
+               - **Explanation:** "High-risk AI systems" defined in the EU AI Act are those AI systems that pose significant risks to safety, fundamental rights, or societal values. These high-risk AI systems correspond directly to the general concept of "AI System" in ISO 5259.
+            
+            3. **Post-market monitoring system (EU AI Act) - Quality Assurance (ISO 5259):**
+               - **Mapping Relationship:** relatedMatch
+               - **Explanation:** The "Post-market monitoring system" in the EU AI Act involves continuous monitoring of AI systems after they are placed on the market. This process relates to ensuring the quality and assurance of AI systems in ISO 5259.
+            
+            4. **Data governance practices (EU AI Act) - Model Governance (ISO 5259):**
+               - **Mapping Relationship:** broadMatch
+               - **Explanation:** "Data governance practices" outlined in the EU AI Act involve policies and processes for managing and protecting data used in AI systems. This aligns broadly with the concept of "Model Governance" in ISO 5259, which encompasses the governance of AI models and their associated data.
+            
+            5. **Data management practices (EU AI Act) - Data Management (ISO 5259):**
+               - **Mapping Relationship:** broadMatch
+               - **Explanation:** "Data management practices" in the EU AI Act refer to processes for handling and manipulating data in AI systems. This corresponds broadly to the concept of "Data Management" in ISO 5259, which covers the management of data throughout its lifecycle.
+            
+            6. **Training, validation, and testing data sets (EU AI Act) - Model Training, Model Validation, Model Testing (ISO 5259):**
+               - **Mapping Relationship:** relatedMatch
+               - **Explanation:** The concept of "Training, validation, and testing data sets" in the EU AI Act corresponds to the stages of model development and evaluation in ISO 5259, including "Model Training," "Model Validation," and "Model Testing."
+            
+            7. **Quality management system (EU AI Act) - Quality Assurance (ISO 5259):**
+               - **Mapping Relationship:** relatedMatch
+               - **Explanation:** The "Quality management system" required by the EU AI Act ensures that AI systems meet predefined quality standards. This relates to the broader concept of "Quality Assurance" in ISO 5259, which involves ensuring the quality and reliability of AI systems.
+            
+            8. **Notified bodies (EU AI Act) - Notified Bodies (ISO 5259):**
+               - **Mapping Relationship:** relatedMatch
+               - **Explanation:** Notified bodies designated by the EU AI Act are responsible for assessing the conformity of AI systems. This concept aligns with the notion of "Notified Bodies" in ISO 5259, which may be involved in certifying AI systems or assessing their compliance with regulations.
+            
+            9. Registration system (EU AI Act) - Registration System (ISO 5259):
+               - **Mapping Relationship:** relatedMatch
+               - **Explanation:** The "Registration system" mandated by the EU AI Act involves registering high-risk AI systems in a centralized database. This aligns with the concept of a "Registration System" in ISO 5259, which may involve recording information about AI systems for regulatory purposes.
+            
+            These mappings establish relationships between concepts from the EU AI Act and the ISO 5259 ontology, highlighting their semantic similarity and alignment with relevant provisions and requirements. Let me know if you need further clarification or additional mappings! </p>
 
 
+<!--       <section id="high-riskrequirements">
+          <h3>Describing High-Risk AI Systems</h3> -->
+          <p>We analysed the requirements of the AI Act, in particular the list of high-risk systems in Annex III, and identified the specific concepts whose combinations determine whether the AI system is considered high-risk.These are listed in Table 1 in the form of: competency questions, concepts, and relation with AI system.</p>
+      
+<br><br>
+      
+<div align="center">
+  <table>
+  <caption style="font-size: 15px;"> Table 1: Questions necessary to determine whether an AI system is high-risk according to Annex III </caption>
+ <tbody>
+ <tr>
+  <th>ID</th>
+  <th>Competency Question</th>
+  <th>Concept</th>
+  <th>Relation</th>
+</tr>
+     
+<tr>
+  <td>1</td>
+    <td>In which <b>domain</b> is the AI system used?</td>
+    <td><a href="#Domain" title="https://w3id.org/airo#Domain"><code>Domain</code></a></td>
+  <td><a href="#isAppliedWithinDomain" title="https://w3id.org/airo#isAppliedWithinDomain"><code>isAppliedWithinDomain</code></a></td>
+</tr>
+      
+<tr>
+  <td>2</td>
+    <td>What is the <b>purpose</b> of the AI system?</td>
+  <td><a href="#Purpose" title="https://w3id.org/airo#Purpose"><code>Purpose</code></a></td>
+  <td><a href="#hasPurpose" title="https://w3id.org/airo#hasPurpose"><code>hasPurpose</code></a></td>
+</tr>
+<tr>
+  <td>3</td>
+    <td>What is the <b>capability</b> of the AI system? </td>
+  <td><a href="#Capability" title="https://w3id.org/airo#AICapability"><code>AICapability</code></a></td>
+  <td><a href="#hasApplication" title="https://w3id.org/airo#hasCapability"><code>hasCapability</code></a></td>
+<tr>
+  <td>4</td>
+  <td>Who is the <b>user</b> of the AI system?</td>
+  <td><a href="#AIUser" title="https://w3id.org/airo#AIUser"><code>AIUser</code></a></td>
+  <td><a href="#isUsedBy" title="https://w3id.org/airo#isUsedBy"><code>isUsedBy</code></a></td>
+</tr>
+<tr>
+  <td>5</td>
+    <td>Who is the <b>AI subject</b>?</td>
+  <td><a href="#AISubject" title="https://w3id.org/airo#AISubject"><code>AISubject</code></a></td>
+  <td><a href="#hasAISubject" title="https://w3id.org/airo#hasAISubject"><code>hasAISubject</code></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+     
+      
+<center>
+   <img src="https://raw.githubusercontent.com/DelaramGlp/airo/main/figures/airo-annexIII-concepts.jpeg"  alt="annex III concepts" width="500" >
+   <figcaption style="font-size: 15px;">Figure 1: concepts required for determining high-risk AI applications as per Annex III</figcaption>
+</center>
+      
+<br>        
+To specify the conditions where use of an AI system is classified into the high-risk category, we determine values of the identified concepts by answering the 5 questions for each clause in Annex III. Combinations of values, which can be treated as rules for high-risk uses, for Annex III's high-risk applications are represented in Figure 2. <br>
+      
+If an AI system meets at least one of the conditions, it is considered as high-risk unless (i) its provider demonstrates that ``the output of the system purely accessory in respect of the relevant action or decision to be taken and is not therefore likely to lead to a significant risk to the health, safety or fundamental rights.'' (Art. 6 (3)), or (ii) it is put into service by a small-scale provider in the public or private sector for their own use to assess creditworthiness, determine credit score, health/life insurance risk assessment, or health/life insurance pricing (Annex III, pt. 5(a) and 5(b)).  
+<center>
+   <img src="https://raw.githubusercontent.com/aiyankovil/AIDGO/main/final-mapping.png"  alt="Test" width=100% height=auto >
+   <figcaption style="font-size: 15px;">Figure 2: Describing Annex III high-risk conditions using the 5 concepts</figcaption>
+</center>    
+
+</section>
 
 
 <!--APPLICATIOn SECTION-->
-    <section id="application"><h2>AIRO Usage and Application</h2>
+    <section id="application"><h2>AIDGO Usage and Application</h2>
         <section id="usecases" class="list"><h3>Use-cases</h3>
          To be published.  
         </section>
