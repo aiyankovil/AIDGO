@@ -1,0 +1,243 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ex: <http://example.com/ontology#> .
+@prefix ai-act: <http://example.com/ai-act#> .
+@prefix iso-5259: <http://example.com/iso-5259#> .
+
+# Concepts from the AI Act
+ai-act:Quality_Report_Requirements a skos:Concept ;
+    skos:prefLabel "Quality Report Requirements" .
+
+ai-act:Quality_Culture a skos:Concept ;
+    skos:prefLabel "Quality Culture" .
+
+ai-act:Management_of_Data_Quality_Anomalies a skos:Concept ;
+    skos:prefLabel "Management of Data Quality Anomalies" .
+
+ai-act:Competence_Management a skos:Concept ;
+    skos:prefLabel "Competence Management" .
+
+ai-act:Resource_Management a skos:Concept ;
+    skos:prefLabel "Resource Management" .
+
+ai-act:Data_Quality_Audit_and_Assessment a skos:Concept ;
+    skos:prefLabel "Data Quality Audit and Assessment" .
+
+ai-act:Confirmation_Review_and_Data_Quality_Measures a skos:Concept ;
+    skos:prefLabel "Confirmation Review and Data Quality Measures" .
+
+ai-act:Project-Specific_Data_Quality_Management a skos:Concept ;
+    skos:prefLabel "Project-Specific Data Quality Management" .
+
+ai-act:Data_Quality_Management_Life_Cycle a skos:Concept ;
+    skos:prefLabel "Data Quality Management Life Cycle" .
+
+ai-act:Data_Motivation_and_Conceptualization a skos:Concept ;
+    skos:prefLabel "Data Motivation and Conceptualization" .
+
+ai-act:Stakeholder_Analysis a skos:Concept ;
+    skos:prefLabel "Stakeholder Analysis" .
+
+ai-act:Complexity_and_Feasibility_Analysis a skos:Concept ;
+    skos:prefLabel "Complexity and Feasibility Analysis" .
+
+ai-act:Data_Specification a skos:Concept ;
+    skos:prefLabel "Data Specification" .
+
+ai-act:Data_Format a skos:Concept ;
+    skos:prefLabel "Data Format" .
+
+ai-act:Statistical_Properties_and_Divisibility a skos:Concept ;
+    skos:prefLabel "Statistical Properties and Divisibility" .
+
+ai-act:Interoperability a skos:Concept ;
+    skos:prefLabel "Interoperability" .
+
+ai-act:Supporting_Resources_and_Tools a skos:Concept ;
+    skos:prefLabel "Supporting Resources and Tools" .
+
+ai-act:Data_Planning a skos:Concept ;
+    skos:prefLabel "Data Planning" .
+
+ai-act:Data_Life_Cycle_Specific_Plan a skos:Concept ;
+    skos:prefLabel "Data Life Cycle Specific Plan" .
+
+ai-act:Data_Acquisition a skos:Concept ;
+    skos:prefLabel "Data Acquisition" .
+
+ai-act:Data_Source a skos:Concept ;
+    skos:prefLabel "Data Source" .
+
+ai-act:Data_Collection a skos:Concept ;
+    skos:prefLabel "Data Collection" .
+
+ai-act:Data_Handling a skos:Concept ;
+    skos:prefLabel "Data Handling" .
+
+ai-act:Data_Preprocessing a skos:Concept ;
+    skos:prefLabel "Data Preprocessing" .
+
+ai-act:Data_Cleaning a skos:Concept ;
+    skos:prefLabel "Data Cleaning" .
+
+ai-act:Data_Augmentation a skos:Concept ;
+    skos:prefLabel "Data Augmentation" .
+
+ai-act:Data_Labeling a skos:Concept ;
+    skos:prefLabel "Data Labeling" .
+
+ai-act:Computed_Augmentation a skos:Concept ;
+    skos:prefLabel "Computed Augmentation" .
+
+# Concepts from ISO 5259
+iso-5259:Data_Quality_Characteristics a skos:Concept ;
+    skos:prefLabel "Data Quality Characteristics" .
+
+iso-5259:Target_Data a skos:Concept ;
+    skos:prefLabel "Target Data" .
+
+iso-5259:Data_Quality_Measures a skos:Concept ;
+    skos:prefLabel "Data Quality Measures" .
+
+iso-5259:Quality_Culture a skos:Concept ;
+    skos:prefLabel "Quality Culture" .
+
+iso-5259:Management_of_Data_Quality_Anomalies a skos:Concept ;
+    skos:prefLabel "Management of Data Quality Anomalies" .
+
+iso-5259:Competence_Management a skos:Concept ;
+    skos:prefLabel "Competence Management" .
+
+iso-5259:Resource_Management a skos:Concept ;
+    skos:prefLabel "Resource Management" .
+
+iso-5259:Data_Quality_Audit_and_Assessment a skos:Concept ;
+    skos:prefLabel "Data Quality Audit and Assessment" .
+
+iso-5259:Confirmation_Review_and_Data_Quality_Measures a skos:Concept ;
+    skos:prefLabel "Confirmation Review and Data Quality Measures" .
+
+iso-5259:Project-Specific_Data_Quality_Management a skos:Concept ;
+    skos:prefLabel "Project-Specific Data Quality Management" .
+
+iso-5259:Data_Quality_Management_Life_Cycle a skos:Concept ;
+    skos:prefLabel "Data Quality Management Life Cycle" .
+
+iso-5259:Data_Motivation_and_Conceptualization a skos:Concept ;
+    skos:prefLabel "Data Motivation and Conceptualization" .
+
+iso-5259:Stakeholder_Analysis a skos:Concept ;
+    skos:prefLabel "Stakeholder Analysis" .
+
+iso-5259:Complexity_and_Feasibility_Analysis a skos:Concept ;
+    skos:prefLabel "Complexity and Feasibility Analysis" .
+
+iso-5259:Data_Specification a skos:Concept ;
+    skos:prefLabel "Data Specification" .
+
+iso-5259:Data_Format a skos:Concept ;
+    skos:prefLabel "Data Format" .
+
+iso-5259:Statistical_Properties_and_Divisibility a skos:Concept ;
+    skos:prefLabel "Statistical Properties and Divisibility" .
+
+iso-5259:Interoperability a skos:Concept ;
+    skos:prefLabel "Interoperability" .
+
+iso-5259:Supporting_Resources_and_Tools a skos:Concept ;
+    skos:prefLabel "Supporting Resources and Tools" .
+
+iso-5259:Data_Planning a skos:Concept ;
+    skos:prefLabel "Data Planning" .
+
+iso-5259:Data_Life_Cycle_Specific_Plan a skos:Concept ;
+    skos:prefLabel "Data Life Cycle Specific Plan" .
+
+iso-5259:Data_Acquisition a skos:Concept ;
+    skos:prefLabel "Data Acquisition" .
+
+iso-5259:Data_Source a skos:Concept ;
+    skos:prefLabel "Data Source" .
+
+iso-5259:Data_Collection a skos:Concept ;
+    skos:prefLabel "Data Collection" .
+
+iso-5259:Data_Handling a skos:Concept ;
+    skos:prefLabel "Data Handling" .
+
+iso-5259:Data_Preprocessing a skos:Concept ;
+    skos:prefLabel "Data Preprocessing" .
+
+iso-5259:Data_Cleaning a skos:Concept ;
+    skos:prefLabel "Data Cleaning" .
+
+iso-5259:Data_Augmentation a skos:Concept ;
+    skos:prefLabel "Data Augmentation" .
+
+iso-5259:Data_Labeling a skos:Concept ;
+    skos:prefLabel "Data Labeling" .
+
+iso-5259:Computed_Augmentation a skos:Concept ;
+    skos:prefLabel "Computed Augmentation" .
+
+# Mapping relations
+ex:completelySatisfies a skos:Concept ;
+    skos:prefLabel "Completely Satisfies" .
+
+ex:partiallySatisfies a skos:Concept ;
+    skos:prefLabel "Partially Satisfies" .
+
+# Custom properties
+ex:normativeDifference a skos:Concept ;
+    skos:prefLabel "Normative Language Difference" .
+
+ex:definitionDifference a skos:Concept ;
+    skos:prefLabel "Definition Difference" .
+
+ex:costFunction a skos:Concept ;
+    skos:prefLabel "Cost Function" .
+
+# Mappings between concepts and requirements
+ai-act:Quality_Report_Requirements ex:partiallySatisfies iso-5259:Data_Quality_Characteristics ;
+    ex:normativeDifference "Different normative language used between AI Act 'should' and ISO 5259 'shall'" ;
+    ex:definitionDifference "Differences in definition of data quality characteristics" ;
+    ex:costFunction "Medium cost to satisfy ISO 5259 requirement" .
+
+ai-act:Quality_Culture ex:completelySatisfies iso-5259:Quality_Culture ;
+    ex:normativeDifference "AI Act requirement 'shall' vs. ISO 5259 requirement 'should'" ;
+    ex:definitionDifference "Similar definitions of 'quality culture' used" ;
+    ex:costFunction "Low cost to satisfy ISO 5259 requirement" .
+
+ai-act:Management_of_Data_Quality_Anomalies ex:partiallySatisfies iso-5259:Management_of_Data_Quality_Anomalies ;
+    ex:normativeDifference "AI Act requirement 'should' vs. ISO 5259 requirement 'shall'" ;
+    ex:definitionDifference "Differences in processes for resolving data quality anomalies" ;
+    ex:costFunction "High cost to satisfy ISO 5259 requirement" .
+
+ai-act:Competence_Management ex:completelySatisfies iso-5259:Competence_Management ;
+    ex:normativeDifference "AI Act requirement 'shall' vs. ISO 5259 requirement 'should'" ;
+    ex:definitionDifference "Similar definitions of 'competence management' used" ;
+    ex:costFunction "Low cost to satisfy ISO 5259 requirement" .
+
+ai-act:Resource_Management ex:completelySatisfies iso-5259:Resource_Management ;
+    ex:normativeDifference "AI Act requirement 'shall' vs. ISO 5259 requirement 'should'" ;
+    ex:definitionDifference "Similar definitions of 'resource management' used" ;
+    ex:costFunction "Low cost to satisfy ISO 5259 requirement" .
+
+ai-act:Data_Quality_Audit_and_Assessment ex:completelySatisfies iso-5259:Data_Quality_Audit_and_Assessment ;
+    ex:normativeDifference "AI Act requirement 'shall' vs. ISO 5259 requirement 'should'" ;
+    ex:definitionDifference "Similar definitions of 'data quality audit and assessment' used" ;
+    ex:costFunction "Low cost to satisfy ISO 5259 requirement" .
+
+ai-act:Confirmation_Review_and_Data_Quality_Measures ex:partiallySatisfies iso-5259:Confirmation_Review_and_Data_Quality_Measures ;
+    ex:normativeDifference "AI Act requirement 'should' vs. ISO 5259 requirement 'shall'" ;
+    ex:definitionDifference "Differences in processes for confirming data quality" ;
+    ex:costFunction "Medium cost to satisfy ISO 5259 requirement" .
+
+ai-act:Project-Specific_Data_Quality_Management ex:partiallySatisfies iso-5259:Project-Specific_Data_Quality_Management ;
+    ex:normativeDifference "AI Act requirement 'should' vs. ISO 5259 requirement 'shall'" ;
+    ex:definitionDifference "Differences in processes for managing project-specific data quality" ;
+    ex:costFunction "High cost to satisfy ISO 5259 requirement" .
+
+ai-act:Data_Quality_Management_Life_Cycle ex:completelySatisfies iso-5259:Data_Quality_Management_Life_Cycle ;
+    ex:normativeDifference "AI Act requirement 'shall' vs. ISO 5259 requirement 'should'" ;
+    ex:definitionDifference "Similar definitions of 'data quality management life cycle' used" ;
+    ex:costFunction "Low cost to satisfy ISO 5259 requirement" .
