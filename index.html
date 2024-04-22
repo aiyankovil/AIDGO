@@ -17,7 +17,7 @@
       edDraftURI: "https://w3id.org/aidgo",
      
       github: {
-        repoURL: "https://github.com/delaramglp/airo",
+        repoURL: "https://github.com/delaramglp/aidgo",
         branch: "main"
       },
       // subjectPrefix: "[]",
@@ -41,7 +41,7 @@
       //key: "Cite as",
       //data: [
     //    {
-    //      value: "Delaram Golpayegani, Harshvardhan J. Pandit, and Dave Lewis. “AIRO: An Ontology for Representing AI Risks Based on the Proposed EU AI Act and ISO Risk Management Standards”. In: Towards a Knowledge-AwareAI (2022). Publisher: IOS Press, pp. 51–65.",
+    //      value: "Delaram Golpayegani, Harshvardhan J. Pandit, and Dave Lewis. “aidgo: An Ontology for Representing AI Risks Based on the Proposed EU AI Act and ISO Risk Management Standards”. In: Towards a Knowledge-AwareAI (2022). Publisher: IOS Press, pp. 51–65.",
     //    },
           
         
@@ -164,7 +164,7 @@
 <!--REQUIREMENTS SECTION-->
     <section id="requirements">
         <h2>Requirements</h2>
-            <p> The purpose of AIRO is to express AI risks to enable organisations to represent their AI systems and the associated AI risks and determine whether their AI systems are "high-risk" as per Annex III of the AI Act and
+            <p> The purpose of aidgo is to express AI risks to enable organisations to represent their AI systems and the associated AI risks and determine whether their AI systems are "high-risk" as per Annex III of the AI Act and
                 </p>
 
 
@@ -188,32 +188,32 @@
   <tr>
     <td>1</td>
       <td>In which <b>domain</b> is the AI system used?</td>
-      <td><a href="#Domain" title="https://w3id.org/airo#Domain"><code>Domain</code></a></td>
-    <td><a href="#isAppliedWithinDomain" title="https://w3id.org/airo#isAppliedWithinDomain"><code>isAppliedWithinDomain</code></a></td>
+      <td><a href="#Domain" title="https://w3id.org/aidgo#Domain"><code>Domain</code></a></td>
+    <td><a href="#isAppliedWithinDomain" title="https://w3id.org/aidgo#isAppliedWithinDomain"><code>isAppliedWithinDomain</code></a></td>
  </tr>
         
   <tr>
     <td>2</td>
       <td>What is the <b>purpose</b> of the AI system?</td>
-    <td><a href="#Purpose" title="https://w3id.org/airo#Purpose"><code>Purpose</code></a></td>
-    <td><a href="#hasPurpose" title="https://w3id.org/airo#hasPurpose"><code>hasPurpose</code></a></td>
+    <td><a href="#Purpose" title="https://w3id.org/aidgo#Purpose"><code>Purpose</code></a></td>
+    <td><a href="#hasPurpose" title="https://w3id.org/aidgo#hasPurpose"><code>hasPurpose</code></a></td>
   </tr>
   <tr>
     <td>3</td>
       <td>What is the <b>capability</b> of the AI system? </td>
-    <td><a href="#Capability" title="https://w3id.org/airo#AICapability"><code>AICapability</code></a></td>
-    <td><a href="#hasApplication" title="https://w3id.org/airo#hasCapability"><code>hasCapability</code></a></td>
+    <td><a href="#Capability" title="https://w3id.org/aidgo#AICapability"><code>AICapability</code></a></td>
+    <td><a href="#hasApplication" title="https://w3id.org/aidgo#hasCapability"><code>hasCapability</code></a></td>
   <tr>
     <td>4</td>
     <td>Who is the <b>user</b> of the AI system?</td>
-    <td><a href="#AIUser" title="https://w3id.org/airo#AIUser"><code>AIUser</code></a></td>
-    <td><a href="#isUsedBy" title="https://w3id.org/airo#isUsedBy"><code>isUsedBy</code></a></td>
+    <td><a href="#AIUser" title="https://w3id.org/aidgo#AIUser"><code>AIUser</code></a></td>
+    <td><a href="#isUsedBy" title="https://w3id.org/aidgo#isUsedBy"><code>isUsedBy</code></a></td>
   </tr>
   <tr>
     <td>5</td>
       <td>Who is the <b>AI subject</b>?</td>
-    <td><a href="#AISubject" title="https://w3id.org/airo#AISubject"><code>AISubject</code></a></td>
-    <td><a href="#hasAISubject" title="https://w3id.org/airo#hasAISubject"><code>hasAISubject</code></a></td>
+    <td><a href="#AISubject" title="https://w3id.org/aidgo#AISubject"><code>AISubject</code></a></td>
+    <td><a href="#hasAISubject" title="https://w3id.org/aidgo#hasAISubject"><code>hasAISubject</code></a></td>
   </tr>
   </tbody>
 </table>
@@ -221,7 +221,7 @@
         </section>
         
 <center>
-     <img src="https://raw.githubusercontent.com/DelaramGlp/airo/main/figures/airo-annexIII-concepts.jpeg"  alt="annex III concepts" width="500" >
+     <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/aidgo-annexIII-concepts.jpeg"  alt="annex III concepts" width="500" >
      <figcaption style="font-size: 15px;">Figure 1: concepts required for determining high-risk AI applications as per Annex III</figcaption>
   </center>
         
@@ -230,7 +230,7 @@
         
  If an AI system meets at least one of the conditions, it is considered as high-risk unless (i) its provider demonstrates that ``the output of the system purely accessory in respect of the relevant action or decision to be taken and is not therefore likely to lead to a significant risk to the health, safety or fundamental rights.'' (Art. 6 (3)), or (ii) it is put into service by a small-scale provider in the public or private sector for their own use to assess creditworthiness, determine credit score, health/life insurance risk assessment, or health/life insurance pricing (Annex III, pt. 5(a) and 5(b)).  
 <center>
-     <img src="https://raw.githubusercontent.com/DelaramGlp/airo/main/figures/annexIII-czversion-updated-24april.png"  alt="annex III combinations" width="700" >
+     <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/annexIII-czversion-updated-24april.png"  alt="annex III combinations" width="700" >
      <figcaption style="font-size: 15px;">Figure 2: Describing Annex III high-risk conditions using the 5 concepts</figcaption>
   </center>        
 
@@ -578,16 +578,16 @@ concepts and relations as presented in Table 2.</p>
     <section id="overview"><h2> Overview </h2>
         <section id="core"> <h3>Core Concepts and Relations</h3>
 
-  AIRO’s core concepts and relations are illustrated in Figure 3. The upper half shows the
+  aidgo’s core concepts and relations are illustrated in Figure 3. The upper half shows the
   main concepts required for describing an AI System (green boxes), and the lower half
-  represents key concepts for expressing Risk (purple boxes). The relation <a href="#hasRisk" title="https://w3id.org/AIRO#hasRisk">hasRisk</a> links
+  represents key concepts for expressing Risk (purple boxes). The relation <a href="#hasRisk" title="https://w3id.org/aidgo#hasRisk">hasRisk</a> links
   these two halves by connecting risk to either an AI system or a component of the system.
 <br><br>
 
 
   <center>
-     <img src="https://raw.githubusercontent.com/DelaramGlp/AIRO/main/figures/airo-concepts-3april.jpeg"  alt="AIRO concepts" width="800" >
-     <figcaption style="font-size: 15px;">Figure 3: AIRO core concepts and relations</figcaption>
+     <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/aidgo-concepts-3april.jpeg"  alt="aidgo concepts" width="800" >
+     <figcaption style="font-size: 15px;">Figure 3: aidgo core concepts and relations</figcaption>
   </center>
         </section>
 
@@ -598,7 +598,7 @@ concepts and relations as presented in Table 2.</p>
                 <table class="def">
                 <caption style="font-size: 15px;"> Table 3: Namespaces used in the document </caption>
                     <tbody>
-                        <tr><td><b>airo</b></td><td>&lt;https://w3id.org/airo&gt;</td></tr>
+                        <tr><td><b>aidgo</b></td><td>&lt;https://w3id.org/aidgo&gt;</td></tr>
                         <tr><td><b>owl</b></td><td>&lt;http://www.w3.org/2002/07/owl&gt;</td></tr>
                         <tr><td><b>rdf</b></td><td>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns&gt;</td></tr>
                         <tr><td><b>terms</b></td><td>&lt;http://purl.org/dc/terms&gt;</td></tr>
@@ -617,7 +617,7 @@ concepts and relations as presented in Table 2.</p>
     <section>
     <h2 id="High-riskAISystem">
       <bdi class="secno"> </bdi> High-risk AI System
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#High-riskAISystem"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#High-riskAISystem"></a>
     </h2>
     <table>
       <tbody>
@@ -652,13 +652,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
     <h2 id="DataGovernancePractices">
       <bdi class="secno"> </bdi> Data Governance Practices
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#DataGovernancePractices"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#DataGovernancePractices"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Domain </code></td>
+          <td><code> https://w3id.org/aidgo#Domain </code></td>
         <tr>
           <td> Term </td>
           <td>Data Governance Practices </td>
@@ -676,15 +676,15 @@ concepts and relations as presented in Table 2.</p>
     </section>    
                 
     <section>
-    <h2 id="Purpose">
+    <h2 id="DataManagementPractices">
       <bdi class="secno"> </bdi> Data Management Practices
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Purpose"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#DataManagementPractices"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Purpose </code></td>
+          <td><code> https://w3id.org/aidgo#DataManagementPractices </code></td>
         <tr>
           <td> Term </td>
           <td>Data Management Practices </td>
@@ -706,15 +706,15 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
          <section>
-    <h2 id="AICapability">
+    <h2 id="TrainingValidationandTestingDataSets">
       <bdi class="secno"> </bdi> Training, Validation, and Testing Data Sets
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AICapability"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#TrainingValidationandTestingDataSets"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AICapability </code></td>
+          <td><code> https://w3id.org/aidgo#TrainingValidationandTestingDataSets </code></td>
         <tr>
           <td> Term </td>
           <td>Training, Validation, and Testing Data Sets </td>
@@ -732,22 +732,22 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
         <section>
-    <h2 id="AITechnique">
-      <bdi class="secno"> </bdi> AI Technique
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AITechnique"></a>
+    <h2 id="Post-marketMonitoringSystem">
+      <bdi class="secno"> </bdi> Post-market Monitoring System
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Post-marketMonitoringSystem"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AITechnique </code></td>
+          <td><code> https://w3id.org/aidgo#Post-marketMonitoringSystem </code></td>
         <tr>
           <td> Term </td>
-          <td>AITechnique </td>
+          <td>Post-market Monitoring System </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> AI Technique </td>
+          <td> Post-market Monitoring System </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -758,22 +758,22 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
         <section>
-    <h2 id="AILifecyclePhase">
-      <bdi class="secno"> </bdi> AI Lifecycle Phase
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AILifecyclePhase"></a>
+    <h2 id="Provider">
+      <bdi class="secno"> </bdi> Provider
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Provider"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AILifecyclePhase </code></td>
+          <td><code> https://w3id.org/aidgo#Provider </code></td>
         <tr>
           <td> Term </td>
-          <td>AILifecyclePhase </td>
+          <td>Provider </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> AI Lifecycle Phase </td>
+          <td> Provider </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -784,22 +784,22 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
         <section>
-    <h2 id="AIComponent">
-      <bdi class="secno"> </bdi> AI Component
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AIComponent"></a>
+    <h2 id="AuthorisedRepresentative">
+      <bdi class="secno"> </bdi> Authorised Representative
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AuthorisedRepresentative"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AIComponent </code></td>
+          <td><code> https://w3id.org/aidgo#AuthorisedRepresentative </code></td>
         <tr>
           <td> Term </td>
-          <td>AIComponent </td>
+          <td>AuthorisedRepresentative </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> AI Component </td>
+          <td> Authorised Representative </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -810,22 +810,22 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
         <section>
-    <h2 id="Output">
-      <bdi class="secno"> </bdi> Output
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Output"></a>
+    <h2 id="NotifiedBodies">
+      <bdi class="secno"> </bdi> Notified Bodies
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#NotifiedBodies"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Output </code></td>
+          <td><code> https://w3id.org/aidgo#NotifiedBodies </code></td>
         <tr>
           <td> Term </td>
-          <td>Output </td>
+          <td>NotifiedBodies </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> Output </td>
+          <td> Notified Bodies </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -837,22 +837,22 @@ concepts and relations as presented in Table 2.</p>
         
 
          <section>
-    <h2 id="Event">
-      <bdi class="secno"> </bdi> Event
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Event"></a>
+    <h2 id="QualityManagementSystem">
+      <bdi class="secno"> </bdi> Quality Management System
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#QualityManagementSystem"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Event </code></td>
+          <td><code> https://w3id.org/aidgo#QualityManagementSystem </code></td>
         <tr>
           <td> Term </td>
-          <td>Event </td>
+          <td>QualityManagementSystem </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> Event </td>
+          <td> Quality Management System </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -866,22 +866,22 @@ concepts and relations as presented in Table 2.</p>
     </table>
     </section>
         <section>
-         <h2 id="RiskSource">
-      <bdi class="secno"> </bdi> Risk Source
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#RiskSource"></a>
+         <h2 id="TechnicalDocumentation">
+      <bdi class="secno"> </bdi> Technical Documentation
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#TechnicalDocumentation"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#RiskSource </code></td>
+          <td><code> https://w3id.org/aidgo#TechnicalDocumentation </code></td>
         <tr>
           <td> Term </td>
-          <td>RiskSource </td>
+          <td>TechnicalDocumentation </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> Risk Source </td>
+          <td> Technical Documentation </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -889,7 +889,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
             <td>SubClassOf</td>
-            <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+            <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
           
           </tr>  
         <tr>
@@ -901,22 +901,22 @@ concepts and relations as presented in Table 2.</p>
     </section>
         
         <section>
-         <h2 id="Risk">
-      <bdi class="secno"> </bdi> Risk
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Risk"></a>
+         <h2 id="NationalPublicAuthoritiesorBodies">
+      <bdi class="secno"> </bdi> National Public Authorities or Bodies
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#NationalPublicAuthoritiesorBodies"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Risk </code></td>
+          <td><code> https://w3id.org/aidgo#NationalPublicAuthoritiesorBodies </code></td>
         <tr>
           <td> Term </td>
-          <td>Risk </td>
+          <td>NationalPublicAuthoritiesorBodies </td>
         </tr>
         <tr>
           <td> Label </td>
-          <td> Risk </td>
+          <td> National Public Authorities or Bodies </td>
         </tr>
         <tr>
           <td> Definition </td>
@@ -924,7 +924,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
             <td>SubClassOf</td>
-            <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+            <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
           
           </tr>  
       </tbody>
@@ -933,14 +933,14 @@ concepts and relations as presented in Table 2.</p>
         
         <section>
          <h2 id="Consequence">
-      <bdi class="secno"> </bdi> Consequence
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Consequence"></a>
+      <bdi class="secno"> </bdi> Market Surveillance Authority
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Consequence"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Consequence </code></td>
+          <td><code> https://w3id.org/aidgo#Consequence </code></td>
         <tr>
           <td> Term </td>
           <td>Consequence </td>
@@ -955,7 +955,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
             <td>SubClassOf</td>
-            <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+            <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
           
           </tr> 
           <tr>
@@ -969,13 +969,13 @@ concepts and relations as presented in Table 2.</p>
         <section>
         <h2 id="Impact">
       <bdi class="secno"> </bdi> Impact
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Impact"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Impact"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Impact </code></td>
+          <td><code> https://w3id.org/aidgo#Impact </code></td>
         <tr>
           <td> Term </td>
           <td>Impact </td>
@@ -990,7 +990,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
             <td>SubClassOf</td>
-            <td><a href="https://w3id.org/airo#Consequence">airo:Consequence</a></td>
+            <td><a href="https://w3id.org/aidgo#Consequence">aidgo:Consequence</a></td>
           
           </tr> 
       </tbody>
@@ -1000,13 +1000,13 @@ concepts and relations as presented in Table 2.</p>
         <section>
         <h2 id="AreaOfImpact">
       <bdi class="secno"> </bdi> Area Of Impact
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AreaOfImpact"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AreaOfImpact"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AreaOfImpact </code></td>
+          <td><code> https://w3id.org/aidgo#AreaOfImpact </code></td>
         <tr>
           <td> Term </td>
           <td>AreaOfImpact </td>
@@ -1027,13 +1027,13 @@ concepts and relations as presented in Table 2.</p>
         <section>
         <h2 id="Control">
       <bdi class="secno"> </bdi> Control
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Control"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Control"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Control </code></td>
+          <td><code> https://w3id.org/aidgo#Control </code></td>
         <tr>
           <td> Term </td>
           <td> Control </td>
@@ -1057,13 +1057,13 @@ concepts and relations as presented in Table 2.</p>
       <section>
         <h2 id="Document">
       <bdi class="secno"> </bdi> Document
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Document"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Document"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Document </code></td>
+          <td><code> https://w3id.org/aidgo#Document </code></td>
         <tr>
           <td> Term </td>
           <td> Document </td>
@@ -1089,13 +1089,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="Standard">
       <bdi class="secno"> </bdi> Standard
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Standard"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Standard"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Standard </code></td>
+          <td><code> https://w3id.org/aidgo#Standard </code></td>
         <tr>
           <td> Term </td>
           <td> Standard </td>
@@ -1119,13 +1119,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="Stakeholder">
       <bdi class="secno"> </bdi> Stakeholder
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Stakeholder"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Stakeholder"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Stakeholder </code></td>
+          <td><code> https://w3id.org/aidgo#Stakeholder </code></td>
         <tr>
           <td> Term </td>
           <td> Stakeholder </td>
@@ -1150,13 +1150,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="AIProvider">
       <bdi class="secno"> </bdi> AI Provider
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AIProvider"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AIProvider"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AIProvider </code></td>
+          <td><code> https://w3id.org/aidgo#AIProvider </code></td>
         <tr>
           <td> Term </td>
           <td> AI Provider </td>
@@ -1171,7 +1171,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
         <td>SubClassOf</td>
-        <td><a href="https://w3id.org/airo#AIOperator">airo:AIOperator</a></td>       
+        <td><a href="https://w3id.org/aidgo#AIOperator">aidgo:AIOperator</a></td>       
         </tr> 
 
       </tbody>
@@ -1181,13 +1181,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="AIUser">
       <bdi class="secno"> </bdi> AI User
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AIUser"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AIUser"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AIUser </code></td>
+          <td><code> https://w3id.org/aidgo#AIUser </code></td>
         <tr>
           <td> Term </td>
           <td> AIUser </td>
@@ -1202,7 +1202,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
         <td>SubClassOf</td>
-        <td><a href="https://w3id.org/airo#AIOperator">airo:AIOperator</a></td>       
+        <td><a href="https://w3id.org/aidgo#AIOperator">aidgo:AIOperator</a></td>       
         </tr> 
 
       </tbody>
@@ -1212,13 +1212,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="AISubject">
       <bdi class="secno"> </bdi> AI Subject
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AISubject"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AISubject"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AISubject </code></td>
+          <td><code> https://w3id.org/aidgo#AISubject </code></td>
         <tr>
           <td> Term </td>
           <td> AISubject </td>
@@ -1233,7 +1233,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
         <td>SubClassOf</td>
-        <td><a href="https://w3id.org/airo#Stakeholder">airo:Stakeholder</a></td>       
+        <td><a href="https://w3id.org/aidgo#Stakeholder">aidgo:Stakeholder</a></td>       
         </tr> 
 
       </tbody>
@@ -1244,13 +1244,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="AffectedStakeholder">
       <bdi class="secno"> </bdi> Affected Stakeholder
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AffectedStakeholder"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AffectedStakeholder"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AffectedStakeholder </code></td>
+          <td><code> https://w3id.org/aidgo#AffectedStakeholder </code></td>
         <tr>
           <td> Term </td>
           <td> AffectedStakeholder </td>
@@ -1265,7 +1265,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
         <td>SubClassOf</td>
-        <td><a href="https://w3id.org/airo#Stakeholder">airo:Stakeholder</a></td>       
+        <td><a href="https://w3id.org/aidgo#Stakeholder">aidgo:Stakeholder</a></td>       
         </tr> 
 
       </tbody>
@@ -1275,13 +1275,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="AIOperator">
       <bdi class="secno"> </bdi> AI Operator
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#AIOperator"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#AIOperator"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#AIOperator </code></td>
+          <td><code> https://w3id.org/aidgo#AIOperator </code></td>
         <tr>
           <td> Term </td>
           <td> AIOperator </td>
@@ -1296,7 +1296,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
         <td>SubClassOf</td>
-        <td><a href="https://w3id.org/airo#Stakeholder">airo:Stakeholder</a></td>       
+        <td><a href="https://w3id.org/aidgo#Stakeholder">aidgo:Stakeholder</a></td>       
         </tr> 
 
       </tbody>
@@ -1307,13 +1307,13 @@ concepts and relations as presented in Table 2.</p>
         <section>
         <h2 id="Version">
       <bdi class="secno"> </bdi> Version
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Version"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Version"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Version</code></td>
+          <td><code> https://w3id.org/aidgo#Version</code></td>
         <tr>
           <td> Term </td>
           <td> Version </td>
@@ -1334,13 +1334,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="Characteristic">
       <bdi class="secno"> </bdi> Characteristic
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Characteristic"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Characteristic"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Characteristic</code></td>
+          <td><code> https://w3id.org/aidgo#Characteristic</code></td>
         <tr>
           <td> Term </td>
           <td> Characteristic </td>
@@ -1361,13 +1361,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="Likelihood">
       <bdi class="secno"> </bdi> Likelihood
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Likelihood"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Likelihood"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Likelihood</code></td>
+          <td><code> https://w3id.org/aidgo#Likelihood</code></td>
         <tr>
           <td> Term </td>
           <td> Likelihood </td>
@@ -1393,13 +1393,13 @@ concepts and relations as presented in Table 2.</p>
       <section>
         <h2 id="Severity">
       <bdi class="secno"> </bdi> Severity
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#Severity"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#Severity"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#Severity</code></td>
+          <td><code> https://w3id.org/aidgo#Severity</code></td>
         <tr>
           <td> Term </td>
           <td> Severity </td>
@@ -1427,13 +1427,13 @@ concepts and relations as presented in Table 2.</p>
     <section>   
     <h2 id="isAppliedWithinDomain">
       <bdi class="secno"> </bdi> is applied within domain
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isAppliedWithinDomain"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isAppliedWithinDomain"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isAppliedWithinDomain </code></td>
+          <td><code> https://w3id.org/aidgo#isAppliedWithinDomain </code></td>
         <tr>
           <td> Term </td>
           <td> isAppliedWithinDomain </td>
@@ -1448,11 +1448,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Domain">airo:Domain</a></td>
+          <td><a href="https://w3id.org/aidgo#Domain">aidgo:Domain</a></td>
         </tr>
           
           
@@ -1464,13 +1464,13 @@ concepts and relations as presented in Table 2.</p>
      <section>   
     <h2 id="hasPurpose">
       <bdi class="secno"> </bdi> has purpose
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasPurpose"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasPurpose"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasPurpose </code></td>
+          <td><code> https://w3id.org/aidgo#hasPurpose </code></td>
         <tr>
           <td> Term </td>
           <td>hasPurpose </td>
@@ -1485,11 +1485,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Purpose">airo:Purpose</a></td>
+          <td><a href="https://w3id.org/aidgo#Purpose">aidgo:Purpose</a></td>
         </tr>
           
       </tbody>
@@ -1499,13 +1499,13 @@ concepts and relations as presented in Table 2.</p>
     <section>   
     <h2 id="hasCapability">
       <bdi class="secno"> </bdi> has capability
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasCapability"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasCapability"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasCapability </code></td>
+          <td><code> https://w3id.org/aidgo#hasCapability </code></td>
         <tr>
           <td> Term </td>
           <td>hasCapability </td>
@@ -1520,11 +1520,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Capability">airo:Capabiliy</a></td>
+          <td><a href="https://w3id.org/aidgo#Capability">aidgo:Capabiliy</a></td>
         </tr>
           
       </tbody>
@@ -1534,13 +1534,13 @@ concepts and relations as presented in Table 2.</p>
     <section>   
     <h2 id="usesTechnique">
       <bdi class="secno"> </bdi> uses technique
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#usesTechnique"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#usesTechnique"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#usesTechnique </code></td>
+          <td><code> https://w3id.org/aidgo#usesTechnique </code></td>
         <tr>
           <td> Term </td>
           <td> usesTechnique </td>
@@ -1555,11 +1555,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AITechnique">airo:AITechnique</a></td>
+          <td><a href="https://w3id.org/aidgo#AITechnique">aidgo:AITechnique</a></td>
         </tr>
           
       </tbody>
@@ -1568,13 +1568,13 @@ concepts and relations as presented in Table 2.</p>
      <section>   
     <h2 id="producesOutput">
       <bdi class="secno"> </bdi> produces output
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#producesOutput"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#producesOutput"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#producesOutput </code></td>
+          <td><code> https://w3id.org/aidgo#producesOutput </code></td>
         <tr>
           <td> Term </td>
           <td> producesOutput </td>
@@ -1589,11 +1589,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Output">airo:Output</a></td>
+          <td><a href="https://w3id.org/aidgo#Output">aidgo:Output</a></td>
         </tr>
           
       </tbody>
@@ -1603,13 +1603,13 @@ concepts and relations as presented in Table 2.</p>
     <section>   
     <h2 id="hasComponent">
       <bdi class="secno"> </bdi> has component
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasComponent"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasComponent"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasComponent </code></td>
+          <td><code> https://w3id.org/aidgo#hasComponent </code></td>
         <tr>
           <td> Term </td>
           <td> hasComponent </td>
@@ -1624,11 +1624,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AIComponent">airo:AIComponent</a></td>
+          <td><a href="https://w3id.org/aidgo#AIComponent">aidgo:AIComponent</a></td>
         </tr>
           
       </tbody>
@@ -1638,13 +1638,13 @@ concepts and relations as presented in Table 2.</p>
            <section> 
           <h2 id="hasRisk">
       <bdi class="secno"> </bdi> has risk
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasRisk"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasRisk"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasRisk </code></td>
+          <td><code> https://w3id.org/aidgo#hasRisk </code></td>
         <tr>
           <td> Term </td>
           <td> hasRisk </td>
@@ -1663,7 +1663,7 @@ concepts and relations as presented in Table 2.</p>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Risk">airo:Risk</a></td>
+          <td><a href="https://w3id.org/aidgo#Risk">aidgo:Risk</a></td>
         </tr>
           
       </tbody>
@@ -1673,13 +1673,13 @@ concepts and relations as presented in Table 2.</p>
          <section>           
     <h2 id="isRiskSourceFor">
       <bdi class="secno"> </bdi> is risk source for
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isRiskSourceFor"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isRiskSourceFor"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isRiskSourceFor </code></td>
+          <td><code> https://w3id.org/aidgo#isRiskSourceFor </code></td>
         <tr>
           <td> Term </td>
           <td> isRiskSourceFor </td>
@@ -1694,11 +1694,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#RiskSource">airo:RiskSource</a></td>
+          <td><a href="https://w3id.org/aidgo#RiskSource">aidgo:RiskSource</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Risk">airo:Risk</a></td>
+          <td><a href="https://w3id.org/aidgo#Risk">aidgo:Risk</a></td>
         </tr>
           
       </tbody>
@@ -1708,13 +1708,13 @@ concepts and relations as presented in Table 2.</p>
             <section>           
     <h2 id="hasConsequence">
       <bdi class="secno"> </bdi> has consequence
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasConsequence"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasConsequence"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasConsequence </code></td>
+          <td><code> https://w3id.org/aidgo#hasConsequence </code></td>
         <tr>
           <td> Term </td>
           <td> hasConsequence </td>
@@ -1729,11 +1729,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Risk">airo:Risk</a></td>
+          <td><a href="https://w3id.org/aidgo#Risk">aidgo:Risk</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Consequence">airo:Consequence</a></td>
+          <td><a href="https://w3id.org/aidgo#Consequence">aidgo:Consequence</a></td>
         </tr>
           
       </tbody>
@@ -1743,13 +1743,13 @@ concepts and relations as presented in Table 2.</p>
         <section>           
     <h2 id="hasImpact">
       <bdi class="secno"> </bdi> has impact
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasImpact"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasImpact"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasImpact </code></td>
+          <td><code> https://w3id.org/aidgo#hasImpact </code></td>
         <tr>
           <td> Term </td>
           <td> hasImpact </td>
@@ -1764,11 +1764,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Consequence">airo:Consequence</a></td>
+          <td><a href="https://w3id.org/aidgo#Consequence">aidgo:Consequence</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Impact">airo:Impact</a></td>
+          <td><a href="https://w3id.org/aidgo#Impact">aidgo:Impact</a></td>
         </tr>
           
       </tbody>
@@ -1779,13 +1779,13 @@ concepts and relations as presented in Table 2.</p>
             <section>           
     <h2 id="hasImpactOnArea">
       <bdi class="secno"> </bdi> has impact on area
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasImpactOnArea"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasImpactOnArea"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasImpactOnArea</code></td>
+          <td><code> https://w3id.org/aidgo#hasImpactOnArea</code></td>
         <tr>
           <td> Term </td>
           <td> hasImpactOnArea </td>
@@ -1800,11 +1800,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Impact">airo:Impact</a></td>
+          <td><a href="https://w3id.org/aidgo#Impact">aidgo:Impact</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AreaOfImpact">airo:AreaOfImpact</a></td>
+          <td><a href="https://w3id.org/aidgo#AreaOfImpact">aidgo:AreaOfImpact</a></td>
         </tr>
           
       </tbody>
@@ -1814,13 +1814,13 @@ concepts and relations as presented in Table 2.</p>
      <section>           
     <h2 id="hasImpactOnStakeholder">
       <bdi class="secno"> </bdi> has impact on stakeholder
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasImpactOnStakeholder"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasImpactOnStakeholder"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasImpactOnStakeholder</code></td>
+          <td><code> https://w3id.org/aidgo#hasImpactOnStakeholder</code></td>
         <tr>
           <td> Term </td>
           <td> hasImpactOnStakeholder </td>
@@ -1835,11 +1835,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Impact">airo:Impact</a></td>
+          <td><a href="https://w3id.org/aidgo#Impact">aidgo:Impact</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AffectedStakeholder">airo:AffectedStakeholder</a></td>
+          <td><a href="https://w3id.org/aidgo#AffectedStakeholder">aidgo:AffectedStakeholder</a></td>
         </tr>
           
       </tbody>
@@ -1850,13 +1850,13 @@ concepts and relations as presented in Table 2.</p>
    <section>           
     <h2 id="modifiesEvent">
       <bdi class="secno"> </bdi> modifies event
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#modifiesEvent"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#modifiesEvent"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#modifiesEvent</code></td>
+          <td><code> https://w3id.org/aidgo#modifiesEvent</code></td>
         <tr>
           <td> Term </td>
           <td> modifiesEvent </td>
@@ -1871,11 +1871,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+          <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
         </tr>
           
       </tbody>
@@ -1885,13 +1885,13 @@ concepts and relations as presented in Table 2.</p>
          <section>   
         <h2 id="detectsEvent">
       <bdi class="secno"> </bdi> detects event
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#detectsEvent"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#detectsEvent"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#detectsEvent</code></td>
+          <td><code> https://w3id.org/aidgo#detectsEvent</code></td>
         <tr>
           <td> Term </td>
           <td> detectsEvent </td>
@@ -1906,15 +1906,15 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+          <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
         </tr>
         <tr>
             <td>SubPropertyOf</td>
-            <td><a href="https://w3id.org/airo#modifiesEvent">modifiesEvent</a></td>
+            <td><a href="https://w3id.org/aidgo#modifiesEvent">modifiesEvent</a></td>
         </tr>
           
       </tbody>
@@ -1925,13 +1925,13 @@ concepts and relations as presented in Table 2.</p>
         <section>
         <h2 id="eliminatesEvent">
       <bdi class="secno"> </bdi> eliminates event
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#eliminatesEvent"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#eliminatesEvent"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#eliminatesEvent</code></td>
+          <td><code> https://w3id.org/aidgo#eliminatesEvent</code></td>
         <tr>
           <td> Term </td>
           <td> eliminatesEvent </td>
@@ -1946,15 +1946,15 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+          <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
         </tr>
         <tr>
             <td>SubPropertyOf</td>
-            <td><a href="https://w3id.org/airo#modifiesEvent">modifiesEvent</a></td>
+            <td><a href="https://w3id.org/aidgo#modifiesEvent">modifiesEvent</a></td>
         </tr>
           
       </tbody>
@@ -1965,13 +1965,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="mitigatesEvent">
       <bdi class="secno"> </bdi> mitigates event
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#mitigatesEvent"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#mitigatesEvent"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#mitigatesEvent</code></td>
+          <td><code> https://w3id.org/aidgo#mitigatesEvent</code></td>
         <tr>
           <td> Term </td>
           <td> mitigatesEvent </td>
@@ -1986,15 +1986,15 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Event">airo:Event</a></td>
+          <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a></td>
         </tr>
         <tr>
             <td>SubPropertyOf</td>
-            <td><a href="https://w3id.org/airo#modifiesEvent">modifiesEvent</a></td>
+            <td><a href="https://w3id.org/aidgo#modifiesEvent">modifiesEvent</a></td>
         </tr>  
           
       </tbody>
@@ -2004,13 +2004,13 @@ concepts and relations as presented in Table 2.</p>
      <section>
         <h2 id="isFollowedByControl">
       <bdi class="secno"> </bdi> is followed by control
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isFollowedByControl"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isFollowedByControl"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isFollowedByControl</code></td>
+          <td><code> https://w3id.org/aidgo#isFollowedByControl</code></td>
         <tr>
           <td> Term </td>
           <td> isFollowedByControl </td>
@@ -2025,11 +2025,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          
           
@@ -2040,13 +2040,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="isPartOfControl">
       <bdi class="secno"> </bdi> is part of control
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isPartOfControl"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isPartOfControl"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isPartOfControl</code></td>
+          <td><code> https://w3id.org/aidgo#isPartOfControl</code></td>
         <tr>
           <td> Term </td>
           <td> isPartOfControl </td>
@@ -2061,11 +2061,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Control">airo:Control</a></td>
+          <td><a href="https://w3id.org/aidgo#Control">aidgo:Control</a></td>
         </tr>
          
           
@@ -2078,13 +2078,13 @@ concepts and relations as presented in Table 2.</p>
      <section>
         <h2 id="hasDocumentation">
       <bdi class="secno"> </bdi> has documentation
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasDocumentation"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasDocumentation"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasDocumentation</code></td>
+          <td><code> https://w3id.org/aidgo#hasDocumentation</code></td>
         <tr>
           <td> Term </td>
           <td> hasDocumentation </td>
@@ -2101,7 +2101,7 @@ concepts and relations as presented in Table 2.</p>
           
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Document">airo:Document</a></td>
+          <td><a href="https://w3id.org/aidgo#Document">aidgo:Document</a></td>
         </tr>
           
       </tbody>
@@ -2111,13 +2111,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="conformsToStandard">
       <bdi class="secno"> </bdi> conforms to standard
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#conformsToStandard"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#conformsToStandard"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#conformsToStandard</code></td>
+          <td><code> https://w3id.org/aidgo#conformsToStandard</code></td>
         <tr>
           <td> Term </td>
           <td> conformsToStandard </td>
@@ -2134,7 +2134,7 @@ concepts and relations as presented in Table 2.</p>
           
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Standard">airo:Standard</a></td>
+          <td><a href="https://w3id.org/aidgo#Standard">aidgo:Standard</a></td>
         </tr>
           
       </tbody>
@@ -2144,13 +2144,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="hasStakeholder">
       <bdi class="secno"> </bdi> has stakeholder
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasStakeholder"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasStakeholder"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasStakeholder</code></td>
+          <td><code> https://w3id.org/aidgo#hasStakeholder</code></td>
         <tr>
           <td> Term </td>
           <td> hasStakeholder </td>
@@ -2166,11 +2166,11 @@ concepts and relations as presented in Table 2.</p>
         <tr>
          <tr>
              <td>Domain</td>
-             <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+             <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
          </tr> 
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Stakeholder">airo:Stakeholder</a></td>
+          <td><a href="https://w3id.org/aidgo#Stakeholder">aidgo:Stakeholder</a></td>
         </tr>
 
       </tbody>
@@ -2180,13 +2180,13 @@ concepts and relations as presented in Table 2.</p>
     <section>
         <h2 id="isProvidedBy">
       <bdi class="secno"> </bdi> is provided by
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isProvidedBy"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isProvidedBy"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isProvidedBy</code></td>
+          <td><code> https://w3id.org/aidgo#isProvidedBy</code></td>
         <tr>
           <td> Term </td>
           <td> isProvidedBy </td>
@@ -2202,11 +2202,11 @@ concepts and relations as presented in Table 2.</p>
         <tr>
          <tr>
              <td>Domain</td>
-             <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+             <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
          </tr> 
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AIProvider">airo:AIProvider</a></td>
+          <td><a href="https://w3id.org/aidgo#AIProvider">aidgo:AIProvider</a></td>
         </tr>
 
       </tbody>
@@ -2216,13 +2216,13 @@ concepts and relations as presented in Table 2.</p>
      <section>
         <h2 id="isUsedBy">
       <bdi class="secno"> </bdi> is used by
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#isUsedBy"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#isUsedBy"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#isUsedBy</code></td>
+          <td><code> https://w3id.org/aidgo#isUsedBy</code></td>
         <tr>
           <td> Term </td>
           <td> isUsedBy </td>
@@ -2238,11 +2238,11 @@ concepts and relations as presented in Table 2.</p>
         <tr>
          <tr>
              <td>Domain</td>
-             <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+             <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
          </tr> 
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AIUser">airo:AIUser</a></td>
+          <td><a href="https://w3id.org/aidgo#AIUser">aidgo:AIUser</a></td>
         </tr>
 
       </tbody>
@@ -2253,13 +2253,13 @@ concepts and relations as presented in Table 2.</p>
      <section>
         <h2 id="hasAISubject">
       <bdi class="secno"> </bdi> has AI subject
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasAISubject"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasAISubject"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasAISubject</code></td>
+          <td><code> https://w3id.org/aidgo#hasAISubject</code></td>
         <tr>
           <td> Term </td>
           <td> hasAISubject </td>
@@ -2275,11 +2275,11 @@ concepts and relations as presented in Table 2.</p>
         <tr>
          <tr>
              <td>Domain</td>
-             <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+             <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
          </tr> 
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AISubject">airo:AISubject</a></td>
+          <td><a href="https://w3id.org/aidgo#AISubject">aidgo:AISubject</a></td>
         </tr>
       </tbody>
     </table>
@@ -2288,13 +2288,13 @@ concepts and relations as presented in Table 2.</p>
      <section>           
     <h2 id="affects">
       <bdi class="secno"> </bdi> affects
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#affects"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#affects"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#affects</code></td>
+          <td><code> https://w3id.org/aidgo#affects</code></td>
         <tr>
           <td> Term </td>
           <td> affects </td>
@@ -2309,11 +2309,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-          <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+          <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#AffectedStakeholder">airo:AffectedStakeholder</a></td>
+          <td><a href="https://w3id.org/aidgo#AffectedStakeholder">aidgo:AffectedStakeholder</a></td>
         </tr>
           
       </tbody>
@@ -2325,13 +2325,13 @@ concepts and relations as presented in Table 2.</p>
    <section>           
     <h2 id="hasVersion">
       <bdi class="secno"> </bdi> has version
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasVersion"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasVersion"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasVersion</code></td>
+          <td><code> https://w3id.org/aidgo#hasVersion</code></td>
         <tr>
           <td> Term </td>
           <td> hasVersion </td>
@@ -2346,11 +2346,11 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-            <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a></td>
+            <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a></td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Version">airo:Version</a></td>
+          <td><a href="https://w3id.org/aidgo#Version">aidgo:Version</a></td>
         </tr>
           
       </tbody>
@@ -2360,13 +2360,13 @@ concepts and relations as presented in Table 2.</p>
     <section>           
     <h2 id="hasSeverity">
       <bdi class="secno"> </bdi> has severity
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasSeverity"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasSeverity"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasSeverity</code></td>
+          <td><code> https://w3id.org/aidgo#hasSeverity</code></td>
         <tr>
           <td> Term </td>
           <td> hasSeverity </td>
@@ -2381,13 +2381,13 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-            <td><a href="https://w3id.org/airo#Consequence">airo:Consequence</a> or
-                <a href="https://w3id.org/airo#Impact">airo:Impact</a>
+            <td><a href="https://w3id.org/aidgo#Consequence">aidgo:Consequence</a> or
+                <a href="https://w3id.org/aidgo#Impact">aidgo:Impact</a>
             </td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Severity">airo:Severity</a></td>
+          <td><a href="https://w3id.org/aidgo#Severity">aidgo:Severity</a></td>
         </tr>
           
       </tbody>
@@ -2397,13 +2397,13 @@ concepts and relations as presented in Table 2.</p>
      <section>           
     <h2 id="hasLikelihood">
       <bdi class="secno"> </bdi> has likelihood
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasLikelihood"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasLikelihood"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasLikelihood</code></td>
+          <td><code> https://w3id.org/aidgo#hasLikelihood</code></td>
         <tr>
           <td> Term </td>
           <td> hasLikelihood </td>
@@ -2418,12 +2418,12 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-            <td><a href="https://w3id.org/airo#Event">airo:Event</a>
+            <td><a href="https://w3id.org/aidgo#Event">aidgo:Event</a>
             </td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#Likelihood">airo:Likelihood</a></td>
+          <td><a href="https://w3id.org/aidgo#Likelihood">aidgo:Likelihood</a></td>
         </tr>
           
       </tbody>
@@ -2433,13 +2433,13 @@ concepts and relations as presented in Table 2.</p>
     <section>           
     <h2 id="hasLifecyclePhase">
       <bdi class="secno"> </bdi> has lifecycle phase
-      <a class="self-link" aria-label="§" href="https://w3id.org/airo#hasLifecyclePhase"></a>
+      <a class="self-link" aria-label="§" href="https://w3id.org/aidgo#hasLifecyclePhase"></a>
     </h2>
     <table>
       <tbody>
         <tr>
           <td style="width:12%"> IRI </td>
-          <td><code> https://w3id.org/airo#hasLifecyclePhase</code></td>
+          <td><code> https://w3id.org/aidgo#hasLifecyclePhase</code></td>
         <tr>
           <td> Term </td>
           <td> hasLifecyclePhase </td>
@@ -2454,12 +2454,12 @@ concepts and relations as presented in Table 2.</p>
         </tr>
         <tr>
           <td>Domain</td>
-            <td><a href="https://w3id.org/airo#AISystem">airo:AISystem</a>
+            <td><a href="https://w3id.org/aidgo#AISystem">aidgo:AISystem</a>
             </td>
         </tr>
          <tr>
           <td>Range</td>
-          <td><a href="https://w3id.org/airo#LifecyclePhase">airo:LifecyclePhase</a></td>
+          <td><a href="https://w3id.org/aidgo#LifecyclePhase">aidgo:LifecyclePhase</a></td>
         </tr>
           
       </tbody>
@@ -2542,32 +2542,32 @@ concepts and relations as presented in Table 2.</p>
 <tr>
   <td>1</td>
     <td>In which <b>domain</b> is the AI system used?</td>
-    <td><a href="#Domain" title="https://w3id.org/airo#Domain"><code>Domain</code></a></td>
-  <td><a href="#isAppliedWithinDomain" title="https://w3id.org/airo#isAppliedWithinDomain"><code>isAppliedWithinDomain</code></a></td>
+    <td><a href="#Domain" title="https://w3id.org/aidgo#Domain"><code>Domain</code></a></td>
+  <td><a href="#isAppliedWithinDomain" title="https://w3id.org/aidgo#isAppliedWithinDomain"><code>isAppliedWithinDomain</code></a></td>
 </tr>
       
 <tr>
   <td>2</td>
     <td>What is the <b>purpose</b> of the AI system?</td>
-  <td><a href="#Purpose" title="https://w3id.org/airo#Purpose"><code>Purpose</code></a></td>
-  <td><a href="#hasPurpose" title="https://w3id.org/airo#hasPurpose"><code>hasPurpose</code></a></td>
+  <td><a href="#Purpose" title="https://w3id.org/aidgo#Purpose"><code>Purpose</code></a></td>
+  <td><a href="#hasPurpose" title="https://w3id.org/aidgo#hasPurpose"><code>hasPurpose</code></a></td>
 </tr>
 <tr>
   <td>3</td>
     <td>What is the <b>capability</b> of the AI system? </td>
-  <td><a href="#Capability" title="https://w3id.org/airo#AICapability"><code>AICapability</code></a></td>
-  <td><a href="#hasApplication" title="https://w3id.org/airo#hasCapability"><code>hasCapability</code></a></td>
+  <td><a href="#Capability" title="https://w3id.org/aidgo#AICapability"><code>AICapability</code></a></td>
+  <td><a href="#hasApplication" title="https://w3id.org/aidgo#hasCapability"><code>hasCapability</code></a></td>
 <tr>
   <td>4</td>
   <td>Who is the <b>user</b> of the AI system?</td>
-  <td><a href="#AIUser" title="https://w3id.org/airo#AIUser"><code>AIUser</code></a></td>
-  <td><a href="#isUsedBy" title="https://w3id.org/airo#isUsedBy"><code>isUsedBy</code></a></td>
+  <td><a href="#AIUser" title="https://w3id.org/aidgo#AIUser"><code>AIUser</code></a></td>
+  <td><a href="#isUsedBy" title="https://w3id.org/aidgo#isUsedBy"><code>isUsedBy</code></a></td>
 </tr>
 <tr>
   <td>5</td>
     <td>Who is the <b>AI subject</b>?</td>
-  <td><a href="#AISubject" title="https://w3id.org/airo#AISubject"><code>AISubject</code></a></td>
-  <td><a href="#hasAISubject" title="https://w3id.org/airo#hasAISubject"><code>hasAISubject</code></a></td>
+  <td><a href="#AISubject" title="https://w3id.org/aidgo#AISubject"><code>AISubject</code></a></td>
+  <td><a href="#hasAISubject" title="https://w3id.org/aidgo#hasAISubject"><code>hasAISubject</code></a></td>
 </tr>
 </tbody>
 </table>
@@ -2575,7 +2575,7 @@ concepts and relations as presented in Table 2.</p>
      
       
 <center>
-   <img src="https://raw.githubusercontent.com/DelaramGlp/airo/main/figures/airo-annexIII-concepts.jpeg"  alt="annex III concepts" width="500" >
+   <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/aidgo-annexIII-concepts.jpeg"  alt="annex III concepts" width="500" >
    <figcaption style="font-size: 15px;">Figure 1: concepts required for determining high-risk AI applications as per Annex III</figcaption>
 </center>
       
@@ -2603,8 +2603,8 @@ This use-case describes an instance where Uber used a facial recognition identif
 <br>
 
    <center>
-   <img src="https://raw.githubusercontent.com/DelaramGlp/AIRO/main/figures/AIRO-UBER.jpg" alt="Uber's real-time ID check system" width="800">
-   <figcaption style="font-size: 15px;"> Figure 2: AIRO-based representation of Uber's real-time ID check use-case </figcaption>
+   <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/aidgo-UBER.jpg" alt="Uber's real-time ID check system" width="800">
+   <figcaption style="font-size: 15px;"> Figure 2: aidgo-based representation of Uber's real-time ID check use-case </figcaption>
  </center>
 
         </section>
@@ -2617,8 +2617,8 @@ This use-case describes an instance where Uber used a facial recognition identif
 </span>
 <br>
   <center>
-   <img src="https://raw.githubusercontent.com/DelaramGlp/AIRO/main/figures/AIRO-Viogen.jpg" alt="viogen domestic violence system" width="800">
-   <figcaption style="font-size: 15px;">Figure3: AIRO-based representation of VioGén use-case</figcaption>
+   <img src="https://raw.githubusercontent.com/DelaramGlp/aidgo/main/figures/aidgo-Viogen.jpg" alt="viogen domestic violence system" width="800">
+   <figcaption style="font-size: 15px;">Figure3: aidgo-based representation of VioGén use-case</figcaption>
  </center>
         </section>-->
         
@@ -2631,15 +2631,15 @@ use-cases and compared against the specific criteria described in Annex III.</p>
 the concepts necessary to determine whether the system is high-risk.</p>
 <pre>
 <code>
-PREFIX airo: &lthttps://w3id.org/airo#&gt
+PREFIX aidgo: &lthttps://w3id.org/aidgo#&gt
 SELECT ?system ?domain ?purpose ?capability ?user ?subject 
 WHERE {
-      ?system a airo:AISystem ;
-              airo:isAppliedWithinDomain ?domain ;
-              airo:hasPurpose ?purpose ;
-              airo:hasCapability ?capability ;
-              airo:isUsedBy ?user ;
-              airo:hasAISubject ?subject . }
+      ?system a aidgo:AISystem ;
+              aidgo:isAppliedWithinDomain ?domain ;
+              aidgo:hasPurpose ?purpose ;
+              aidgo:hasCapability ?capability ;
+              aidgo:isUsedBy ?user ;
+              aidgo:hasAISubject ?subject . }
 
 </code>
 </pre>
@@ -2651,7 +2651,7 @@ WHERE {
   <caption style="font-size: 15px;"> Table 4: Information retrieved from the use-cases </caption>
      <tbody>
        <tr>
-         <th>AIRO concept</th>
+         <th>aidgo concept</th>
          <th>Uber's Real-time ID Check</th>
          <th>VioGén system</th>
        </tr>
@@ -2705,7 +2705,7 @@ WHERE {
 </div>
 
 <p> To show automation in determination of whether an AI system is high-risk, and to
-show the usefulness of our analysis and AIRO’s concepts, we created SHACL shapes
+show the usefulness of our analysis and aidgo’s concepts, we created SHACL shapes
 representing two of the high-risk conditions defined in Annex III,
 and then applied them over the use-cases.
 we modelled these SHACL shapes to check where AI systems are not high-risk,
@@ -2715,34 +2715,34 @@ is met.</p>
   <code>
 @prefix dash: &lthttp://datashapes.org/dash#&gt .
 @prefix sh: &lthttp://www.w3.org/ns/shacl#&gt .
-@prefix airo: &lthttps://w3id.org/AIRO#&gt .
+@prefix aidgo: &lthttps://w3id.org/aidgo#&gt .
 @prefix rdf: &lthttp://www.w3.org/1999/02/22-rdf-syntax-ns#&gt .
 :AnnexIII-1
     a sh:NodeShape ;
-    sh:targetClass airo:AISystem ;
+    sh:targetClass aidgo:AISystem ;
     sh:message "High-Risk AI System as per AI Act Annex III-1"@en ;
     sh:description "Biometric Identification of Natural Persons"@en ;
     sh:not [
         a sh:PropertyShape ;
-        sh:path airo:hasPurpose ;
-        sh:class airo:BiometricIdentification; ] .
+        sh:path aidgo:hasPurpose ;
+        sh:class aidgo:BiometricIdentification; ] .
 :AnnexIII-6a
     a sh:NodeShape ;
-    sh:targetClass airo:AISystem ;
+    sh:targetClass aidgo:AISystem ;
     sh:message "High-Risk AI System as per AI Act Annex III-6a"@en ;
     sh:description "AI systems intended to be used by law enforcement..."
         "... or the risk for potential victims of criminal offences;"@en ;
     sh:not [ sh:and (
             sh:property [
                 a sh:PropertyShape ;
-                sh:path airo:isUsedWithinDomain ;
-                sh:hasValue airo:law_enforcement ;
+                sh:path aidgo:isUsedWithinDomain ;
+                sh:hasValue aidgo:law_enforcement ;
             ]
             sh:property [
                 a sh:PropertyShape ;
-                sh:path airo:hasPurpose ;
-                # omitted (sh:or .. airo:AssessingRiskOfReoffending) here for brevity
-                sh:class airo:AssessingRiskOfReoffending ; ] ) ] .
+                sh:path aidgo:hasPurpose ;
+                # omitted (sh:or .. aidgo:AssessingRiskOfReoffending) here for brevity
+                sh:class aidgo:AssessingRiskOfReoffending ; ] ) ] .
   </code>
 </pre>
 
@@ -2750,12 +2750,12 @@ is met.</p>
 <!--
 <section id="A-TechnicalDocumentation">
 <h3>Generating Technical Documentation</h3>
-<p> To demonstrate how AIRO assists with producing technical documentation as required by Art. 11 and described in Annex IV of the AI Act,
+<p> To demonstrate how aidgo assists with producing technical documentation as required by Art. 11 and described in Annex IV of the AI Act,
 we utilised SPARQL queries to retrieve the information regarding the two use-cases. </p>
 
 <div align="center">
   <table class="gridtable" style="font-size: 14px;">
-  <caption style="font-size: 15px;"> Table 5: Information retrieved from AIRO-based representations of use-cases for generating technical documentation </caption>
+  <caption style="font-size: 15px;"> Table 5: Information retrieved from aidgo-based representations of use-cases for generating technical documentation </caption>
      <tbody>
        <tr>
          <th>Anx.IV. Required  Information</th>
