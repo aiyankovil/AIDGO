@@ -1,0 +1,77 @@
+@prefix aidgo: <http://example.org/aidgo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aidgo:Control a owl:Class ;
+    rdfs:label "A mechanism or process used to fulfil obligations or reduce risk."@en .
+
+aidgo:alignmentType a owl:ObjectProperty ;
+    rdfs:label "Classifies the strength of the alignment."@en ;
+    rdfs:domain aidgo:ConceptMapping ;
+    rdfs:range aidgo:AlignmentType .
+
+aidgo:appliesTo a owl:ObjectProperty ;
+    rdfs:label "Dataset to which the obligation applies."@en ;
+    rdfs:domain aidgo:Obligation ;
+    rdfs:range aidgo:Dataset .
+
+aidgo:hasJustification a owl:DatatypeProperty ;
+    rdfs:label "Provides textual rationale for a mapping."@en ;
+    rdfs:domain aidgo:ConceptMapping ;
+    rdfs:range xsd:string .
+
+aidgo:hasLifecycleStage a owl:ObjectProperty ;
+    rdfs:label "Lifecycle stage relevant to the obligation."@en ;
+    rdfs:domain aidgo:Obligation ;
+    rdfs:range aidgo:LifecycleStage .
+
+aidgo:hasProvenance a owl:DatatypeProperty ;
+    rdfs:label "Specifies the source or version of a mapping."@en ;
+    rdfs:domain aidgo:ConceptMapping ;
+    rdfs:range xsd:string .
+
+aidgo:hasResponsibleActor a owl:ObjectProperty ;
+    rdfs:label "Actor accountable for fulfilling the obligation."@en ;
+    rdfs:domain aidgo:Obligation ;
+    rdfs:range aidgo:Actor .
+
+aidgo:mapsFrom a owl:ObjectProperty ;
+    rdfs:label "Links a mapping to its legal obligation."@en ;
+    rdfs:domain aidgo:ConceptMapping ;
+    rdfs:range aidgo:Obligation .
+
+aidgo:mapsTo a owl:ObjectProperty ;
+    rdfs:label "Links a mapping to its technical requirement."@en ;
+    rdfs:domain aidgo:ConceptMapping ;
+    rdfs:range aidgo:Requirement .
+
+aidgo:tests a owl:ObjectProperty ;
+    rdfs:label "CQ used to evaluate a specific mapping."@en ;
+    rdfs:domain aidgo:CompetencyQuestion ;
+    rdfs:range aidgo:ConceptMapping .
+
+aidgo:Actor a owl:Class ;
+    rdfs:label "Entity responsible for fulfilling obligations (e.g., AI Provider)."@en .
+
+aidgo:AlignmentType a owl:Class ;
+    rdfs:label "Classification of how a requirement satisfies an obligation."@en .
+
+aidgo:CompetencyQuestion a owl:Class ;
+    rdfs:label "A question used to test the capabilities of the ontology."@en .
+
+aidgo:Dataset a owl:Class ;
+    rdfs:label "The data object upon which obligations or requirements operate."@en .
+
+aidgo:LifecycleStage a owl:Class ;
+    rdfs:label "Stage in the data or AI system lifecycle relevant to obligations."@en .
+
+aidgo:Requirement a owl:Class ;
+    rdfs:label "A technical or procedural requirement from standards like ISO."@en .
+
+aidgo:Obligation a owl:Class ;
+    rdfs:label "A normative obligation from a legal source (e.g., AI Act)."@en .
+
+aidgo:ConceptMapping a owl:Class ;
+    rdfs:label "A mapping between an obligation and a requirement."@en .
+

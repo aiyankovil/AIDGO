@@ -1,0 +1,43 @@
+@prefix aidgo: <http://example.org/aidgo#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+
+<< aidgo:BiasMitigation skos:relatedMatch aidgo:Balance >> 
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:hasJustification "ISO 5259 defines balance but does not mandate proactive bias mitigation."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataAccuracy skos:relatedMatch aidgo:Accuracy >> 
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:hasJustification "ISO 5259 provides a full definition and metric for data accuracy."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:Traceability skos:relatedMatch aidgo:AuditAssessment >> 
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:hasJustification "Audit mechanisms support traceability but do not fully cover data lineage."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataRelevance skos:relatedMatch aidgo:Relevance >> 
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:hasJustification "ISO 5259-2 defines relevance as a core quality dimension matching the legal obligation."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataRepresentativeness skos:relatedMatch aidgo:Representativeness >> 
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:hasJustification "ISO 5259-2 addresses representativeness directly in context of analytical purpose."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataCompleteness skos:relatedMatch aidgo:Completeness >> 
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:hasJustification "ISO 5259-2 defines completeness with supporting metrics and evaluation methods."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataVersioning skos:relatedMatch aidgo:Decommissioning >> 
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:hasJustification "Decommissioning captures end-of-life handling, but not version control and traceability."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .
+
+<< aidgo:DataIntegrity skos:relatedMatch aidgo:AuditAssessment >> 
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:hasJustification "Audit and validation support integrity assurance but lack full control-level tracking."@en ;
+    aidgo:hasProvenance "Mapping_v1.0" .

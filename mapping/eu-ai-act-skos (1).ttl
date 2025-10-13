@@ -1,0 +1,71 @@
+@prefix aidgo: <http://example.org/aidgo#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+aidgo:BiasMitigation a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Apply measures to detect and mitigate bias in datasets."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Bias mitigation obligation"@en .
+
+aidgo:DataAccuracy a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Ensure data is accurate and free of errors."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Data accuracy obligation"@en .
+
+aidgo:DataCompleteness a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Ensure data is complete with respect to the training objective."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Data completeness obligation"@en .
+
+aidgo:DataGovernance a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Overall responsibility for data governance for high-risk AI systems."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:narrower aidgo:BiasMitigation,
+        aidgo:DataAccuracy,
+        aidgo:DataCompleteness,
+        aidgo:DataGovernance,
+        aidgo:DataIntegrity,
+        aidgo:DataRelevance,
+        aidgo:DataRepresentativeness,
+        aidgo:DataVersioning,
+        aidgo:Traceability ;
+    skos:prefLabel "Data governance obligation"@en .
+
+aidgo:DataIntegrity a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Maintain integrity of data throughout lifecycle."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Data integrity obligation"@en .
+
+aidgo:DataRelevance a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Ensure data is relevant for intended purpose."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Data relevance obligation"@en .
+
+aidgo:DataRepresentativeness a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Ensure data is representative of the use context."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Data representativeness obligation"@en .
+
+aidgo:DataVersioning a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Track and control dataset versions."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Versioning obligation"@en .
+
+aidgo:Traceability a skos:Concept ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:definition "Ensure traceability and documentation of data handling."@en ;
+    skos:inScheme aidgo:EU_AI_Act_Article10 ;
+    skos:prefLabel "Traceability obligation"@en .
+
+aidgo:EU_AI_Act_Article10 a skos:ConceptScheme ;
+    dct:source "EU AI Act Article 10"@en ;
+    skos:prefLabel "EU AI Act - Article 10 Obligations"@en .
+

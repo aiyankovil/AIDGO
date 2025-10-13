@@ -1,0 +1,98 @@
+@prefix aidgo: <http://example.org/aidgo#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+aidgo:Accuracy a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Degree to which data correctly describes real-world phenomena."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Accuracy"@en .
+
+aidgo:AuditAssessment a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Formal reviews to assess data quality."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Audit and Assessment"@en .
+
+aidgo:Balance a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Evenness of distribution across relevant classes."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Balance"@en .
+
+aidgo:CompetenceManagement a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Ensuring staff have appropriate DQ skills."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Competence Management"@en .
+
+aidgo:Completeness a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Extent to which data is of sufficient breadth and depth for the task."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Completeness"@en .
+
+aidgo:Consistency a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Degree to which data is presented in the same format and structure."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Consistency"@en .
+
+aidgo:Currentness a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Degree to which data is up-to-date and reflects recent changes."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Currentness"@en .
+
+aidgo:DQCulture a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Organizational norms that support DQ practices."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Data Quality Culture"@en .
+
+aidgo:Decommissioning a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Safe withdrawal or disposal of data no longer in use."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Decommissioning"@en .
+
+aidgo:Diversity a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Extent to which data includes varied attributes or subgroups."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Diversity"@en .
+
+aidgo:IssueManagement a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Processes to resolve data quality issues."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Issue Management"@en .
+
+aidgo:Preprocessing a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Activities to clean, transform, and prepare data."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Preprocessing"@en .
+
+aidgo:Provisioning a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Making data available for consumption."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Provisioning"@en .
+
+aidgo:Relevance a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Degree to which data is applicable to its intended analytical purpose."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Relevance"@en .
+
+aidgo:Representativeness a skos:Concept ;
+    dct:source "ISO/IEC 5259"@en ;
+    skos:definition "Extent to which data reflects the conditions of use context."@en ;
+    skos:inScheme aidgo:ISO_5259_DataQuality ;
+    skos:prefLabel "Representativeness"@en .
+
+aidgo:ISO_5259_DataQuality a skos:ConceptScheme ;
+    dct:source "ISO/IEC 5259 Parts 1-5"@en ;
+    skos:prefLabel "ISO/IEC 5259 Data Quality Concepts"@en .
+

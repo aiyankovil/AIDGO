@@ -1,0 +1,38 @@
+@prefix aidgo: <http://example.org/aidgo#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+aidgo:CompletelySatisfies a skos:Concept ;
+    dct:source "AIDGO AlignmentType Vocabulary"@en ;
+    skos:definition "The requirement fully satisfies the obligation in scope and intent."@en ;
+    skos:inScheme aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Completely Satisfies"@en .
+
+aidgo:ConflictsWith a skos:Concept ;
+    dct:source "AIDGO AlignmentType Vocabulary"@en ;
+    skos:definition "The requirement contradicts the obligation."@en ;
+    skos:inScheme aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Conflicts With"@en .
+
+aidgo:DefinitionDifference a skos:Concept ;
+    dct:source "AIDGO AlignmentType Vocabulary"@en ;
+    skos:definition "The requirement overlaps but differs significantly in its definition."@en ;
+    skos:inScheme aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Definition Difference"@en .
+
+aidgo:NoMapping a skos:Concept ;
+    dct:source "AIDGO AlignmentType Vocabulary"@en ;
+    skos:definition "No relevant requirement exists in the standard to address the obligation."@en ;
+    skos:inScheme aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "No Mapping"@en .
+
+aidgo:PartiallySatisfies a skos:Concept ;
+    dct:source "AIDGO AlignmentType Vocabulary"@en ;
+    skos:definition "The requirement addresses part of the obligation but does not fully satisfy it."@en ;
+    skos:inScheme aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Partially Satisfies"@en .
+
+aidgo:AlignmentTypeScheme a skos:ConceptScheme ;
+    dct:source "AIDGO Mapping Methodology"@en ;
+    skos:prefLabel "AIDGO Alignment Type Scheme"@en .
+
