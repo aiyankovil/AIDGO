@@ -1,1 +1,17 @@
+## SPARQL Query Reference (RDF★ Compatible)
+
+The following table summarises the key SPARQL queries provided in the AIDGO pipeline.  
+All queries are fully compatible with RDF-Star–enabled triple stores (GraphDB, Jena, RDFox).
+
+| Query Name | Purpose | SPARQL Example |
+|------------|----------|----------------|
+| **All Alignments** | Retrieves every alignment instance linking Article 10 requirements to ISO clauses. | ```sparql\nSELECT ?align ?requirement ?clause ?type WHERE { ?align a aidgo:Alignment ; aidgo:regulatoryRequirement ?requirement ; aidgo:technicalClause ?clause ; aidgo:alignmentType ?type . }\n``` |
+| **Alignments with Rationale (RDF★)** | Retrieves alignment type *and* embedded RDF★ rationale text. | ```sparql\nSELECT ?requirement ?clause ?type ?rationale WHERE { ?align a aidgo:Alignment ; aidgo:regulatoryRequirement ?requirement ; aidgo:technicalClause ?clause ; aidgo:alignmentType ?type . << ?align aidgo:alignmentType ?type >> aidgo:rationale ?rationale . }\n``` |
+| **Unmapped Requirements (Gap Analysis)** | Lists Article 10 requirements with no ISO clause mapped. | ```sparql\nSELECT ?requirement WHERE { ?requirement a aidgo:RegulatoryRequirement . FILTER NOT EXISTS { ?a a aidgo:Alignment ; aidgo:regulatoryRequirement ?requirement . } }\n``` |
+| **Unused ISO Clauses** | Returns ISO clauses not referenced by any alignment. | ```sparql\nSELECT ?clause WHERE { ?clause a aidgo:TechnicalClause . FILTER NOT EXISTS { ?a a aidgo:Alignment ; aidgo:technicalClause ?clause . } }\n``` |
+| **Alignment Type Distribution** | Counts how many alignments use each alignment type. | ```sparql\nSELECT ?type (COUNT(?a) AS ?count) WHERE { ?a a aidgo:Alignment ; aidgo:alignmentType ?type . } GROUP BY ?type\n``` |
+| **Partially Satisfies Only** | Returns requirement–clause pairs with PartiallySatisfies alignment. | ```sparql\nSELECT ?requirement ?clause ?rationale WHERE { ?a a aidgo:Alignment ; aidgo:regulatoryRequirement ?requirement ; aidgo:technicalClause ?clause ; aidgo:alignmentType aidgo:PartiallySatisfies . << ?a aidgo:alignmentType aidgo:PartiallySatisfies >> aidgo:rationale ?rationale . }\n``` |
+| **Search Rationale for Keyword** | Searches rationale text for a term (e.g. “bias”). | ```sparql\nSELECT ?requirement ?clause ?type ?rationale WHERE { ?a a aidgo:Alignment ; aidgo:regulatoryRequirement ?requirement ; aidgo:technicalClause ?clause ; aidgo:alignmentType ?type . << ?a aidgo:alignmentType ?type >> aidgo:rationale ?rationale . FILTER(CONTAINS(LCASE(?rationale), \"bias\")) }\n``` |
+| **Detailed View for One Requirement** | Retrieves all ISO mappings for a specific requirement. Replace `A10-2-Req1` as needed. | ```sparql\nSELECT ?clause ?type ?rationale WHERE { ?a a aidgo:Alignment ; aidgo:regulatoryRequirement aidgo:A10-2-Req1 ; aidgo:technicalClause ?clause ; aidgo:alignmentType ?type . << ?a aidgo:alignmentType ?type >> aidgo:rationale ?rationale . }\n``` |
+| **Full Provenance Dump** | Returns all provenance statements stored using RDF★. | ```sparql\nSELECT ?align ?property ?value ?rationale WHERE { ?align a aidgo:Alignment ; aidgo:alignmentType ?value . BIND(aidgo:alignmentType AS ?property) << ?align ?property ?value >> aidgo:rationale ?rationale . }\n``` |
 
