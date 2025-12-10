@@ -1,154 +1,112 @@
-\name{AIDGO}
-\title{AIDGO Ontology Pipeline Working Manual}
-\description{
-AIDGO (AI Data Governance Ontology) is a semantic alignment pipeline for linking 
-legal requirements from the EU AI Act (Article 10) with technical clauses from 
-ISO/IEC 5259 (Data Quality for Analytics & AI). 
+SPARQL AIDGO
 
-This documentation describes the components, data structures, scripts, and usage 
-instructions for generating an RDF-Star ontology for regulatory-technical alignment.
-}
+This document explains all SPARQL queries used in the AIDGO ontology pipeline.
+Queries are written to work with RDF-Star (RDF★) where required.
 
-\section{Repository Structure}{
-\preformatted{
-data/
-  article10_requirements.csv
-  iso5259_clauses.csv
-  aidgo_alignment.csv
+Query: Retrieve all alignments
 
-scripts/
-  merge_to_aidgo_rdfstar.py
-  suggest_alignments.py
+Purpose:
+Fetch every alignment instance created in the AIDGO ontology.
+Shows which Article 10 requirement maps to which ISO clause and the alignment type.
 
-output/
-  aidgo_output.ttl
+How it works:
+Selects nodes that are of type Alignment and retrieves their associated requirement, clause, and alignment type.
 
-examples/
-  example_alignment.ttl
-  example_queries.rq
-}
-}
+Use case:
+Quick overview of all mappings in the dataset.
 
-\section{Installation}{
-Requires Python 3.9+ and the following packages:
-- rdflib (>= 6.2, RDF-Star support)
-- pandas
-- scikit-learn
+Query: Retrieve alignments with RDF-Star rationale
 
-Install via:
-\preformatted{
-pip install rdflib pandas scikit-learn
-}
-}
+Purpose:
+Fetch not only the alignment but also the attached rationale stored using RDF-Star embedded triples.
 
-\section{Input Data Files}{
-Three input datasets are required.
+Why SPARQL-Star is needed:
+The rationale annotation is attached to an embedded triple.
+Only SPARQL★ can extract this metadata.
 
-\subsection{article10_requirements.csv}{
-Contains atomic requirements extracted from Article 10 of the EU AI Act.
+Use case:
+Auditing, provenance tracking, justification for alignments.
 
-Columns:
-\itemize{
-  \item RequirementID
-  \item skos:prefLabel
-  \item skos:definition
-}
-}
+Query: Unmapped Article 10 requirements (gap analysis)
 
-\subsection{iso5259_clauses.csv}{
-Contains atomic clauses extracted from ISO/IEC 5259 standards.
+Purpose:
+Find requirements from Article 10 that do not have any alignment to ISO clauses.
 
-Columns:
-\itemize{
-  \item ClauseID
-  \item skos:prefLabel
-  \item skos:definition
-}
-}
+How it works:
+Lists all RegulatoryRequirement nodes for which there is no matching Alignment that references them.
 
-\subsection{aidgo_alignment.csv}{
-Defines semantic alignment between Article 10 requirements and ISO clauses.
+Use case:
+Gap analysis, completeness evaluation for ontological coverage.
 
-Columns:
-\itemize{
-  \item Requirement
-  \item Clause
-  \item AlignmentType
-  \item Rationale
-  \item skos:prefLabel (optional)
-  \item skos:definition (optional)
-}
-}
-}
+Query: ISO clauses not mapped to any requirement
 
-\section{Generating the RDF-Star Ontology}{
-Use the main script:
-\preformatted{
-python scripts/merge_to_aidgo_rdfstar.py
-}
+Purpose:
+Find ISO 5259 clauses that do not support any Article 10 requirement.
 
-This produces:
-\preformatted{
-output/aidgo_output.ttl
-}
+How it works:
+Similar to gap analysis, but checks TechnicalClause entities instead.
 
-The output includes:
-\itemize{
-  \item RegulatoryRequirement instances
-  \item TechnicalClause instances
-  \item Alignment nodes
-  \item RDF-Star embedded rationale triples
-}
-}
+Use case:
+Identifying irrelevant or unnecessary clauses, or gaps in the legal requirements.
 
-\section{SPARQL Query Examples}{
-Queries in RDF-Star format are included in:
-\preformatted{
-examples/aidgo_queries.rq
-}
+Query: Alignment type distribution
 
-Example:
-\preformatted{
-PREFIX aidgo: <http://example.org/aidgo#>
+Purpose:
+Count how many times each alignment type appears.
 
-SELECT ?requirement ?clause ?type ?rationale
-WHERE {
-  ?align a aidgo:Alignment ;
-         aidgo:regulatoryRequirement ?requirement ;
-         aidgo:technicalClause ?clause ;
-         aidgo:alignmentType ?type .
+How it works:
+Groups alignment nodes by alignmentType and counts them.
 
-  << ?align aidgo:alignmentType ?type >>
-      aidgo:rationale ?rationale .
-}
-}
-}
+Use case:
+Evaluate mapping quality, understand coverage vs conflict vs partial match distribution.
 
-\section{Alignment Suggestion Tool}{
-Use TF-IDF similarity to identify likely mappings:
+Query: Retrieve only PartiallySatisfies alignments
 
-\preformatted{
-python scripts/suggest_alignments.py
-}
+Purpose:
+List all requirement–clause pairs where the alignment type is PartiallySatisfies.
 
-This generates:
-\preformatted{
-data/alignment_suggestions.csv
-}
-}
+Why this matters:
+Partial satisfaction often indicates areas where ISO provisions do not fully meet the AI Act requirements.
 
-\section{Troubleshooting}{
-\itemize{
-  \item Empty TTL file: check CSV column names.
-  \item RDF-Star missing: ensure rdflib >= 6.2 is installed.
-  \item AlignmentType errors: must match expected vocabulary exactly.
-}
-}
+Use case:
+Assessment of risk, identifying where extra governance controls are needed.
 
-\section{Citation}{
-If using this work in academic publications, cite:
+Query: Search rationale for a keyword
 
-Aiyankovil, K. G. (2025).
-AIDGO: A Semantic Alignment Framework for AI Act Data Governance Requirements 
-and ISO/IEC 5259.
-}
+Purpose:
+Allows text search over rationale explanations.
+Example keyword: “bias”.
+
+How it works:
+Uses FILTER(CONTAINS()) to match text inside rationale.
+
+Why SPARQL-Star is needed:
+Rationale is stored on an embedded triple.
+
+Use case:
+Identify clusters of mappings related to risk, bias, legality concerns, or documentation.
+
+Query: Detailed report for one requirement
+
+Purpose:
+Show all mapped clauses, alignment types, and rationales for a specific Article 10 requirement.
+
+How it works:
+Filters alignments based on a specific RequirementID.
+
+Use case:
+Case study reporting, internal audit, or PhD evaluation demonstration.
+
+Query: Full provenance dump (RDF-Star)
+
+Purpose:
+Retrieve all embedded provenance statements stored via RDF-Star in the ontology.
+
+Why SPARQL-Star is required:
+All rationale explanations are attached to embedded triples, not standard triples.
+
+How it works:
+Searches for every alignment triple and extracts rationale using embedded triple matching.
+
+Use case:
+Complete transparency for auditors, regulators, thesis evaluation, or QA processes.
