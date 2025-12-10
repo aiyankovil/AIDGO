@@ -1,0 +1,144 @@
+PREFIX aidgo: <http://w3id.org/aidgo#>
+
+###############################################################
+# 1. Retrieve all alignments
+###############################################################
+
+SELECT ?alignment ?requirement ?clause ?alignmentType
+WHERE {
+    ?alignment a aidgo:Alignment ;
+               aidgo:regulatoryRequirement ?requirement ;
+               aidgo:technicalClause ?clause ;
+               aidgo:alignmentType ?alignmentType .
+}
+ORDER BY ?requirement ?clause
+
+
+###############################################################
+# 2. Retrieve alignments with RDF★ rationale
+###############################################################
+
+SELECT ?requirement ?clause ?alignmentType ?rationale
+WHERE {
+    ?align a aidgo:Alignment ;
+           aidgo:regulatoryRequirement ?requirement ;
+           aidgo:technicalClause ?clause ;
+           aidgo:alignmentType ?alignmentType .
+
+    << ?align aidgo:alignmentType ?alignmentType >>
+         aidgo:rationale ?rationale .
+}
+ORDER BY ?requirement ?clause
+
+
+###############################################################
+# 3. Gap analysis: Article 10 requirements with no alignment
+###############################################################
+
+SELECT ?requirement
+WHERE {
+    ?requirement a aidgo:RegulatoryRequirement .
+    FILTER NOT EXISTS {
+        ?align a aidgo:Alignment ;
+               aidgo:regulatoryRequirement ?requirement .
+    }
+}
+ORDER BY ?requirement
+
+
+###############################################################
+# 4. ISO clauses that do not support any requirement
+###############################################################
+
+SELECT ?clause
+WHERE {
+    ?clause a aidgo:TechnicalClause .
+    FILTER NOT EXISTS {
+        ?align a aidgo:Alignment ;
+               aidgo:technicalClause ?clause .
+    }
+}
+ORDER BY ?clause
+
+
+###############################################################
+# 5. Alignment strength distribution
+###############################################################
+
+SELECT ?alignmentType (COUNT(?align) AS ?count)
+WHERE {
+    ?align a aidgo:Alignment ;
+           aidgo:alignmentType ?alignmentType .
+}
+GROUP BY ?alignmentType
+ORDER BY DESC(?count)
+
+
+###############################################################
+# 6. Retrieve all PartiallySatisfies alignments (with rationale)
+###############################################################
+
+SELECT ?requirement ?clause ?rationale
+WHERE {
+    ?align a aidgo:Alignment ;
+           aidgo:regulatoryRequirement ?requirement ;
+           aidgo:technicalClause ?clause ;
+           aidgo:alignmentType aidgo:PartiallySatisfies .
+
+    << ?align aidgo:alignmentType aidgo:PartiallySatisfies >>
+         aidgo:rationale ?rationale .
+}
+ORDER BY ?requirement
+
+
+###############################################################
+# 7. Retrieve requirements whose rationale mentions a keyword
+#    Change "bias" to any other keyword of interest
+###############################################################
+
+SELECT ?requirement ?clause ?alignmentType ?rationale
+WHERE {
+    ?align a aidgo:Alignment ;
+           aidgo:regulatoryRequirement ?requirement ;
+           aidgo:technicalClause ?clause ;
+           aidgo:alignmentType ?alignmentType .
+
+    << ?align aidgo:alignmentType ?alignmentType >>
+         aidgo:rationale ?rationale .
+
+    FILTER(CONTAINS(LCASE(?rationale), "bias"))
+}
+ORDER BY ?requirement
+
+
+###############################################################
+# 8. Detailed view: All alignments for a specific requirement
+#    Replace A10-2-Req1 with any RequirementID
+###############################################################
+
+SELECT ?clause ?alignmentType ?rationale
+WHERE {
+    ?align a aidgo:Alignment ;
+           aidgo:regulatoryRequirement aidgo:A10-2-Req1 ;
+           aidgo:technicalClause ?clause ;
+           aidgo:alignmentType ?alignmentType .
+
+    << ?align aidgo:alignmentType ?alignmentType >>
+         aidgo:rationale ?rationale .
+}
+ORDER BY ?clause
+
+
+###############################################################
+# 9. Full provenance dump (for auditors)
+###############################################################
+
+SELECT ?alignment ?property ?value ?rationale
+WHERE {
+    ?alignment a aidgo:Alignment ;
+               aidgo:alignmentType ?value .
+
+    BIND(aidgo:alignmentType AS ?property)
+
+    << ?alignment ?property ?value >> aidgo:rationale ?rationale .
+}
