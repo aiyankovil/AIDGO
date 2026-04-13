@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIDGO — AI Data Governance Ontology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0d1117;
+  --surface:   #161b22;
+  --surface2:  #21262d;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --muted:     #8b949e;
+  --accent:    #58a6ff;
+  --green:     #3fb950;
+  --amber:     #d29922;
+  --red:       #f85149;
+  --purple:    #bc8cff;
+  --teal:      #39d0d8;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── LAYOUT ── */
+.page { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+nav {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  background: var(--surface); border-right: 1px solid var(--border);
+  padding: 24px 0;
+}
+.nav-brand {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.nav-brand h1 {
+  font-size: 18px; font-weight: 700; color: var(--accent);
+  letter-spacing: -0.5px;
+}
+.nav-brand span { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+nav ul { list-style: none; }
+nav ul li a {
+  display: block; padding: 6px 20px;
+  color: var(--muted); text-decoration: none; font-size: 13px;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+nav ul li a:hover, nav ul li a.active {
+  color: var(--text); background: var(--surface2);
+  border-left-color: var(--accent);
+}
+.nav-section {
+  padding: 16px 20px 4px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted);
+}
+
+/* ── MAIN CONTENT ── */
+main { padding: 48px 64px; max-width: 900px; }
+
+/* ── HERO ── */
+.hero {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+  margin-bottom: 48px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--teal), var(--purple));
+}
+.hero-badge {
+  display: inline-block;
+  padding: 4px 12px; margin-bottom: 16px;
+  background: rgba(88, 166, 255, 0.1); border: 1px solid rgba(88, 166, 255, 0.3);
+  border-radius: 20px; font-size: 12px; color: var(--accent);
+  font-family: var(--font-mono);
+}
+.hero h1 { font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+.hero h1 span { color: var(--accent); }
+.hero p { color: var(--muted); font-size: 15px; max-width: 640px; margin-bottom: 24px; }
+.hero-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+.hero-meta-item { font-size: 12px; font-family: var(--font-mono); }
+.hero-meta-item strong { color: var(--text); display: block; }
+.hero-meta-item span { color: var(--muted); }
+
+/* ── SECTIONS ── */
+section { margin-bottom: 56px; }
+section > h2 {
+  font-size: 22px; font-weight: 700; margin-bottom: 20px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+section > h3 {
+  font-size: 16px; font-weight: 600; margin: 28px 0 12px;
+  color: var(--teal);
+}
+
+p { color: var(--muted); margin-bottom: 12px; }
+p strong { color: var(--text); }
+
+/* ── NAMESPACE TABLE ── */
+.ns-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.ns-table th, .ns-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+.ns-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); background: var(--surface2); }
+.ns-table code { font-family: var(--font-mono); color: var(--accent); font-size: 12px; }
+
+/* ── CONCEPT CARD ── */
+.concept-card {
+  border: 1px solid var(--border);
+  border-radius: 6px; margin-bottom: 16px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.concept-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+.concept-tag {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  padding: 3px 8px; border-radius: 4px;
+}
+.tag-class   { background: rgba(188,140,255,0.15); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+.tag-prop    { background: rgba(57,208,216,0.15);  color: var(--teal);   border: 1px solid rgba(57,208,216,0.3); }
+.tag-inst    { background: rgba(63,185,80,0.15);   color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+.tag-new     { background: rgba(248,81,73,0.15);   color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+.concept-name {
+  font-size: 15px; font-weight: 700; font-family: var(--font-mono);
+  color: var(--text);
+}
+.concept-body { padding: 14px 16px; }
+.concept-row {
+  display: grid; grid-template-columns: 160px 1fr;
+  gap: 6px 16px; font-size: 13px; margin-bottom: 6px;
+}
+.concept-row .k { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.concept-row .v { color: var(--text); }
+.concept-row .v a { color: var(--accent); text-decoration: none; }
+.concept-row .v a:hover { text-decoration: underline; }
+.iri-pill {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 2px 8px; border-radius: 4px; display: inline-block;
+}
+
+/* ── ALIGNMENT BADGES ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  font-family: var(--font-mono);
+}
+.badge-green  { background: rgba(63,185,80,0.15);  color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+.badge-amber  { background: rgba(210,153,34,0.15); color: var(--amber);  border: 1px solid rgba(210,153,34,0.3); }
+.badge-red    { background: rgba(248,81,73,0.15);  color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+.badge::before { content: '●'; font-size: 8px; }
+
+/* ── MAPPING TABLE ── */
+.mapping-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+.mapping-table th {
+  padding: 10px 12px; text-align: left;
+  background: var(--surface2); border-bottom: 2px solid var(--border);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+}
+.mapping-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.mapping-table tr:hover td { background: rgba(255,255,255,0.02); }
+.mapping-table .legal-id { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.mapping-table .iso-id   { font-family: var(--font-mono); font-size: 11px; color: var(--teal); }
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin: 20px 0;
+}
+.stat-card {
+  padding: 20px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--surface);
+  text-align: center;
+}
+.stat-number { font-size: 36px; font-weight: 700; font-family: var(--font-mono); }
+.stat-label  { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat-green  .stat-number { color: var(--green); }
+.stat-amber  .stat-number { color: var(--amber); }
+.stat-red    .stat-number { color: var(--red); }
+
+/* ── CODE BLOCK ── */
+pre {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px; margin: 12px 0;
+  overflow-x: auto; font-family: var(--font-mono); font-size: 12px;
+  line-height: 1.6; color: var(--text);
+}
+.comment { color: var(--muted); }
+.kw      { color: var(--purple); }
+.str     { color: var(--green); }
+.uri     { color: var(--accent); }
+.class-name { color: var(--teal); }
+
+/* ── CQ TABLE ── */
+.cq-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.cq-table th {
+  padding: 8px 12px; background: var(--surface2); border-bottom: 2px solid var(--border);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); text-align: left;
+}
+.cq-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.cq-id { font-family: var(--font-mono); font-size: 12px; color: var(--purple); font-weight: 600; }
+.cq-ans-y  { color: var(--green); font-size: 12px; font-weight: 600; }
+.cq-ans-p  { color: var(--amber); font-size: 12px; font-weight: 600; }
+
+/* ── NOTICE ── */
+.notice {
+  padding: 14px 16px; border-radius: 6px; margin: 16px 0;
+  border-left: 3px solid; font-size: 13px;
+}
+.notice-blue { background: rgba(88,166,255,0.08); border-color: var(--accent); color: var(--muted); }
+.notice-green { background: rgba(63,185,80,0.08); border-color: var(--green); color: var(--muted); }
+
+/* ── RDFSTAR BOX ── */
+.rdfstar-box {
+  border: 1px solid rgba(188,140,255,0.3);
+  background: rgba(188,140,255,0.05);
+  border-radius: 6px; padding: 20px; margin: 16px 0;
+}
+.rdfstar-box h4 { color: var(--purple); font-size: 13px; margin-bottom: 10px; font-family: var(--font-mono); }
+
+/* ── DIAGRAM ── */
+.diagram {
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); padding: 32px;
+  margin: 20px 0; text-align: center;
+}
+.diagram svg { max-width: 100%; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0; margin-top: 48px;
+  color: var(--muted); font-size: 12px;
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+  nav { position: static; height: auto; }
+  main { padding: 24px 20px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══ SIDEBAR ══════════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-brand">
+    <h1>AIDGO</h1>
+    <span>AI Data Governance Ontology</span>
+  </div>
+  <ul>
+    <li class="nav-section">Introduction</li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#requirements">Requirements & CQs</a></li>
+    <li><a href="#namespaces">Namespaces</a></li>
+
+    <li class="nav-section">New Terms</li>
+    <li><a href="#alignment-relations">Alignment Relations</a></li>
+    <li><a href="#completely-satisfies">CompletelySatisfies</a></li>
+    <li><a href="#partially-satisfies">PartiallySatisfies</a></li>
+    <li><a href="#no-matching">NoMatching</a></li>
+
+    <li class="nav-section">Core Classes</li>
+    <li><a href="#alignment-triple">AlignmentTriple</a></li>
+    <li><a href="#requirement-classes">Requirement Classes</a></li>
+    <li><a href="#dqlc">Data Quality Life Cycle</a></li>
+    <li><a href="#dq-characteristics">DQ Characteristics</a></li>
+    <li><a href="#stakeholders">Actors & Stakeholders</a></li>
+
+    <li class="nav-section">Mapping</li>
+    <li><a href="#rdfstar">RDF-star Pattern</a></li>
+    <li><a href="#mapping-instances">Mapping Instances</a></li>
+    <li><a href="#sparql">SPARQL Queries</a></li>
+
+    <li class="nav-section">Resources</li>
+    <li><a href="#download">Download</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ MAIN ══════════════════════════════════════════════════════════════ -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">https://w3id.org/aidgo#</div>
+    <h1>AIDGO — <span>AI Data Governance</span> Ontology</h1>
+    <p>An OWL ontology for expressing the alignment between ISO/IEC 5259 data quality
+    management requirements and EU AI Act Article 10 data governance obligations,
+    using RDF-star annotated mapping triples with provenance and justification.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Version</strong><span>1.0.0</span></div>
+      <div class="hero-meta-item"><strong>Created</strong><span>2026-04-13</span></div>
+      <div class="hero-meta-item"><strong>Creator</strong><span>AIDGO Project, ADAPT Centre</span></div>
+      <div class="hero-meta-item"><strong>License</strong><span>CC BY 4.0</span></div>
+      <div class="hero-meta-item"><strong>Standard</strong><span>ISO/IEC 5259-3:2025</span></div>
+      <div class="hero-meta-item"><strong>Regulation</strong><span>EU AI Act Art. 10 (2024/1689)</span></div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>The EU AI Act mandates that providers of high-risk AI systems implement appropriate
+    <strong>data governance and management practices</strong> (Article 10). ISO/IEC 5259 provides
+    a comprehensive technical framework for managing data quality in analytics and machine learning.
+    AIDGO bridges these two frameworks through a formally defined alignment ontology.</p>
+
+    <p>AIDGO introduces three new alignment relation classes — <strong>CompletelySatisfies</strong>,
+    <strong>PartiallySatisfies</strong>, and <strong>NoMatching</strong> — and uses
+    <strong>RDF-star (RDF 1.2 annotated triples)</strong> to attach these relations, justifications,
+    and provenance directly to the mapping assertions.</p>
+
+    <!-- Concept diagram -->
+    <div class="diagram">
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px">
+        <!-- Legal box -->
+        <rect x="20" y="80" width="180" height="80" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+        <text x="110" y="106" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#8b949e">LegalRequirement</text>
+        <text x="110" y="126" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#e6edf3" font-weight="600">EU AI Act</text>
+        <text x="110" y="144" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#8b949e">Article 10 obligation</text>
+
+        <!-- ISO box -->
+        <rect x="560" y="80" width="180" height="80" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+        <text x="650" y="106" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#8b949e">ISORequirement</text>
+        <text x="650" y="126" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#e6edf3" font-weight="600">ISO/IEC 5259-3</text>
+        <text x="650" y="144" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#8b949e">SHALL requirement</text>
+
+        <!-- AlignmentTriple box (centre) -->
+        <rect x="270" y="60" width="220" height="120" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
+        <text x="380" y="88" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#58a6ff">AlignmentTriple</text>
+        <text x="380" y="108" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#3fb950">● CompletelySatisfies</text>
+        <text x="380" y="126" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#d29922">● PartiallySatisfies</text>
+        <text x="380" y="144" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#f85149">● NoMatching</text>
+        <text x="380" y="166" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" fill="#8b949e">+ justification + provenance</text>
+
+        <!-- Arrows -->
+        <line x1="200" y1="120" x2="270" y2="120" stroke="#30363d" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="490" y1="120" x2="560" y2="120" stroke="#30363d" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="227" y="113" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b949e">legalReq</text>
+        <text x="527" y="113" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b949e">isoReq</text>
+
+        <!-- RDF-star quoted triple arrow below -->
+        <path d="M 200 155 Q 380 230 560 155" stroke="#bc8cff" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arru)"/>
+        <rect x="300" y="228" width="160" height="28" rx="4" fill="#161b22" stroke="#bc8cff" stroke-width="1"/>
+        <text x="380" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#bc8cff">&lt;&lt; s p o &gt;&gt; annotation</text>
+
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#30363d"/>
+          </marker>
+          <marker id="arru" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#bc8cff"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card stat-green">
+        <div class="stat-number">6</div>
+        <div class="stat-label">CompletelySatisfies</div>
+        <div class="stat-label">26% of Art. 10 obligations</div>
+      </div>
+      <div class="stat-card stat-amber">
+        <div class="stat-number">12</div>
+        <div class="stat-label">PartiallySatisfies</div>
+        <div class="stat-label">52% of Art. 10 obligations</div>
+      </div>
+      <div class="stat-card stat-red">
+        <div class="stat-number">5</div>
+        <div class="stat-label">NoMatching</div>
+        <div class="stat-label">22% — genuine regulatory gaps</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REQUIREMENTS & CQs ── -->
+  <section id="requirements">
+    <h2>Requirements &amp; Competency Questions</h2>
+    <p>AIDGO was designed to answer 12 competency questions covering legal (CQ-L), technical (CQ-T),
+    and mapping (CQ-M) dimensions of ISO 5259 / EU AI Act Article 10 alignment.</p>
+
+    <table class="cq-table">
+      <thead><tr><th>ID</th><th>Competency Question</th><th>Answered?</th></tr></thead>
+      <tbody>
+        <tr><td class="cq-id">DG1</td><td>What are the data governance obligations defined in Article 10?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">DG2</td><td>What types of data quality (accuracy, relevance, representativeness) are required?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">DG3</td><td>What measures are required to detect and mitigate bias in training datasets?</td><td class="cq-ans-p">◑ Partial</td></tr>
+        <tr><td class="cq-id">DG7</td><td>What are the expected lifecycle stages for managing data quality in AI systems?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">DG10</td><td>What alignment exists between Article 10 obligations and ISO 5259 concepts?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">DG11</td><td>Are there Article 10 obligations not currently supported by ISO 5259 standards?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M1</td><td>Which ISO clauses completely satisfy individual obligations under Article 10?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M2</td><td>Which clauses only partially satisfy Article 10 obligations, and what is the justification?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M3</td><td>Are there Article 10 obligations for which no ISO 5259 concept provides coverage?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M5</td><td>For each mapped pair, what is the alignment type?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M6</td><td>What is the provenance of the mapping used to justify alignment?</td><td class="cq-ans-y">✓ Yes</td></tr>
+        <tr><td class="cq-id">CQ-M7</td><td>How many obligations are satisfied by each ISO 5259 part?</td><td class="cq-ans-y">✓ Yes</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── NAMESPACES ── -->
+  <section id="namespaces">
+    <h2>Namespace Declarations</h2>
+    <table class="ns-table">
+      <thead><tr><th>Prefix</th><th>URI</th></tr></thead>
+      <tbody>
+        <tr><td><strong>aidgo</strong></td><td><code>https://w3id.org/aidgo#</code></td></tr>
+        <tr><td><strong>tair</strong></td><td><code>https://w3id.org/tair#</code></td></tr>
+        <tr><td><strong>airo</strong></td><td><code>https://w3id.org/airo#</code></td></tr>
+        <tr><td><strong>skos</strong></td><td><code>http://www.w3.org/2004/02/skos/core#</code></td></tr>
+        <tr><td><strong>dct</strong></td><td><code>http://purl.org/dc/terms/</code></td></tr>
+        <tr><td><strong>prov</strong></td><td><code>http://www.w3.org/ns/prov#</code></td></tr>
+        <tr><td><strong>owl</strong></td><td><code>http://www.w3.org/2002/07/owl#</code></td></tr>
+        <tr><td><strong>rdf</strong></td><td><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></td></tr>
+        <tr><td><strong>rdfs</strong></td><td><code>http://www.w3.org/2000/01/rdf-schema#</code></td></tr>
+        <tr><td><strong>xsd</strong></td><td><code>http://www.w3.org/2001/XMLSchema#</code></td></tr>
+        <tr><td><strong>vann</strong></td><td><code>http://purl.org/vocab/vann/</code></td></tr>
+        <tr><td><strong>dqv</strong></td><td><code>http://www.w3.org/ns/dqv#</code></td></tr>
+        <tr><td><strong>dpv</strong></td><td><code>https://w3id.org/dpv#</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── ALIGNMENT RELATIONS ── -->
+  <section id="alignment-relations">
+    <h2>Alignment Relations — New AIDGO Terms</h2>
+    <p>AIDGO introduces three new OWL classes as subtypes of <code>aidgo:AlignmentRelation</code>.
+    These are the core contribution of the ontology, used as type annotations on RDF-star quoted triples.</p>
+
+    <div class="concept-card" id="completely-satisfies">
+      <div class="concept-header">
+        <span class="concept-tag tag-new">NEW</span>
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:CompletelySatisfies</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">IRI</span><span class="v"><span class="iri-pill">https://w3id.org/aidgo#CompletelySatisfies</span></span></div>
+        <div class="concept-row"><span class="k">rdfs:subClassOf</span><span class="v"><a href="#alignment-relations">aidgo:AlignmentRelation</a></span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">An alignment relation indicating that the ISO/IEC 5259 requirement completely addresses all semantic content of the corresponding EU AI Act obligation — same scope, same actors, same data objects, no material gaps.</span></div>
+        <div class="concept-row"><span class="k">skos:scopeNote</span><span class="v">Use when: (1) the ISO clause covers the full semantic extent; (2) actors, data objects and normative level match; (3) no sub-element of the legal obligation is unaddressed.</span></div>
+        <div class="concept-row"><span class="k">Example</span><span class="v">ISO 5259-3 §6.3.2 completely satisfies EU AI Act Art. 10(2) data governance practices obligation.</span></div>
+        <div class="concept-row"><span class="k">Visual</span><span class="v"><span class="badge badge-green">CompletelySatisfies</span></span></div>
+      </div>
+    </div>
+
+    <div class="concept-card" id="partially-satisfies">
+      <div class="concept-header">
+        <span class="concept-tag tag-new">NEW</span>
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:PartiallySatisfies</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">IRI</span><span class="v"><span class="iri-pill">https://w3id.org/aidgo#PartiallySatisfies</span></span></div>
+        <div class="concept-row"><span class="k">rdfs:subClassOf</span><span class="v"><a href="#alignment-relations">aidgo:AlignmentRelation</a></span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">An alignment relation indicating that the ISO/IEC 5259 requirement addresses the core intent of the corresponding EU AI Act obligation but contains one or more gaps: (a) narrower scope, (b) missing sub-elements, (c) different actor framing, or (d) different specificity level.</span></div>
+        <div class="concept-row"><span class="k">skos:scopeNote</span><span class="v">Always document the gap in <code>aidgo:alignmentGap</code>. Always provide <code>aidgo:recommendedStandard</code> where applicable.</span></div>
+        <div class="concept-row"><span class="k">Example</span><span class="v">ISO 5259-3 §7.3.5.2 partially satisfies EU AI Act Art. 10(2)(f) — covers technical bias but not the fundamental rights framing.</span></div>
+        <div class="concept-row"><span class="k">Visual</span><span class="v"><span class="badge badge-amber">PartiallySatisfies</span></span></div>
+      </div>
+    </div>
+
+    <div class="concept-card" id="no-matching">
+      <div class="concept-header">
+        <span class="concept-tag tag-new">NEW</span>
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:NoMatching</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">IRI</span><span class="v"><span class="iri-pill">https://w3id.org/aidgo#NoMatching</span></span></div>
+        <div class="concept-row"><span class="k">rdfs:subClassOf</span><span class="v"><a href="#alignment-relations">aidgo:AlignmentRelation</a></span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">An alignment relation indicating that no ISO/IEC 5259 requirement addresses the corresponding EU AI Act obligation. This represents a genuine regulatory gap where compliance with ISO 5259 alone is insufficient.</span></div>
+        <div class="concept-row"><span class="k">skos:scopeNote</span><span class="v">Use when the legal obligation operates in a domain (e.g. personal data law, fundamental rights) structurally outside ISO 5259's scope. Always document in <code>aidgo:alignmentGap</code> and <code>aidgo:recommendedStandard</code>.</span></div>
+        <div class="concept-row"><span class="k">Example</span><span class="v">EU AI Act Art. 10(5) special category personal data processing has no matching ISO 5259 requirement.</span></div>
+        <div class="concept-row"><span class="k">Visual</span><span class="v"><span class="badge badge-red">NoMatching</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ALIGNMENT TRIPLE ── -->
+  <section id="alignment-triple">
+    <h2>AlignmentTriple Class</h2>
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:AlignmentTriple</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">IRI</span><span class="v"><span class="iri-pill">https://w3id.org/aidgo#AlignmentTriple</span></span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">A named node representing an RDF-star annotated alignment between one EU AI Act legal requirement and one ISO/IEC 5259 technical requirement, qualified with an alignment relation type, justification, basis, and provenance.</span></div>
+      </div>
+    </div>
+
+    <h3>Properties of AlignmentTriple</h3>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-prop">owl:ObjectProperty</span>
+        <span class="concept-name">aidgo:legalRequirement</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:domain</span><span class="v">aidgo:AlignmentTriple</span></div>
+        <div class="concept-row"><span class="k">rdfs:range</span><span class="v">aidgo:LegalRequirement</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">The EU AI Act atomic obligation being assessed in this alignment triple.</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-prop">owl:ObjectProperty</span>
+        <span class="concept-name">aidgo:isoRequirement</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:domain</span><span class="v">aidgo:AlignmentTriple</span></div>
+        <div class="concept-row"><span class="k">rdfs:range</span><span class="v">aidgo:ISORequirement</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">The ISO/IEC 5259 atomic requirement being assessed in this alignment triple.</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-prop">owl:ObjectProperty</span>
+        <span class="concept-name">aidgo:alignmentType</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:range</span><span class="v">aidgo:AlignmentRelation (CompletelySatisfies | PartiallySatisfies | NoMatching)</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">The category of alignment for this triple.</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-prop">owl:DatatypeProperty</span>
+        <span class="concept-name">aidgo:alignmentJustification</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:range</span><span class="v">rdf:langString</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">A 1–3 sentence rationale explaining the alignment decision, documenting both similarities and differences.</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-prop">owl:DatatypeProperty</span>
+        <span class="concept-name">aidgo:alignmentGap</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:range</span><span class="v">rdf:langString</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">For PartiallySatisfies and NoMatching: description of what element is missing from the ISO standard.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REQUIREMENT CLASSES ── -->
+  <section id="requirement-classes">
+    <h2>Requirement Classes</h2>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:LegalRequirement</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:subClassOf</span><span class="v">aidgo:Requirement</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">An atomic obligation derived from a legal instrument such as a regulation or directive. Corresponds to an atomic sub-clause of EU AI Act Article 10.</span></div>
+        <div class="concept-row"><span class="k">Example IDs</span><span class="v"><code>AiaPrReq_10.2_1</code>, <code>AiaPrReq_10.3_1</code>, <code>AiaPrReq_10.5</code></span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:ISORequirement</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">rdfs:subClassOf</span><span class="v">aidgo:Requirement</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">An atomic SHALL requirement from ISO/IEC 5259-3, corresponding to a <code>tair:ConjuntiveRequirement</code>.</span></div>
+        <div class="concept-row"><span class="k">Example IDs</span><span class="v"><code>AidgoReq_6_3_2</code>, <code>AidgoConjReq_7.3.5.2_R1</code>, <code>AidgoConjReq_7.3.2.3_Rb</code></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DQLC ── -->
+  <section id="dqlc">
+    <h2>Data Quality Life Cycle (DQLC)</h2>
+    <p>AIDGO models the ISO 5259-3 Data Quality Management Life Cycle (DQMLC) as a set of
+    <code>aidgo:DQLCStage</code> instances, plus four <code>aidgo:HorizontalProcess</code> instances
+    that apply across all stages.</p>
+
+    <h3>Life Cycle Stages</h3>
+    <table class="mapping-table">
+      <thead><tr><th>Stage</th><th>IRI</th><th>ISO Clause</th></tr></thead>
+      <tbody>
+        <tr><td>Data Motivation and Conceptualization</td><td class="iso-id">aidgo:DataMotivation</td><td>§7.3.1</td></tr>
+        <tr><td>Data Specification</td><td class="iso-id">aidgo:DataSpecification</td><td>§7.3.2</td></tr>
+        <tr><td>Data Planning</td><td class="iso-id">aidgo:DataPlanning</td><td>§7.3.3</td></tr>
+        <tr><td>Data Acquisition</td><td class="iso-id">aidgo:DataAcquisition</td><td>§7.3.4</td></tr>
+        <tr><td>Data Preprocessing</td><td class="iso-id">aidgo:DataPreprocessing</td><td>§7.3.5</td></tr>
+        <tr><td>Data Augmentation</td><td class="iso-id">aidgo:DataAugmentation</td><td>§7.3.6</td></tr>
+        <tr><td>Data Provisioning</td><td class="iso-id">aidgo:DataProvisioning</td><td>§7.3.7</td></tr>
+        <tr><td>Data Decommissioning</td><td class="iso-id">aidgo:DataDecommissioning</td><td>§7.3.8</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Horizontal Processes</h3>
+    <table class="mapping-table">
+      <thead><tr><th>Process</th><th>IRI</th><th>ISO Clause</th></tr></thead>
+      <tbody>
+        <tr><td>Verification and Validation</td><td class="iso-id">aidgo:VerificationAndValidation</td><td>§8.3.1</td></tr>
+        <tr><td>Configuration Management</td><td class="iso-id">aidgo:ConfigurationManagement</td><td>§8.3.2</td></tr>
+        <tr><td>Change Management</td><td class="iso-id">aidgo:ChangeManagement</td><td>§8.3.3</td></tr>
+        <tr><td>Risk Management</td><td class="iso-id">aidgo:RiskManagement</td><td>§8.3.4</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── DQ CHARACTERISTICS ── -->
+  <section id="dq-characteristics">
+    <h2>Data Quality Characteristics</h2>
+    <p>AIDGO models the ISO 5259-5 data quality characteristics as named individuals of
+    <code>aidgo:DataQualityCharacteristic</code>, linking directly to their corresponding EU AI Act quality obligations.</p>
+
+    <table class="mapping-table">
+      <thead><tr><th>Characteristic</th><th>IRI</th><th>EU AI Act Link</th></tr></thead>
+      <tbody>
+        <tr><td>Representativeness</td><td class="iso-id">aidgo:Representativeness</td><td class="legal-id">Art. 10(3)</td></tr>
+        <tr><td>Data Accuracy</td><td class="iso-id">aidgo:DataAccuracy</td><td class="legal-id">Art. 10(3)</td></tr>
+        <tr><td>Data Completeness</td><td class="iso-id">aidgo:DataCompleteness</td><td class="legal-id">Art. 10(3)</td></tr>
+        <tr><td>Data Relevance</td><td class="iso-id">aidgo:DataRelevance</td><td class="legal-id">Art. 10(3)</td></tr>
+        <tr><td>Data Bias</td><td class="iso-id">aidgo:DataBias</td><td class="legal-id">Art. 10(2)(f)</td></tr>
+        <tr><td>Data Drift</td><td class="iso-id">aidgo:DataDrift</td><td class="legal-id">Art. 10(2)(f)</td></tr>
+        <tr><td>Data Consistency</td><td class="iso-id">aidgo:DataConsistency</td><td class="legal-id">Art. 10(3)</td></tr>
+        <tr><td>Data Currentness</td><td class="iso-id">aidgo:DataCurrentness</td><td class="legal-id">Art. 10(3)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── STAKEHOLDERS ── -->
+  <section id="stakeholders">
+    <h2>Actors &amp; Stakeholders</h2>
+    <p>AIDGO aligns ISO 5259 actors with EU AI Act actors. Where equivalent classes exist in AIRO, OWL equivalencies are declared.</p>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:Organisation</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">Person or group of people that has its own functions with responsibilities, authorities and relationships to achieve its objectives. (ISO 5259-3 reference from ISO MSS core text)</span></div>
+        <div class="concept-row"><span class="k">dct:source</span><span class="v">ISO/IEC 5259-3:2025, §3 (referenced)</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:AIProvider</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">owl:equivalentClass</span><span class="v">airo:AIProvider</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">A natural or legal person that develops an AI system and places it on the market.</span></div>
+        <div class="concept-row"><span class="k">dct:source</span><span class="v">EU AI Act, Article 3(3)</span></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header">
+        <span class="concept-tag tag-class">owl:Class</span>
+        <span class="concept-name">aidgo:AIDeployer</span>
+      </div>
+      <div class="concept-body">
+        <div class="concept-row"><span class="k">owl:equivalentClass</span><span class="v">airo:AIDeployer</span></div>
+        <div class="concept-row"><span class="k">skos:definition</span><span class="v">Any natural or legal person using an AI system under its authority.</span></div>
+        <div class="concept-row"><span class="k">dct:source</span><span class="v">EU AI Act, Article 3(4)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RDF-STAR ── -->
+  <section id="rdfstar">
+    <h2>RDF-star Pattern</h2>
+    <p>AIDGO uses <strong>RDF-star (RDF 1.2 Annotated Triples)</strong> to attach alignment
+    metadata directly to mapping assertions. This enables SPARQL-star queries that retrieve
+    justification and provenance without reification overhead.</p>
+
+    <div class="rdfstar-box">
+      <h4>RDF-star quoted triple pattern</h4>
+<pre><span class="comment"># Standard mapping assertion (the "quoted triple")</span>
+<span class="uri">&lt;legal:AiaPrReq_10.2_1&gt;</span> <span class="kw">aidgo:satisfiedBy</span> <span class="uri">&lt;iso:AidgoReq_6_3_2&gt;</span> <span class="kw">.</span>
+
+<span class="comment"># RDF-star annotation — metadata attached to the triple itself</span>
+<span class="kw">&lt;&lt;</span> <span class="uri">&lt;legal:AiaPrReq_10.2_1&gt;</span> <span class="kw">aidgo:satisfiedBy</span> <span class="uri">&lt;iso:AidgoReq_6_3_2&gt;</span> <span class="kw">&gt;&gt;</span>
+    <span class="kw">aidgo:alignmentType</span>          <span class="class-name">aidgo:CompletelySatisfies</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentBasis</span>         <span class="class-name">aidgo:SemanticEquivalence</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentJustification</span> <span class="str">"ISO 5259-3 §6.3.2 data quality culture requirements 
+    completely satisfy Art 10(2) governance practices."</span><span class="kw">@en ;</span>
+    <span class="kw">prov:wasGeneratedBy</span>          <span class="uri">aidgo:MappingProcess_v1</span> <span class="kw">;</span>
+    <span class="kw">prov:generatedAtTime</span>         <span class="str">"2026-04-13"</span><span class="kw">^^xsd:date .</span></pre>
+    </div>
+
+    <h3>Three RDF-star Patterns</h3>
+
+    <div class="rdfstar-box">
+      <h4>CompletelySatisfies</h4>
+<pre><span class="kw">&lt;&lt;</span> <span class="uri">:legalReq</span> <span class="kw">aidgo:satisfiedBy</span> <span class="uri">:isoReq</span> <span class="kw">&gt;&gt;</span>
+    <span class="kw">aidgo:alignmentType</span> <span class="class-name">aidgo:CompletelySatisfies</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentBasis</span> <span class="class-name">aidgo:SemanticEquivalence</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentJustification</span> <span class="str">"..."</span><span class="kw">@en ;</span>
+    <span class="kw">prov:wasGeneratedBy</span> <span class="uri">aidgo:MappingProcess_v1</span> <span class="kw">.</span></pre>
+    </div>
+
+    <div class="rdfstar-box">
+      <h4>PartiallySatisfies</h4>
+<pre><span class="kw">&lt;&lt;</span> <span class="uri">:legalReq</span> <span class="kw">aidgo:partiallySatisfiedBy</span> <span class="uri">:isoReq</span> <span class="kw">&gt;&gt;</span>
+    <span class="kw">aidgo:alignmentType</span>    <span class="class-name">aidgo:PartiallySatisfies</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentBasis</span>   <span class="class-name">aidgo:ScopeOverlap</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentGap</span>     <span class="str">"Description of what is missing..."</span><span class="kw">@en ;</span>
+    <span class="kw">prov:wasGeneratedBy</span>    <span class="uri">aidgo:MappingProcess_v1</span> <span class="kw">.</span></pre>
+    </div>
+
+    <div class="rdfstar-box">
+      <h4>NoMatching</h4>
+<pre><span class="kw">&lt;&lt;</span> <span class="uri">:legalReq</span> <span class="kw">aidgo:satisfiedBy</span> <span class="kw">rdf:nil</span> <span class="kw">&gt;&gt;</span>
+    <span class="kw">aidgo:alignmentType</span>         <span class="class-name">aidgo:NoMatching</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentBasis</span>        <span class="class-name">aidgo:GapIdentified</span> <span class="kw">;</span>
+    <span class="kw">aidgo:alignmentGap</span>          <span class="str">"No ISO 5259 requirement addresses this obligation."</span><span class="kw">@en ;</span>
+    <span class="kw">aidgo:recommendedStandard</span>   <span class="str">"GDPR Art. 9; ISO/IEC 27701"</span> <span class="kw">;</span>
+    <span class="kw">prov:wasGeneratedBy</span>         <span class="uri">aidgo:MappingProcess_v1</span> <span class="kw">.</span></pre>
+    </div>
+  </section>
+
+  <!-- ── MAPPING INSTANCES ── -->
+  <section id="mapping-instances">
+    <h2>Mapping Instances</h2>
+    <table class="mapping-table">
+      <thead>
+        <tr>
+          <th>Mapping ID</th>
+          <th>Legal Req</th>
+          <th>ISO Req</th>
+          <th>Alignment</th>
+          <th>Basis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Map_10.2.1_6.3.2</td><td class="legal-id">AiaPrReq_10.2_1</td><td class="iso-id">AidgoReq_6_3_2</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.2.1b_7.3.1</td><td class="legal-id">AiaPrReq_10.2_1</td><td class="iso-id">AidgoReq_7_3_1</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.2.3_7.3.4.3</td><td class="legal-id">AiaPrReq_10.2_3</td><td class="iso-id">AidgoReq_7_3_4_3</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.2.4b_7.3.6</td><td class="legal-id">AiaPrReq_10.2_4</td><td class="iso-id">AidgoReq_7_3_6</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.3.1a_7.3.2.3</td><td class="legal-id">AiaPrReq_10.3_1</td><td class="iso-id">AidgoConjReq_7.3.2.3_Rb</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.3.1b_7.3.5.2</td><td class="legal-id">AiaPrReq_10.3_1</td><td class="iso-id">AidgoConjReq_7.3.5.2_R1</td><td><span class="badge badge-green">CompletelySatisfies</span></td><td>SemanticEquivalence</td></tr>
+        <tr><td>Map_10.2.4_7.3.5.2</td><td class="legal-id">AiaPrReq_10.2_4</td><td class="iso-id">AidgoConjReq_7.3.5.2_R1</td><td><span class="badge badge-amber">PartiallySatisfies</span></td><td>ScopeOverlap</td></tr>
+        <tr><td>Map_10.2.7_7.3.5.2</td><td class="legal-id">AiaPrReq_10.2_7</td><td class="iso-id">AidgoConjReq_7.3.5.2_R1</td><td><span class="badge badge-amber">PartiallySatisfies</span></td><td>ScopeOverlap</td></tr>
+        <tr><td>Map_10.5_NoMatch</td><td class="legal-id">AiaPrReq_10.5</td><td class="iso-id">—</td><td><span class="badge badge-red">NoMatching</span></td><td>GapIdentified</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── SPARQL ── -->
+  <section id="sparql">
+    <h2>SPARQL Queries</h2>
+    <div class="notice notice-blue">These queries use SPARQL-star 1.2 syntax with annotated triple patterns. Load <code>aidgo.ttl</code> into Apache Jena Fuseki, GraphDB, or Stardog to execute them.</div>
+
+    <h3>CQ-M1: Which ISO clauses completely satisfy Article 10 obligations?</h3>
+<pre><span class="kw">PREFIX</span> <span class="uri">aidgo: &lt;https://w3id.org/aidgo#&gt;</span>
+<span class="kw">PREFIX</span> <span class="uri">skos:  &lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
+<span class="kw">PREFIX</span> <span class="uri">dct:   &lt;http://purl.org/dc/terms/&gt;</span>
+
+<span class="kw">SELECT</span> ?legalLabel ?isoLabel ?justification <span class="kw">WHERE</span> {
+  ?mapping <span class="kw">a</span> <span class="class-name">aidgo:AlignmentTriple</span> <span class="kw">;</span>
+           <span class="kw">aidgo:legalRequirement</span> ?legalReq <span class="kw">;</span>
+           <span class="kw">aidgo:isoRequirement</span>   ?isoReq <span class="kw">;</span>
+           <span class="kw">aidgo:alignmentType</span>    <span class="class-name">aidgo:CompletelySatisfies</span> <span class="kw">;</span>
+           <span class="kw">aidgo:alignmentJustification</span> ?justification .
+  ?legalReq <span class="kw">skos:prefLabel</span> ?legalLabel .
+  ?isoReq   <span class="kw">skos:prefLabel</span> ?isoLabel .
+}</pre>
+
+    <h3>CQ-M3: Which Article 10 obligations have no ISO 5259 coverage (gaps)?</h3>
+<pre><span class="kw">SELECT</span> ?legalLabel ?gap ?recommended <span class="kw">WHERE</span> {
+  ?mapping <span class="kw">a</span> <span class="class-name">aidgo:AlignmentTriple</span> <span class="kw">;</span>
+           <span class="kw">aidgo:legalRequirement</span> ?legalReq <span class="kw">;</span>
+           <span class="kw">aidgo:alignmentType</span>    <span class="class-name">aidgo:NoMatching</span> <span class="kw">;</span>
+           <span class="kw">aidgo:alignmentGap</span>     ?gap .
+  <span class="kw">OPTIONAL</span> { ?mapping <span class="kw">aidgo:recommendedStandard</span> ?recommended }
+  ?legalReq <span class="kw">skos:prefLabel</span> ?legalLabel .
+}</pre>
+
+    <h3>RDF-star: Query alignment annotations on mapping triples</h3>
+<pre><span class="kw">PREFIX</span> <span class="uri">aidgo: &lt;https://w3id.org/aidgo#&gt;</span>
+
+<span class="kw">SELECT</span> ?alignmentType ?justification ?generatedAt <span class="kw">WHERE</span> {
+  <span class="comment"># RDF-star pattern: query annotations on the quoted triple</span>
+  <span class="kw">&lt;&lt;</span> ?legalReq <span class="kw">aidgo:satisfiedBy</span> ?isoReq <span class="kw">&gt;&gt;</span>
+      <span class="kw">aidgo:alignmentType</span>          ?alignmentType <span class="kw">;</span>
+      <span class="kw">aidgo:alignmentJustification</span> ?justification <span class="kw">;</span>
+      <span class="kw">prov:generatedAtTime</span>         ?generatedAt .
+}</pre>
+
+    <h3>CQ-M5: Count by alignment type</h3>
+<pre><span class="kw">SELECT</span> ?alignmentType (<span class="kw">COUNT</span>(?m) <span class="kw">AS</span> ?count) <span class="kw">WHERE</span> {
+  ?m <span class="kw">a</span> <span class="class-name">aidgo:AlignmentTriple</span> <span class="kw">;</span>
+     <span class="kw">aidgo:alignmentType</span> ?alignmentType .
+} <span class="kw">GROUP BY</span> ?alignmentType <span class="kw">ORDER BY DESC</span>(?count)</pre>
+  </section>
+
+  <!-- ── DOWNLOAD ── -->
+  <section id="download">
+    <h2>Download</h2>
+    <div class="notice notice-green">
+      All AIDGO artefacts are available for download. The <code>.ttl</code> file is the normative ontology. 
+      Load into Apache Jena Fuseki, GraphDB, Stardog, or any RDF-star compatible triple store.
+    </div>
+
+    <table class="mapping-table">
+      <thead><tr><th>Artefact</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>aidgo.ttl</code></td><td>Turtle / OWL</td><td>Normative ontology — OWL classes, properties, RDF-star mapping triples</td></tr>
+        <tr><td><code>ISO5259_EUAIAct_Mapping.xlsx</code></td><td>Excel</td><td>Human-readable mapping workbook — 6 sheets, colour-coded</td></tr>
+        <tr><td><code>ISO5259_EUAIAct_Mapping.ttl</code></td><td>Turtle</td><td>Full mapping serialisation — all 23 alignment triples with provenance</td></tr>
+        <tr><td><code>aidgo_ontology.html</code></td><td>HTML</td><td>This documentation page</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>AIDGO — AI Data Governance Ontology · Version 1.0.0 · 
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · 
+    AIDGO Project, ADAPT Centre, Trinity College Dublin · 
+    Built on <a href="https://delaramglp.github.io/airo/">AIRO</a>, 
+    <a href="https://www.iso.org/standard/iso-iec-5259">ISO/IEC 5259</a>, 
+    <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689">EU AI Act</a></p>
+  </footer>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
