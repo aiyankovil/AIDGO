@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIDGO Knowledge Graph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2235;--border:#1f2d45;
+  --text:#e2e8f0;--muted:#64748b;--accent:#38bdf8;
+  --cs:#22c55e;--ps:#f59e0b;--rt:#60a5fa;--cw:#ff6b35;--na:#ef4444;
+  --legal:#fb923c;--tech:#2dd4bf;--coll:#a78bfa;--conc:#86efac;
+  --conjreq:#67e8f9;--euconcept:#fbbf24;
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);
+  font-family:'Syne',sans-serif;overflow:hidden}
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+#app{display:grid;grid-template-columns:260px 1fr 300px;height:100vh;overflow:hidden}
+#sidebar{background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden}
+#canvas-wrap{position:relative;overflow:hidden;background:var(--bg)}
+#detail{background:var(--surface);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.brand{padding:18px 16px 12px;border-bottom:1px solid var(--border)}
+.brand h1{font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--accent)}
+.brand span{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;display:block;margin-top:2px}
+.section-head{padding:10px 16px 6px;font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.sidebar-scroll{overflow-y:auto;flex:1;padding-bottom:12px}
+
+/* Node type filters */
+.filter-btn{display:flex;align-items:center;gap:8px;width:100%;padding:6px 16px;
+  background:none;border:none;cursor:pointer;transition:background .1s;text-align:left}
+.filter-btn:hover{background:var(--surface2)}
+.filter-btn.off{opacity:.35}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hex{width:10px;height:10px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);flex-shrink:0}
+.dia{width:10px;height:10px;transform:rotate(45deg);flex-shrink:0}
+.filter-label{font-size:11px;color:var(--text);font-family:'JetBrains Mono',monospace;flex:1}
+.filter-count{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* Alignment edge filters */
+.edge-btn{display:flex;align-items:center;gap:8px;width:100%;padding:5px 16px;
+  background:none;border:none;cursor:pointer;transition:background .1s}
+.edge-btn:hover{background:var(--surface2)}
+.edge-btn.off{opacity:.35}
+.edge-line{width:22px;height:2px;border-radius:1px;flex-shrink:0}
+.edge-label{font-size:11px;color:var(--text);font-family:'JetBrains Mono',monospace;flex:1}
+.edge-count{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* Search */
+.search-wrap{padding:10px 16px;border-top:1px solid var(--border)}
+.search-input{width:100%;padding:7px 10px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text);font-size:11px;font-family:'JetBrains Mono',monospace;
+  outline:none;transition:border-color .15s}
+.search-input:focus{border-color:var(--accent)}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 16px 10px}
+.stat-box{background:var(--surface2);border-radius:5px;padding:8px 10px}
+.stat-n{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.stat-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* Controls */
+.ctrl-row{display:flex;gap:6px;padding:0 16px 10px}
+.btn{padding:5px 10px;border-radius:5px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--muted);font-size:10px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;transition:all .15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.active{background:rgba(56,189,248,.12);border-color:var(--accent);color:var(--accent)}
+
+/* ── CANVAS ──────────────────────────────────────────────── */
+#kg-canvas{width:100%;height:100%}
+.node{cursor:pointer}
+.node circle,.node polygon{transition:r .15s,opacity .2s}
+.node.highlighted circle,.node.highlighted polygon{filter:drop-shadow(0 0 6px currentColor)}
+.node.faded{opacity:.12}
+.link{fill:none;transition:opacity .2s;stroke-width:1.5}
+.link.faded{opacity:.04}
+.link.highlighted{stroke-width:2.5;opacity:1}
+.link-cs{stroke:var(--cs)}
+.link-ps{stroke:var(--ps)}
+.link-rt{stroke:var(--rt)}
+.link-cw{stroke:var(--cw)}
+.link-na{stroke:var(--na);stroke-dasharray:4,3}
+.link-decomp{stroke:#475569;stroke-dasharray:2,2;stroke-width:1}
+.link-broader{stroke:#334155;stroke-width:1}
+.link-uses{stroke:#1e3a5f;stroke-dasharray:3,4;stroke-width:1}
+.node-label{font-size:8px;font-family:'JetBrains Mono',monospace;
+  fill:var(--text);pointer-events:none;opacity:.7;text-anchor:middle}
+
+/* Tooltip */
+#tooltip{position:absolute;background:rgba(10,14,26,.96);border:1px solid var(--border);
+  border-radius:6px;padding:10px 12px;pointer-events:none;max-width:240px;
+  display:none;z-index:100;font-size:11px;line-height:1.6}
+#tooltip .tt-id{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:10px}
+#tooltip .tt-type{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+#tooltip .tt-label{color:var(--text);margin:4px 0;font-weight:600;font-size:11px}
+
+/* ── DETAIL PANEL ────────────────────────────────────────── */
+.detail-head{padding:16px;border-bottom:1px solid var(--border)}
+.detail-head h2{font-size:13px;font-weight:700;color:var(--accent)}
+.detail-head span{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.detail-scroll{overflow-y:auto;flex:1;padding:12px}
+.detail-empty{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--muted);font-size:12px;text-align:center;padding:20px}
+.prop-row{margin-bottom:12px}
+.prop-key{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:3px}
+.prop-val{font-size:11px;color:var(--text);line-height:1.55;
+  background:var(--surface2);border-radius:4px;padding:6px 8px;word-break:break-word}
+.prop-val.mono{font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;
+  font-family:'JetBrains Mono',monospace;font-weight:600}
+.badge-cs{background:rgba(34,197,94,.15);color:var(--cs);border:1px solid rgba(34,197,94,.3)}
+.badge-ps{background:rgba(245,158,11,.15);color:var(--ps);border:1px solid rgba(245,158,11,.3)}
+.badge-rt{background:rgba(96,165,250,.15);color:var(--rt);border:1px solid rgba(96,165,250,.3)}
+.badge-cw{background:rgba(255,107,53,.15);color:var(--cw);border:1px solid rgba(255,107,53,.3)}
+.badge-na{background:rgba(239,68,68,.15);color:var(--na);border:1px solid rgba(239,68,68,.3)}
+.connected-list{display:flex;flex-direction:column;gap:4px}
+.connected-item{font-size:10px;font-family:'JetBrains Mono',monospace;
+  color:var(--muted);padding:4px 8px;background:var(--surface2);border-radius:3px;
+  cursor:pointer;transition:color .1s}
+.connected-item:hover{color:var(--accent)}
+
+/* CQ badge */
+.cq-wrap{display:flex;flex-wrap:wrap;gap:4px}
+.cq-badge{font-size:9px;font-family:'JetBrains Mono',monospace;padding:2px 6px;
+  border-radius:3px;background:rgba(56,189,248,.1);color:var(--accent);
+  border:1px solid rgba(56,189,248,.2)}
+
+/* Legend tag */
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;
+  font-family:'JetBrains Mono',monospace;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="brand">
+    <h1>AIDGO Knowledge Graph</h1>
+    <span>ISO 5259-3 ↔ EU AI Act Art.10 · v2.0</span>
+  </div>
+
+  <div class="sidebar-scroll">
+    <div class="section-head">Node Types</div>
+    <div id="node-filters"></div>
+
+    <div class="section-head" style="margin-top:8px">Alignment Edges</div>
+    <div id="edge-filters"></div>
+
+    <div class="section-head" style="margin-top:8px">Live Stats</div>
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <div class="section-head" style="margin-top:4px">Controls</div>
+    <div class="ctrl-row">
+      <button class="btn active" id="btn-physics" onclick="togglePhysics()">⚡ Physics</button>
+      <button class="btn" id="btn-labels" onclick="toggleLabels()">🏷 Labels</button>
+      <button class="btn" onclick="resetCamera()">⌖ Reset</button>
+    </div>
+    <div class="ctrl-row">
+      <button class="btn" onclick="exportSVG()" style="flex:1">⬇ Export SVG</button>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input"
+      placeholder="Search nodes… (ID or label)" oninput="onSearch(this.value)">
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div id="canvas-wrap">
+  <svg id="kg-canvas"></svg>
+  <div id="tooltip">
+    <div class="tt-type" id="tt-type"></div>
+    <div class="tt-id" id="tt-id"></div>
+    <div class="tt-label" id="tt-label"></div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div id="detail">
+  <div class="detail-head">
+    <h2 id="detail-title">Node Inspector</h2>
+    <span id="detail-sub">Click any node to inspect</span>
+  </div>
+  <div class="detail-scroll" id="detail-body">
+    <div class="detail-empty">
+      Select a node in the graph to inspect its properties, connections, and alignment data.
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+// ═══ DATA ════════════════════════════════════════════════════════════════════
+const KG = {"concepts":[{"id":"dataLifeCycle","clause":"3.1","alt":"","label":"data life cycle","def":"All stages in the process of data usage from idea conception to its discontinuation.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataHolder","clause":"3.2","alt":"","label":"data holder","def":"Party that has legal control to authorize data processing of the data by other parties.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataUser","clause":"3.3","alt":"","label":"data user","def":"Party that is authorized to perform processing of data under the legal control of a data holder.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataQuality","clause":"3.4","alt":"","label":"data quality","def":"Degree to which a collection of characteristics of data fulfills requirements.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataQualityCharacteristic","clause":"3.5","alt":"","label":"data quality characteristic","def":"Category of data quality attributes that bears on data quality.","broader":"dataQuality","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataQualityModel","clause":"3.6","alt":"","label":"data quality model","def":"Defined set of characteristics with their sub-characteristics that provide a framework for specifying data quality requirements and evaluating data quality.","broader":"dataQuality","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataQualityMeasure","clause":"3.7","alt":"","label":"data quality measure","def":"Variable to which a value is assigned as the result of measurement of a data quality characteristic.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-1","type":"concept"},{"id":"qualityRequirement","clause":"3.8","alt":"","label":"quality requirement","def":"Requirement for quality properties or attributes of a product, data or service.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"measurement","clause":"3.9","alt":"","label":"measurement","def":"Set of operations having the object of determining a value of a measure.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"measurementScale","clause":"3.10","alt":"quantity-value scale","label":"measurement scale","def":"Ordered set of quantity values used in ranking quantities of a given kind according to magnitude.","broader":"measurement","source":"ISO/IEC 5259-1","type":"concept"},{"id":"analytics","clause":"3.11","alt":"data analytics","label":"analytics","def":"Composite concept consisting of data acquisition, collection, validation, processing including quantification, visualisation, documentation and interpretation.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"attribute","clause":"3.12","alt":"","label":"attribute","def":"Property or characteristic of an object that can be distinguished quantitatively or qualitatively.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"feature","clause":"3.13","alt":"","label":"feature","def":"<machine learning> Measurable property of an object or event in the context of an analytics or ML task.","broader":"attribute","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataQualityManagement","clause":"3.14","alt":"","label":"data quality management","def":"Coordinated activities to direct and control an organisation with regard to data quality.","broader":"dataQuality","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataGovernance","clause":"3.15","alt":"","label":"data governance","def":"Property or ability for coordinated management of data asset management strategy, including policies, procedures, standards, and guidelines.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataProvenance","clause":"3.16","alt":"provenance","label":"data provenance","def":"Information on the place and time of origin, derivation or generation of a dataset.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"visualisation","clause":"3.17","alt":"scientific visualisation","label":"visualisation","def":"Representation of data in a visual form that enables a human to directly understand or interact with the data.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"mlProject","clause":"3.18","alt":"ML project","label":"machine learning project","def":"Project that utilizes analytics and machine learning and is responsible for the associated data throughout the data's entire life cycle.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataArchitecture","clause":"3.19","alt":"","label":"data architecture","def":"Design that describes the structure and arrangement of data and the processes for managing data at the organisation level.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataItem","clause":"3.20","alt":"","label":"data item","def":"Smallest identifiable unit of data within a certain context.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"dataRecord","clause":"3.21","alt":"","label":"data record","def":"Set of related data items treated as a unit.","broader":"dataItem","source":"ISO/IEC 5259-1","type":"concept"},{"id":"metadata","clause":"3.22","alt":"","label":"metadata","def":"Data that define and describe other data.","broader":"","source":"ISO/IEC 5259-1","type":"concept"},{"id":"boundingBox","clause":"3.1","alt":"","label":"bounding box","def":"Minimum n-dimensional rectangle aligned with the axes of a coordinate system that entirely contains an object.","broader":"","source":"ISO/IEC 5259-2","type":"concept"},{"id":"data","clause":"3.2","alt":"","label":"data","def":"Re-interpretable representation of information in a formalized manner suitable for communication, interpretation, or processing.","broader":"","source":"ISO/IEC 5259-2","type":"concept"},{"id":"dataset","clause":"3.3","alt":"","label":"dataset","def":"Collection of data with a shared format.","broader":"data","source":"ISO/IEC 5259-2","type":"concept"},{"id":"dataType","clause":"3.5","alt":"","label":"data type","def":"Categorisation of an abstract set of possible values, characteristics, and set of operations for an attribute.","broader":"dataItem","source":"ISO/IEC 5259-2","type":"concept"},{"id":"dataValue","clause":"3.6","alt":"","label":"data value","def":"Content of a data item.","broader":"dataItem","source":"ISO/IEC 5259-2","type":"concept"},{"id":"dataFrame","clause":"3.8","alt":"","label":"data frame","def":"Set of data records with a specific domain or purpose and the same data items, used for analytics and ML.","broader":"dataRecord","source":"ISO/IEC 5259-2","type":"concept"},{"id":"cluster","clause":"3.9","alt":"","label":"cluster","def":"Group of data having similar properties or characteristics as determined by a clustering algorithm.","broader":"dataset","source":"ISO/IEC 5259-2","type":"concept"},{"id":"emptyDataItem","clause":"3.10","alt":"","label":"empty data item","def":"Data item whose data value has no value, i.e. Null or None.","broader":"dataItem","source":"ISO/IEC 5259-2","type":"concept"},{"id":"measuredValue","clause":"3.14","alt":"","label":"measured value","def":"Value attributed to a data quality measure obtained by measurement.","broader":"dataQualityMeasure","source":"ISO/IEC 5259-2","type":"concept"},{"id":"measurementFunction","clause":"3.15","alt":"","label":"measurement function","def":"Algorithm or calculation performed to combine two or more quality measure elements.","broader":"measurement","source":"ISO/IEC 5259-2","type":"concept"},{"id":"overfitting","clause":"3.16","alt":"","label":"overfitting","def":"<machine learning> Creating a model which fits the training data too precisely and fails to generalise on new data.","broader":"","source":"ISO/IEC 5259-2","type":"concept"},{"id":"rawData","clause":"3.18","alt":"","label":"raw data","def":"Data in its originally acquired form from its source, before subsequent processing.","broader":"data","source":"ISO/IEC 5259-2","type":"concept"},{"id":"targetData","clause":"3.19","alt":"","label":"target data","def":"Data used in an analytics or ML task whose quality is measured.","broader":"data","source":"ISO/IEC 5259-2","type":"concept"},{"id":"organization","clause":"3-ref","alt":"","label":"organization","def":"Person or group of people that has its own functions with responsibilities, authorities and relationships to achieve its objectives.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataQualityManagementSystem","clause":"3-dqms","alt":"","label":"data quality management system","def":"Part of an organisation's management system which addresses data quality planning, control, assurance and improvement.","broader":"dataQualityManagement","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataQualityManagementLifeCycle","clause":"3-dqmlc","alt":"DQMLC","label":"data quality management life cycle","def":"Life cycle model providing guidance towards meeting quality requirements of data for analytics and ML with discrete stages for managing data quality.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataSpecificationDoc","clause":"3-ds","alt":"","label":"data specification","def":"Document specifying data requirements, validated to be consistent and complete for the intended use.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataQualityPlan","clause":"3-dqp","alt":"","label":"data quality plan","def":"Document covering processes, activities and resources required to meet the data specification throughout the data life cycle.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataAcquisition","clause":"3-da","alt":"","label":"data acquisition","def":"Process by which data are obtained, including collection, purchase, licensing, reuse or generation.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataPreprocessing","clause":"3-dp","alt":"","label":"data preprocessing","def":"Processes applied to acquired data to improve its quality towards meeting the data specification.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataAugmentation","clause":"3-daug","alt":"","label":"data augmentation","def":"Processes that increase the diversity or quantity of data in a dataset in a controlled manner to meet the data specification.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataProvisioning","clause":"3-dprov","alt":"","label":"data provisioning","def":"Process by which auditable data and metadata are delivered to users, meeting all specified requirements.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataDecommissioning","clause":"3-ddecom","alt":"","label":"data decommissioning","def":"Process of retiring data either through transfer to a qualified recipient or deletion.","broader":"dataLifeCycle","source":"ISO/IEC 5259-3","type":"concept"},{"id":"qualityGate","clause":"3-qg","alt":"","label":"data life cycle quality gate","def":"Objectively assessable quality target for work products at each stage of the DQMLC; a stage shall only be entered with verified and validated input.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"configurationManagement","clause":"3-cm","alt":"","label":"configuration management","def":"Planned and maintained activity defining requirements for uniquely identified and reproducible items produced or used during the data life cycle.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"changeManagement","clause":"3-chm","alt":"","label":"change management","def":"Planned and initiated process before any change to data, requirements or processes to ensure all impacts are assessed and approved.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"riskManagement","clause":"3-rm","alt":"","label":"risk management (data quality)","def":"Coordinated activities to ensure all risks to data quality are accounted for, assessed and if necessary mitigated.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"stakeholder","clause":"3-sh","alt":"","label":"stakeholder","def":"Person or organisation that can affect, be affected by, or perceive itself to be affected by a decision or activity related to data quality.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"verificationAndValidation","clause":"3-vv","alt":"V&V","label":"verification and validation","def":"Processes that monitor and assess data quality throughout all stages of the DQMLC using measurable quality criteria.","broader":"","source":"ISO/IEC 5259-3","type":"concept"},{"id":"dataQualityImprovement","clause":"4-dqi","alt":"","label":"data quality improvement","def":"Application of data transformations to a dataset to improve its quality to the extent it meets the organisation's needs.","broader":"dataQualityManagement","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataQualityAssessment","clause":"4-dqa","alt":"","label":"data quality assessment","def":"Use of data quality measures to evaluate whether a dataset meets the organisation's needs.","broader":"dataQualityManagement","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataQualityReport","clause":"4-dqr","alt":"","label":"data quality report","def":"Document expressing data quality requirements, measures, results of measurements, and an assessment of whether data meets requirements.","broader":"","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataLabelling","clause":"4-dl","alt":"data annotation","label":"data labelling","def":"Process of assigning values for target variables to training, validation and testing data for supervised ML.","broader":"dataPreprocessing","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataTransformation","clause":"4-dt","alt":"","label":"data transformation","def":"Converting data from one representation or space to another with minimal loss of content.","broader":"dataPreprocessing","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataPrivacy","clause":"4-dpriv","alt":"","label":"data privacy","def":"Protection of personally identifiable information (PII) in datasets during data quality processes.","broader":"","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataInteroperability","clause":"4-di","alt":"","label":"data interoperability","def":"Ability of data from one system to be understood and used by another system without special effort.","broader":"","source":"ISO/IEC 5259-4","type":"concept"},{"id":"groundTruth","clause":"4-gt","alt":"","label":"ground truth","def":"Data label or annotation that is assumed to be correct or accurate for use as training or testing data.","broader":"dataLabelling","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataSampling","clause":"4-ds","alt":"","label":"data sampling","def":"Process of selecting a subset of data from a dataset according to a defined method.","broader":"dataPreprocessing","source":"ISO/IEC 5259-4","type":"concept"},{"id":"dataAnnotation","clause":"4-dan","alt":"annotation","label":"data annotation","def":"Process of adding metadata or labels to raw data to make it meaningful for ML training.","broader":"dataLabelling","source":"ISO/IEC 5259-4","type":"concept"},{"id":"trainingData","clause":"5-td","alt":"","label":"training data","def":"Data used to train an ML algorithm to produce a trained ML model.","broader":"targetData","source":"ISO/IEC 5259-5","type":"concept"},{"id":"validationData","clause":"5-vd","alt":"","label":"validation data","def":"Data used to provide an evaluation of the trained ML model and for tuning its non-learnable parameters to prevent underfitting or overfitting.","broader":"targetData","source":"ISO/IEC 5259-5","type":"concept"},{"id":"testData","clause":"5-testd","alt":"","label":"test data","def":"Data used to evaluate the final performance of a trained ML model independently of training.","broader":"targetData","source":"ISO/IEC 5259-5","type":"concept"},{"id":"productionData","clause":"5-pd","alt":"","label":"production data","def":"Data provided to a deployed ML model in the operational environment.","broader":"targetData","source":"ISO/IEC 5259-5","type":"concept"},{"id":"representativeness","clause":"5-rep","alt":"","label":"representativeness","def":"Degree to which the statistical properties of a dataset reflect those of the target population for the intended use.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataBias","clause":"5-db","alt":"","label":"data bias","def":"Systematic deviation in data from a true value or representation of the target population, potentially leading to unfair or inaccurate outcomes.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataDrift","clause":"5-dd","alt":"","label":"data drift","def":"Change over time in the statistical properties of data used in analytics or ML that can degrade model performance.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataCompleteness","clause":"5-dc","alt":"","label":"data completeness","def":"Degree to which all required data items are present in a dataset and have defined, non-empty values.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataAccuracy","clause":"5-acc","alt":"","label":"data accuracy","def":"Degree to which data correctly represents the real-world values it is intended to model.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataConsistency","clause":"5-con","alt":"","label":"data consistency","def":"Degree to which data is free from contradictions and coherent within a dataset and across related datasets.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataCurrentness","clause":"5-cur","alt":"timeliness","label":"data currentness","def":"Degree to which data represents the current state of the phenomenon it models at a given point in time.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataRelevance","clause":"5-rel","alt":"","label":"data relevance","def":"Degree to which data is applicable and useful for the specified analytics or ML purpose.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"},{"id":"dataBalance","clause":"5-bal","alt":"","label":"data balance","def":"Degree to which the distribution of values across categories in a dataset reflects the intended distribution for the ML task.","broader":"dataQualityCharacteristic","source":"ISO/IEC 5259-5","type":"concept"}],"collections":[{"id":"AidgoContextOfOrganizationReqColl","clause":"4","label":"Context of the organization","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoLeadershipReqColl","clause":"5","label":"Leadership","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoPlanningReqColl","clause":"6","label":"Planning (DQM System)","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoDataQualityCultureReqColl","clause":"6.3.2","label":"Data quality culture","def":"Requirements for the organisation to establish and sustain a data quality culture.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoDataQualityIssuesMgmtReqColl","clause":"6.3.3","label":"Management of data quality issues","def":"Requirements for processes to communicate, analyse, evaluate, resolve and close data quality issues.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoCompetenceMgmtReqColl","clause":"6.3.4","label":"Competence management","def":"Requirements for managing skills and competence of persons involved in DQM activities.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoResourceMgmtReqColl","clause":"6.3.5","label":"Resource management","def":"Requirements for providing sufficient resources for DQM activities.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoDocumentationReqColl","clause":"6.3.7","label":"Documentation","def":"Requirements for documentation to be intelligible and accessible.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoDataQualityAuditReqColl","clause":"6.3.8","label":"Data quality audit and assessment","def":"Requirements for auditing implemented DQM processes.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoConfirmationReviewReqColl","clause":"6.3.9","label":"Confirmation review and DQ measures","def":"Requirements for confirming data quality via measures and confirmation reviews.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoProjectSpecificDQReqColl","clause":"6.3.10","label":"Project-specific DQM","def":"Requirements for project-specific data quality management.","broader":"AidgoPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoSupportReqColl","clause":"7","label":"Support (DQMLC)","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoDQLCReqColl","clause":"7.2.1","label":"Data quality management life cycle General","def":"General requirements for the DQMLC.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataMotivationReqColl","clause":"7.3.1.1","label":"Data motivation and conceptualization","def":"Requirements for documenting motivation, origin and intended use of data.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoStakeholderAnalysisReqColl","clause":"7.3.1.2","label":"Stakeholder analysis","def":"Requirements for identifying and engaging stakeholders.","broader":"AidgoDataMotivationReqColl","collection":"","type":"collection"},{"id":"AidgoDataSpecificationReqColl","clause":"7.3.2.1","label":"Data specification General","def":"Requirements for specifying data requirements consistently and completely.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataFormatReqColl","clause":"7.3.2.2","label":"Data format","def":"Requirements for specifying data format.","broader":"AidgoDataSpecificationReqColl","collection":"","type":"collection"},{"id":"AidgoStatisticalPropertiesReqColl","clause":"7.3.2.3","label":"Statistical properties and divisibility","def":"Requirements for specifying statistical properties and subset divisions.","broader":"AidgoDataSpecificationReqColl","collection":"","type":"collection"},{"id":"AidgoDataPlanningReqColl","clause":"7.3.3.1","label":"Data planning General","def":"Requirements for establishing a data quality plan.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataLifeCyclePlansReqColl","clause":"7.3.3.2","label":"Data life cycle specific plans","def":"Requirements for stage-specific planning.","broader":"AidgoDataPlanningReqColl","collection":"","type":"collection"},{"id":"AidgoDataAcquisitionReqColl","clause":"7.3.4.1","label":"Data acquisition General","def":"Requirements for data acquisition processes.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataSourceReqColl","clause":"7.3.4.2","label":"Data source delegation","def":"Requirements concerning data source and delegation of acquisition responsibilities.","broader":"AidgoDataAcquisitionReqColl","collection":"","type":"collection"},{"id":"AidgoDataCollectionReqColl","clause":"7.3.4.3","label":"Data collection","def":"Requirements for documenting data collection.","broader":"AidgoDataAcquisitionReqColl","collection":"","type":"collection"},{"id":"AidgoDataHandlingReqColl","clause":"7.3.4.4","label":"Data handling","def":"Requirements for data handling after collection.","broader":"AidgoDataAcquisitionReqColl","collection":"","type":"collection"},{"id":"AidgoDataPreprocessingReqColl","clause":"7.3.5.1","label":"Data preprocessing General","def":"Requirements for data preprocessing processes.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataCleaningReqColl","clause":"7.3.5.2","label":"Data cleaning","def":"Requirements for specifying and applying data cleaning measures.","broader":"AidgoDataPreprocessingReqColl","collection":"","type":"collection"},{"id":"AidgoDataAugmentationReqColl","clause":"7.3.6.1","label":"Data augmentation General","def":"Requirements for data augmentation processes.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataProvisioningReqColl","clause":"7.3.7.1","label":"Data provisioning General","def":"Requirements for data provisioning processes.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataProvisioningDocReqColl","clause":"7.3.7.3","label":"Data provisioning documentation","def":"Requirements for documentation provisioned with data.","broader":"AidgoDataProvisioningReqColl","collection":"","type":"collection"},{"id":"AidgoTrackingImprovementReqColl","clause":"7.3.7.4","label":"Tracking and improvement","def":"Requirements for tracking provisioned data and improving the provisioning process.","broader":"AidgoDataProvisioningReqColl","collection":"","type":"collection"},{"id":"AidgoDataOptimizationReqColl","clause":"7.3.7.5","label":"Data optimization","def":"Requirements for optimising provisioned data.","broader":"AidgoDataProvisioningReqColl","collection":"","type":"collection"},{"id":"AidgoSupportCommitmentReqColl","clause":"7.3.7.6","label":"Support commitment","def":"Requirements for ongoing support commitment for provisioned data.","broader":"AidgoDataProvisioningReqColl","collection":"","type":"collection"},{"id":"AidgoDataDecommissioningReqColl","clause":"7.3.8.1","label":"Data decommissioning General","def":"Requirements for decommissioning data.","broader":"AidgoSupportReqColl","collection":"","type":"collection"},{"id":"AidgoDataTransferReqColl","clause":"7.3.8.2","label":"Data transfer","def":"","broader":"AidgoDataDecommissioningReqColl","collection":"","type":"collection"},{"id":"AidgoDataDeletionReqColl","clause":"7.3.8.3","label":"Data deletion","def":"","broader":"AidgoDataDecommissioningReqColl","collection":"","type":"collection"},{"id":"AidgoPartialDeletionReqColl","clause":"7.3.8.4","label":"Partial data deletion on request","def":"","broader":"AidgoDataDecommissioningReqColl","collection":"","type":"collection"},{"id":"AidgoOperationReqColl","clause":"8","label":"Operation (horizontal processes)","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoHorizontalGeneralReqColl","clause":"8.2","label":"Horizontal processes General","def":"","broader":"AidgoOperationReqColl","collection":"","type":"collection"},{"id":"AidgoVVReqColl","clause":"8.3.1.1","label":"Verification and validation General","def":"","broader":"AidgoOperationReqColl","collection":"","type":"collection"},{"id":"AidgoQualityGatesReqColl","clause":"8.3.1.2","label":"Data life cycle quality gates","def":"","broader":"AidgoVVReqColl","collection":"","type":"collection"},{"id":"AidgoVVImprovementReqColl","clause":"8.3.1.3","label":"V&V improvement","def":"","broader":"AidgoVVReqColl","collection":"","type":"collection"},{"id":"AidgoConfigMgmtReqColl","clause":"8.3.2","label":"Configuration management","def":"","broader":"AidgoOperationReqColl","collection":"","type":"collection"},{"id":"AidgoChangeMgmtReqColl","clause":"8.3.3","label":"Change management","def":"","broader":"AidgoOperationReqColl","collection":"","type":"collection"},{"id":"AidgoChangeRequestSpecReqColl","clause":"8.3.3.3","label":"Change request specification","def":"","broader":"AidgoChangeMgmtReqColl","collection":"","type":"collection"},{"id":"AidgoChangeRequestAnalysisReqColl","clause":"8.3.3.4","label":"Change request analysis","def":"","broader":"AidgoChangeMgmtReqColl","collection":"","type":"collection"},{"id":"AidgoChangeRequestEvalReqColl","clause":"8.3.3.5","label":"Change request evaluation","def":"","broader":"AidgoChangeMgmtReqColl","collection":"","type":"collection"},{"id":"AidgoChangeDocumentationReqColl","clause":"8.3.3.6","label":"Implementing and documenting change","def":"","broader":"AidgoChangeMgmtReqColl","collection":"","type":"collection"},{"id":"AidgoRiskManagementReqColl","clause":"8.3.4","label":"Risk management","def":"","broader":"AidgoOperationReqColl","collection":"","type":"collection"},{"id":"AidgoDataProcessingToolsReqColl","clause":"10","label":"Data processing tools","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoDQDependenciesReqColl","clause":"11","label":"Data quality dependencies","def":"","broader":"","collection":"","type":"collection"},{"id":"AidgoProjectDQReqColl","clause":"12","label":"Project-specific DQM","def":"","broader":"","collection":"","type":"collection"}],"requirements":[{"id":"AidgoReq_6_3_2","clause":"6.3.2","label":"Data quality culture","def":"The organization should sustain a data quality culture. The organization shall: a) have rules and processes to achieve quality (according to this document) taking into account the data quality model a","broader":"","collection":"AidgoDataQualityCultureReqColl","type":"requirement"},{"id":"AidgoReq_6_3_3","clause":"6.3.3","label":"Management of data quality issues","def":"The organization shall meet data quality requirements by: a) having processes for communicating, analysing, evaluating, resolving and closing (implementing a resolution or giving a reason for not bein","broader":"","collection":"AidgoDataQualityIssuesMgmtReqColl","type":"requirement"},{"id":"AidgoReq_6_3_4","clause":"6.3.4","label":"Competence management","def":"The organization shall: a) document required skills and tools to process the data; b) ensure that involved persons have sufficient skills to perform their activities and duties; c) maintain proof of s","broader":"","collection":"AidgoCompetenceMgmtReqColl","type":"requirement"},{"id":"AidgoReq_6_3_5","clause":"6.3.5","label":"Resource management","def":"The organization shall provide the resources required for data quality management, including: a) appropriate software licenses and technical support for required tools; b) required IT infrastructure o","broader":"","collection":"AidgoResourceMgmtReqColl","type":"requirement"},{"id":"AidgoReq_6_3_7_R1","clause":"6.3.7","label":"Documentation \u2014 intelligibility","def":"Documentation shall be intelligible to relevant stakeholders in accordance with their role.","broader":"","collection":"AidgoDocumentationReqColl","type":"requirement"},{"id":"AidgoReq_6_3_7_R2","clause":"6.3.7","label":"Documentation \u2014 accessibility","def":"Documentation shall be accessible to relevant stakeholders as appropriate and authorized.","broader":"","collection":"AidgoDocumentationReqColl","type":"requirement"},{"id":"AidgoReq_6_3_8","clause":"6.3.8","label":"Data quality audit and assessment","def":"The implemented processes shall be audited when appropriate. The audit shall: a) evaluate the data quality plan against the organizational rules and processes for data quality; b) determine whether pl","broader":"","collection":"AidgoDataQualityAuditReqColl","type":"requirement"},{"id":"AidgoReq_6_3_9","clause":"6.3.9","label":"Confirmation review and DQ measures","def":"Data quality shall be confirmed by appropriate data quality measures in accordance with ISO/IEC 5259-2. All work products shall undergo confirmation reviews that: a) confirm that work products meet th","broader":"","collection":"AidgoConfirmationReviewReqColl","type":"requirement"},{"id":"AidgoReq_6_3_9_R2","clause":"6.3.9","label":"Confirmation review \u2014 independent personnel","def":"Confirmation reviews shall be performed by personnel independent of the activities under review.","broader":"","collection":"AidgoConfirmationReviewReqColl","type":"requirement"},{"id":"AidgoReq_6_3_10","clause":"6.3.10","label":"Project-specific DQM","def":"The organization shall manage project-specific data by: a) establishing a suitable project-specific DQM process; b) maintaining a list of relevant DQ claims with benchmarks for each milestone; c) adop","broader":"","collection":"AidgoProjectSpecificDQReqColl","type":"requirement"},{"id":"AidgoReq_7_2_1_R1","clause":"7.2.1","label":"DQMLC \u2014 specify processes","def":"The organization shall specify the processes to be performed in each stage of the DQMLC in accordance with the requirements of this document.","broader":"","collection":"AidgoDQLCReqColl","type":"requirement"},{"id":"AidgoReq_7_2_1_R2","clause":"7.2.1","label":"DQMLC \u2014 quality gates","def":"The organization shall ensure that each stage of the DQMLC is only entered when all quality gates for the preceding stage have been met.","broader":"","collection":"AidgoDQLCReqColl","type":"requirement"},{"id":"AidgoReq_7_2_1_R3","clause":"7.2.1","label":"DQMLC \u2014 document deviations","def":"The organization shall document all deviations from the defined DQMLC together with a justification and any compensating measures.","broader":"","collection":"AidgoDQLCReqColl","type":"requirement"},{"id":"AidgoReq_7_3_1_1","clause":"7.3.1.1","label":"Data motivation and conceptualization","def":"The organization shall: a) document motivation and origin of the data need; b) specify scope, purpose and intended use of data; c) document the data quality requirements.","broader":"","collection":"AidgoDataMotivationReqColl","type":"requirement"},{"id":"AidgoReq_7_3_1_2","clause":"7.3.1.2","label":"Stakeholder analysis","def":"The organization shall: a) identify all stakeholders relevant to the data and the intended use; b) document stakeholder data quality requirements and expectations.","broader":"","collection":"AidgoStakeholderAnalysisReqColl","type":"requirement"},{"id":"AidgoReq_7_3_2_1","clause":"7.3.2.1","label":"Data specification General","def":"The organization shall specify data requirements in a data specification and validate that these requirements are consistent and complete for the intended use.","broader":"","collection":"AidgoDataSpecificationReqColl","type":"requirement"},{"id":"AidgoReq_7_3_2_2","clause":"7.3.2.2","label":"Data format specification","def":"The data specification shall include: a) the data type(s) of each data item; b) the allowed range or set of values for each data item; c) the encoding and representation standards; d) the unit of meas","broader":"","collection":"AidgoDataFormatReqColl","type":"requirement"},{"id":"AidgoReq_7_3_2_3_R1","clause":"7.3.2.3","label":"Statistical properties \u2014 subset divisions","def":"The data specification shall include specification of valid divisions into subsets (e.g. training, validation and test data) and the criteria for assigning data items to subsets.","broader":"","collection":"AidgoStatisticalPropertiesReqColl","type":"requirement"},{"id":"AidgoReq_7_3_2_3_R2","clause":"7.3.2.3","label":"Statistical properties \u2014 representativeness","def":"The organization shall determine and maintain for each subset: relevant statistical properties, representativeness with respect to the target population, and appropriate size to meet the intended purp","broader":"","collection":"AidgoStatisticalPropertiesReqColl","type":"requirement"},{"id":"AidgoReq_7_3_3_1","clause":"7.3.3.1","label":"Data planning General","def":"The organization shall establish a data quality plan that covers: a) the processes, activities and resources required to meet the data specification throughout the data life cycle; b) entry and exit c","broader":"","collection":"AidgoDataPlanningReqColl","type":"requirement"},{"id":"AidgoReq_7_3_3_2","clause":"7.3.3.2","label":"Data life cycle specific plans","def":"The organization shall establish life cycle stage-specific plans addressing: a) data acquisition plan; b) data preprocessing plan; c) data augmentation plan; d) data provisioning plan; e) data decommi","broader":"","collection":"AidgoDataLifeCyclePlansReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_1_R1","clause":"7.3.4.1","label":"Data acquisition \u2014 specify processes","def":"The organization shall specify data acquisition processes to meet the data specification and include them in the data quality plan.","broader":"","collection":"AidgoDataAcquisitionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_1_R2","clause":"7.3.4.1","label":"Data acquisition \u2014 monitoring","def":"The organization shall monitor data acquisition processes to ensure compliance with the data specification.","broader":"","collection":"AidgoDataAcquisitionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_1_R3","clause":"7.3.4.1","label":"Data acquisition \u2014 risk documentation","def":"Risks that arise from incompleteness of the acquired data shall be documented and mitigated.","broader":"","collection":"AidgoDataAcquisitionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_2","clause":"7.3.4.2","label":"Data source \u2014 delegation responsibility","def":"Documented conditions of the reuse or license of a dataset shall be taken into account. The organization can delegate data acquisition to a third party but remains responsible for meeting data quality","broader":"","collection":"AidgoDataSourceReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_3","clause":"7.3.4.3","label":"Data collection","def":"The organization shall document: a) reasons for collection, including the relationship to the data specification; b) the method of data collection; c) the data collection specification including data ","broader":"","collection":"AidgoDataCollectionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_4_R1","clause":"7.3.4.4","label":"Data handling \u2014 meets specification","def":"The organization shall ensure that collected data meets the data specification before progressing to the next DQMLC stage.","broader":"","collection":"AidgoDataHandlingReqColl","type":"requirement"},{"id":"AidgoReq_7_3_4_4_R2","clause":"7.3.4.4","label":"Data handling \u2014 processes","def":"The organization shall specify processes for data handling, including storage, access control, format conversion and integrity checking.","broader":"","collection":"AidgoDataHandlingReqColl","type":"requirement"},{"id":"AidgoReq_7_3_5_1","clause":"7.3.5.1","label":"Data preprocessing \u2014 specify processes","def":"The organization shall specify data preprocessing processes to meet the data specification and include them in the data quality plan.","broader":"","collection":"AidgoDataPreprocessingReqColl","type":"requirement"},{"id":"AidgoReq_7_3_5_2","clause":"7.3.5.2","label":"Data cleaning","def":"The organization shall specify data quality measures to be applied for cleaning, including measures for: a) missing data items; b) duplication; c) outliers; d) bias and drift; e) non-standard or inval","broader":"","collection":"AidgoDataCleaningReqColl","type":"requirement"},{"id":"AidgoReq_7_3_6_1","clause":"7.3.6.1","label":"Data augmentation \u2014 specify processes","def":"The organization shall specify data augmentation processes to meet the data specification and include them in the data quality plan.","broader":"","collection":"AidgoDataAugmentationReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_1","clause":"7.3.7.1","label":"Data provisioning General","def":"The organization shall: a) specify data provisioning processes to meet the data specification; b) provide auditable evidence that provisioned data meets all specified data quality requirements; c) ens","broader":"","collection":"AidgoDataProvisioningReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_3","clause":"7.3.7.3","label":"Data provisioning documentation","def":"Documentation provisioned with data shall include: a) scope of use and intended purpose; b) instructions for use; c) statistical properties of the dataset; d) description of each data item; e) list of","broader":"","collection":"AidgoDataProvisioningDocReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_4_R1","clause":"7.3.7.4","label":"Tracking \u2014 data usage monitoring","def":"The organization shall monitor the use of provisioned data to detect any degradation of data quality or deviations from the intended use.","broader":"","collection":"AidgoTrackingImprovementReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_4_R2","clause":"7.3.7.4","label":"Tracking \u2014 corrective actions","def":"The organization shall define and apply corrective actions when deviations or degradation are detected.","broader":"","collection":"AidgoTrackingImprovementReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_4_R3","clause":"7.3.7.4","label":"Tracking \u2014 improvement feedback","def":"The organization shall use tracking results as feedback to improve data quality planning and acquisition processes.","broader":"","collection":"AidgoTrackingImprovementReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_5","clause":"7.3.7.5","label":"Data optimization","def":"The organization shall specify data optimization processes that: a) reduce storage and computational overhead without reducing quality below specified thresholds; b) apply only transformations that ar","broader":"","collection":"AidgoDataOptimizationReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_6_R1","clause":"7.3.7.6","label":"Support commitment \u2014 specify","def":"The organization shall specify the support it will provide for provisioned data, including the duration of support and conditions for termination.","broader":"","collection":"AidgoSupportCommitmentReqColl","type":"requirement"},{"id":"AidgoReq_7_3_7_6_R2","clause":"7.3.7.6","label":"Support commitment \u2014 documentation","def":"The organization shall document all support commitments in a support agreement that covers: a) scope of support; b) response times and service levels; c) versioning and update policy; d) conditions fo","broader":"","collection":"AidgoSupportCommitmentReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_1","clause":"7.3.8.1","label":"Data decommissioning \u2014 choose method","def":"The organization shall choose an appropriate method to decommission the data either through data deletion or through data transfer to a qualified recipient.","broader":"","collection":"AidgoDataDecommissioningReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_1_R2","clause":"7.3.8.1","label":"Data decommissioning \u2014 specify processes","def":"The organization shall specify data decommissioning processes in the data quality plan, including the schedule and criteria for decommissioning.","broader":"","collection":"AidgoDataDecommissioningReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_2","clause":"7.3.8.2","label":"Data transfer \u2014 conditions","def":"When transferring data, the organization shall ensure that the recipient meets the data quality requirements and has the authority to receive the data.","broader":"","collection":"AidgoDataTransferReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_3_R1","clause":"7.3.8.3","label":"Data deletion \u2014 from all storage","def":"When deleting data, the organization shall ensure that data is deleted from all storage locations, including backups and replicas.","broader":"","collection":"AidgoDataDeletionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_3_R2","clause":"7.3.8.3","label":"Data deletion \u2014 legal obligations","def":"The organization shall ensure that data deletion does not violate applicable legal, contractual or regulatory obligations.","broader":"","collection":"AidgoDataDeletionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_3_R3","clause":"7.3.8.3","label":"Data deletion \u2014 confirmation","def":"The organization shall document confirmation that data has been deleted from all locations.","broader":"","collection":"AidgoDataDeletionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_4_R1","clause":"7.3.8.4","label":"Partial deletion \u2014 identify scope","def":"When partial data deletion is requested, the organization shall identify the exact scope of data items to be deleted.","broader":"","collection":"AidgoPartialDeletionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_4_R2","clause":"7.3.8.4","label":"Partial deletion \u2014 impact assessment","def":"The organization shall assess the impact of partial deletion on the remaining dataset quality.","broader":"","collection":"AidgoPartialDeletionReqColl","type":"requirement"},{"id":"AidgoReq_7_3_8_4_R3","clause":"7.3.8.4","label":"Partial deletion \u2014 execute and confirm","def":"The organization shall execute the partial deletion and confirm that the requested data items have been removed.","broader":"","collection":"AidgoPartialDeletionReqColl","type":"requirement"},{"id":"AidgoReq_8_2","clause":"8.2","label":"Horizontal processes General","def":"The organization shall apply the horizontal processes (verification and validation, configuration management, change management, and risk management) across all stages of the DQMLC.","broader":"","collection":"AidgoHorizontalGeneralReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_1_R1","clause":"8.3.1.1","label":"V&V \u2014 apply throughout","def":"The organization shall apply verification and validation processes throughout all stages of the DQMLC.","broader":"","collection":"AidgoVVReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_1_R2","clause":"8.3.1.1","label":"V&V \u2014 independent personnel","def":"Verification and validation activities shall be performed by personnel with appropriate independence from the activities being verified or validated.","broader":"","collection":"AidgoVVReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_2_R1","clause":"8.3.1.2","label":"Quality gates \u2014 define criteria","def":"The organization shall define quality gate criteria for each DQMLC stage in the data quality plan.","broader":"","collection":"AidgoQualityGatesReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_2_R2","clause":"8.3.1.2","label":"Quality gates \u2014 enforce progression","def":"A DQMLC stage shall only be entered when all quality gate criteria for the preceding stage have been met and documented.","broader":"","collection":"AidgoQualityGatesReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_2_R3","clause":"8.3.1.2","label":"Quality gates \u2014 deviations","def":"Any deviation from quality gate criteria shall be documented with a justification and approved by appropriate authority before progression.","broader":"","collection":"AidgoQualityGatesReqColl","type":"requirement"},{"id":"AidgoReq_8_3_1_2_R4","clause":"8.3.1.2","label":"Quality gates \u2014 objectively measurable","def":"Quality gate criteria shall be objectively measurable using defined data quality measures.","broader":"","collection":"AidgoQualityGatesReqColl","type":"requirement"},{"id":"AidgoReq_8_3_2_R1","clause":"8.3.2","label":"Configuration management \u2014 identify items","def":"The organization shall identify all configuration items (data, data specifications, plans, tools, and work products) subject to configuration management.","broader":"","collection":"AidgoConfigMgmtReqColl","type":"requirement"},{"id":"AidgoReq_8_3_2_R2","clause":"8.3.2","label":"Configuration management \u2014 version control","def":"The organization shall implement version control for all configuration items to ensure traceability and reproducibility.","broader":"","collection":"AidgoConfigMgmtReqColl","type":"requirement"},{"id":"AidgoReq_8_3_2_R3","clause":"8.3.2","label":"Configuration management \u2014 baseline","def":"The organization shall establish and maintain baselines for configuration items at defined DQMLC milestones.","broader":"","collection":"AidgoConfigMgmtReqColl","type":"requirement"},{"id":"AidgoReq_8_3_2_R4","clause":"8.3.2","label":"Configuration management \u2014 status accounting","def":"The organization shall maintain records of the status of all configuration items throughout the DQMLC.","broader":"","collection":"AidgoConfigMgmtReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_2","clause":"8.3.3.2","label":"Change management planning","def":"The organization shall establish and maintain a change management process that ensures all changes to data, requirements or processes are assessed and approved before implementation.","broader":"","collection":"AidgoChangeMgmtReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_3","clause":"8.3.3.3","label":"Change request specification","def":"Each change request shall specify: a) the data item or process affected; b) the reason for the change; c) the proposed change; d) the requestor and date.","broader":"","collection":"AidgoChangeRequestSpecReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_4","clause":"8.3.3.4","label":"Change request analysis","def":"Change requests shall be analysed to determine: a) impact on data quality; b) impact on dependent datasets, processes and plans; c) risks introduced by the change; d) alternative solutions; e) resourc","broader":"","collection":"AidgoChangeRequestAnalysisReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_5","clause":"8.3.3.5","label":"Change request evaluation and approval","def":"Change requests shall be evaluated and: a) approved, with conditions if necessary; b) deferred to a later stage; c) rejected with justification.","broader":"","collection":"AidgoChangeRequestEvalReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_6_R1","clause":"8.3.3.6","label":"Change implementation \u2014 implement","def":"Approved changes shall be implemented in accordance with the approved change request and all affected configuration items shall be updated.","broader":"","collection":"AidgoChangeDocumentationReqColl","type":"requirement"},{"id":"AidgoReq_8_3_3_6_R2","clause":"8.3.3.6","label":"Change implementation \u2014 verify","def":"The organization shall verify that the implemented change achieves the intended objective without introducing unacceptable side effects.","broader":"","collection":"AidgoChangeDocumentationReqColl","type":"requirement"},{"id":"AidgoReq_8_3_4_R1","clause":"8.3.4.2","label":"Risk management \u2014 conduct assessment","def":"The organization shall conduct a risk assessment and maintain documentation with respect to risks associated to data quality.","broader":"","collection":"AidgoRiskManagementReqColl","type":"requirement"},{"id":"AidgoReq_8_3_4_R2","clause":"8.3.4.2","label":"Risk management \u2014 minimise risks","def":"The organization shall manage and maintain appropriate processes to minimise identified risks. Risks shall be specified, justified and documented.","broader":"","collection":"AidgoRiskManagementReqColl","type":"requirement"},{"id":"AidgoReq_8_3_4_R3","clause":"8.3.4.2","label":"Risk management \u2014 monitor","def":"The organization shall monitor identified risks throughout the DQMLC and update the risk assessment when the risk environment changes.","broader":"","collection":"AidgoRiskManagementReqColl","type":"requirement"},{"id":"AidgoReq_8_3_4_R4","clause":"8.3.4.2","label":"Risk management \u2014 communicate","def":"The organization shall communicate significant data quality risks to relevant stakeholders.","broader":"","collection":"AidgoRiskManagementReqColl","type":"requirement"},{"id":"AidgoReq_10_2","clause":"10.2","label":"Data processing tools \u2014 management","def":"The organization shall manage data processing tools to ensure they support data quality requirements, covering: a) approved tool list with version information; b) tool qualification and validation; c)","broader":"","collection":"AidgoDataProcessingToolsReqColl","type":"requirement"},{"id":"AidgoReq_11_2","clause":"11.2","label":"Data quality dependencies \u2014 management","def":"The organization shall manage data quality dependencies by: a) identifying all data quality dependencies between datasets and processes; b) documenting the impact of dependency failures on data qualit","broader":"","collection":"AidgoDQDependenciesReqColl","type":"requirement"}],"conjReqs":[{"id":"AidgoConjReq_6.3.2_Ra","clause":"6.3.2","label":"Data quality culture \u2014 a","def":"[The organization should sustain a data quality culture. The organization shall:] have rules and processes to achieve quality (according to this document) taking into account the data quality model as","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rb","clause":"6.3.2","label":"Data quality culture \u2014 b","def":"[The organization should sustain a data quality culture. The organization shall:] define and implement data quality management processes, and performing related data quality activities","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rc","clause":"6.3.2","label":"Data quality culture \u2014 c","def":"[The organization should sustain a data quality culture. The organization shall:] integrate the data quality management processes and activities, to the extent appropriate, into other management proce","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rd","clause":"6.3.2","label":"Data quality culture \u2014 d","def":"[The organization should sustain a data quality culture. The organization shall:] document the performed activities","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Re","clause":"6.3.2","label":"Data quality culture \u2014 e","def":"[The organization should sustain a data quality culture. The organization shall:] provide resources sufficient to perform data quality management","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rf","clause":"6.3.2","label":"Data quality culture \u2014 f","def":"[The organization should sustain a data quality culture. The organization shall:] monitor, and to the extent necessary, review and improve the data quality management processes","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rg","clause":"6.3.2","label":"Data quality culture \u2014 g","def":"[The organization should sustain a data quality culture. The organization shall:] provide the required authority to involved personnel","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.2_Rh","clause":"6.3.2","label":"Data quality culture \u2014 h","def":"[The organization should sustain a data quality culture. The organization shall:] communicate data quality policies within the organization","broader":"AidgoReq_6_3_2","collection":"AidgoDataQualityCultureReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_2"},{"id":"AidgoConjReq_6.3.3_Ra","clause":"6.3.3","label":"DQ issues management \u2014 a","def":"[The organization shall meet data quality requirements. The organization shall:] have processes for communicating, analysing, evaluating, resolving and closing (implementing a resolution or giving a r","broader":"AidgoReq_6_3_3","collection":"AidgoDataQualityIssuesMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_3"},{"id":"AidgoConjReq_6.3.3_Rb","clause":"6.3.3","label":"DQ issues management \u2014 b","def":"[The organization shall meet data quality requirements. The organization shall:] document closed issues","broader":"AidgoReq_6_3_3","collection":"AidgoDataQualityIssuesMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_3"},{"id":"AidgoConjReq_6.3.3_Rc","clause":"6.3.3","label":"DQ issues management \u2014 c","def":"[The organization shall meet data quality requirements. The organization shall:] escalate issues that cannot be closed","broader":"AidgoReq_6_3_3","collection":"AidgoDataQualityIssuesMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_3"},{"id":"AidgoConjReq_6.3.4_Ra","clause":"6.3.4","label":"Competence management \u2014 a","def":"[The organization shall manage competence. The organization shall:] document required skills and tools to process the data","broader":"AidgoReq_6_3_4","collection":"AidgoCompetenceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_4"},{"id":"AidgoConjReq_6.3.4_Rb","clause":"6.3.4","label":"Competence management \u2014 b","def":"[The organization shall manage competence. The organization shall:] ensure that involved persons have sufficient skills to perform their activities and duties","broader":"AidgoReq_6_3_4","collection":"AidgoCompetenceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_4"},{"id":"AidgoConjReq_6.3.4_Rc","clause":"6.3.4","label":"Competence management \u2014 c","def":"[The organization shall manage competence. The organization shall:] maintain proof of sufficient skill with the data quality system","broader":"AidgoReq_6_3_4","collection":"AidgoCompetenceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_4"},{"id":"AidgoConjReq_6.3.4_Rd","clause":"6.3.4","label":"Competence management \u2014 d","def":"[The organization shall manage competence. The organization shall:] keep appropriate records of training and experience that substantiate claims of competency","broader":"AidgoReq_6_3_4","collection":"AidgoCompetenceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_4"},{"id":"AidgoConjReq_6.3.5_Ra","clause":"6.3.5","label":"Resource management \u2014 a","def":"[The organization shall provide the resources required for data quality management, including:] appropriate software licenses and technical support for required tools","broader":"AidgoReq_6_3_5","collection":"AidgoResourceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_5"},{"id":"AidgoConjReq_6.3.5_Rb","clause":"6.3.5","label":"Resource management \u2014 b","def":"[The organization shall provide the resources required for data quality management, including:] required IT infrastructure or services to meet the storage and compute requirements","broader":"AidgoReq_6_3_5","collection":"AidgoResourceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_5"},{"id":"AidgoConjReq_6.3.5_Rc","clause":"6.3.5","label":"Resource management \u2014 c","def":"[The organization shall provide the resources required for data quality management, including:] availability of skilled persons","broader":"AidgoReq_6_3_5","collection":"AidgoResourceMgmtReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_5"},{"id":"AidgoConjReq_6.3.8_Ra","clause":"6.3.8","label":"DQ audit \u2014 a","def":"[The implemented processes shall be audited. The audit shall:] evaluate the data quality plan against the organizational rules and processes for data quality","broader":"AidgoReq_6_3_8","collection":"AidgoDataQualityAuditReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_8"},{"id":"AidgoConjReq_6.3.8_Rb","clause":"6.3.8","label":"DQ audit \u2014 b","def":"[The implemented processes shall be audited. The audit shall:] determine whether planned activities have been implemented and maintained effectively","broader":"AidgoReq_6_3_8","collection":"AidgoDataQualityAuditReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_8"},{"id":"AidgoConjReq_6.3.8_Rc","clause":"6.3.8","label":"DQ audit \u2014 c","def":"[The implemented processes shall be audited. The audit shall:] identify non-compliances and propose corrective actions","broader":"AidgoReq_6_3_8","collection":"AidgoDataQualityAuditReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_8"},{"id":"AidgoConjReq_6.3.8_Rd","clause":"6.3.8","label":"DQ audit \u2014 d","def":"[The implemented processes shall be audited. The audit shall:] document audit findings and conclusions","broader":"AidgoReq_6_3_8","collection":"AidgoDataQualityAuditReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_8"},{"id":"AidgoConjReq_6.3.8_Re","clause":"6.3.8","label":"DQ audit \u2014 e","def":"[The implemented processes shall be audited. The audit shall:] communicate findings to relevant stakeholders","broader":"AidgoReq_6_3_8","collection":"AidgoDataQualityAuditReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_8"},{"id":"AidgoConjReq_6.3.9_Ra","clause":"6.3.9","label":"Confirmation review \u2014 a","def":"[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] confirm that work products meet the data specification","broader":"AidgoReq_6_3_9","collection":"AidgoConfirmationReviewReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_9"},{"id":"AidgoConjReq_6.3.9_Rb","clause":"6.3.9","label":"Confirmation review \u2014 b","def":"[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] confirm that data quality measures have been applied correctly","broader":"AidgoReq_6_3_9","collection":"AidgoConfirmationReviewReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_9"},{"id":"AidgoConjReq_6.3.9_Rc","clause":"6.3.9","label":"Confirmation review \u2014 c","def":"[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] identify any remaining open issues","broader":"AidgoReq_6_3_9","collection":"AidgoConfirmationReviewReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_9"},{"id":"AidgoConjReq_6.3.9_Rd","clause":"6.3.9","label":"Confirmation review \u2014 d","def":"[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] authorise progression to the next life cycle stage","broader":"AidgoReq_6_3_9","collection":"AidgoConfirmationReviewReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_9"},{"id":"AidgoConjReq_6.3.10_Ra","clause":"6.3.10","label":"Project-specific DQM \u2014 a","def":"[The organization shall manage project-specific data. The organization shall:] establish a suitable project-specific DQM process","broader":"AidgoReq_6_3_10","collection":"AidgoProjectSpecificDQReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_10"},{"id":"AidgoConjReq_6.3.10_Rb","clause":"6.3.10","label":"Project-specific DQM \u2014 b","def":"[The organization shall manage project-specific data. The organization shall:] maintain a list of relevant DQ claims with benchmarks for each milestone","broader":"AidgoReq_6_3_10","collection":"AidgoProjectSpecificDQReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_10"},{"id":"AidgoConjReq_6.3.10_Rc","clause":"6.3.10","label":"Project-specific DQM \u2014 c","def":"[The organization shall manage project-specific data. The organization shall:] adopt processes to identify and manage all relevant DQ measures","broader":"AidgoReq_6_3_10","collection":"AidgoProjectSpecificDQReqColl","type":"conjreq","decomposes":"AidgoReq_6_3_10"},{"id":"AidgoConjReq_7.3.1.1_Ra","clause":"7.3.1.1","label":"Data motivation \u2014 a","def":"[The organization shall complete data motivation and conceptualization. The organization shall:] document motivation and origin of the data need","broader":"AidgoReq_7_3_1_1","collection":"AidgoDataMotivationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_1_1"},{"id":"AidgoConjReq_7.3.1.1_Rb","clause":"7.3.1.1","label":"Data motivation \u2014 b","def":"[The organization shall complete data motivation and conceptualization. The organization shall:] specify scope, purpose and intended use of data","broader":"AidgoReq_7_3_1_1","collection":"AidgoDataMotivationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_1_1"},{"id":"AidgoConjReq_7.3.1.1_Rc","clause":"7.3.1.1","label":"Data motivation \u2014 c","def":"[The organization shall complete data motivation and conceptualization. The organization shall:] document the data quality requirements","broader":"AidgoReq_7_3_1_1","collection":"AidgoDataMotivationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_1_1"},{"id":"AidgoConjReq_7.3.1.2_Ra","clause":"7.3.1.2","label":"Stakeholder analysis \u2014 a","def":"[The organization shall conduct stakeholder analysis. The organization shall:] identify all stakeholders relevant to the data and the intended use","broader":"AidgoReq_7_3_1_2","collection":"AidgoStakeholderAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_1_2"},{"id":"AidgoConjReq_7.3.1.2_Rb","clause":"7.3.1.2","label":"Stakeholder analysis \u2014 b","def":"[The organization shall conduct stakeholder analysis. The organization shall:] document stakeholder data quality requirements and expectations","broader":"AidgoReq_7_3_1_2","collection":"AidgoStakeholderAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_1_2"},{"id":"AidgoConjReq_7.3.2.2_Ra","clause":"7.3.2.2","label":"Data format \u2014 a","def":"[The data specification shall include the following format specifications:] the data type(s) of each data item","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rb","clause":"7.3.2.2","label":"Data format \u2014 b","def":"[The data specification shall include the following format specifications:] the allowed range or set of values for each data item","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rc","clause":"7.3.2.2","label":"Data format \u2014 c","def":"[The data specification shall include the following format specifications:] the encoding and representation standards","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rd","clause":"7.3.2.2","label":"Data format \u2014 d","def":"[The data specification shall include the following format specifications:] the unit of measurement for quantitative data items","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Re","clause":"7.3.2.2","label":"Data format \u2014 e","def":"[The data specification shall include the following format specifications:] the definition of missing or null values","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rf","clause":"7.3.2.2","label":"Data format \u2014 f","def":"[The data specification shall include the following format specifications:] any required data structure (e.g. tabular, hierarchical, graph)","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rg","clause":"7.3.2.2","label":"Data format \u2014 g","def":"[The data specification shall include the following format specifications:] inter-data constraints and integrity rules","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rh","clause":"7.3.2.2","label":"Data format \u2014 h","def":"[The data specification shall include the following format specifications:] metadata requirements","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Ri","clause":"7.3.2.2","label":"Data format \u2014 i","def":"[The data specification shall include the following format specifications:] versioning and provenance requirements","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.2.2_Rj","clause":"7.3.2.2","label":"Data format \u2014 j","def":"[The data specification shall include the following format specifications:] any other format constraints relevant to intended use","broader":"AidgoReq_7_3_2_2","collection":"AidgoDataFormatReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_2_2"},{"id":"AidgoConjReq_7.3.3.1_Ra","clause":"7.3.3.1","label":"Data planning \u2014 a","def":"[The organization shall establish a data quality plan that covers:] the processes, activities and resources required to meet the data specification throughout the data life cycle","broader":"AidgoReq_7_3_3_1","collection":"AidgoDataPlanningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_1"},{"id":"AidgoConjReq_7.3.3.1_Rb","clause":"7.3.3.1","label":"Data planning \u2014 b","def":"[The organization shall establish a data quality plan that covers:] entry and exit criteria for each DQMLC stage","broader":"AidgoReq_7_3_3_1","collection":"AidgoDataPlanningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_1"},{"id":"AidgoConjReq_7.3.3.1_Rc","clause":"7.3.3.1","label":"Data planning \u2014 c","def":"[The organization shall establish a data quality plan that covers:] the data quality measures to be applied","broader":"AidgoReq_7_3_3_1","collection":"AidgoDataPlanningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_1"},{"id":"AidgoConjReq_7.3.3.1_Rd","clause":"7.3.3.1","label":"Data planning \u2014 d","def":"[The organization shall establish a data quality plan that covers:] responsibilities and authorities for DQM activities","broader":"AidgoReq_7_3_3_1","collection":"AidgoDataPlanningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_1"},{"id":"AidgoConjReq_7.3.3.1_Re","clause":"7.3.3.1","label":"Data planning \u2014 e","def":"[The organization shall establish a data quality plan that covers:] schedule and milestones for DQM activities","broader":"AidgoReq_7_3_3_1","collection":"AidgoDataPlanningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_1"},{"id":"AidgoConjReq_7.3.3.2_Ra","clause":"7.3.3.2","label":"Life cycle plans \u2014 a","def":"[The organization shall establish life cycle stage-specific plans addressing:] data acquisition plan","broader":"AidgoReq_7_3_3_2","collection":"AidgoDataLifeCyclePlansReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_2"},{"id":"AidgoConjReq_7.3.3.2_Rb","clause":"7.3.3.2","label":"Life cycle plans \u2014 b","def":"[The organization shall establish life cycle stage-specific plans addressing:] data preprocessing plan","broader":"AidgoReq_7_3_3_2","collection":"AidgoDataLifeCyclePlansReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_2"},{"id":"AidgoConjReq_7.3.3.2_Rc","clause":"7.3.3.2","label":"Life cycle plans \u2014 c","def":"[The organization shall establish life cycle stage-specific plans addressing:] data augmentation plan","broader":"AidgoReq_7_3_3_2","collection":"AidgoDataLifeCyclePlansReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_2"},{"id":"AidgoConjReq_7.3.3.2_Rd","clause":"7.3.3.2","label":"Life cycle plans \u2014 d","def":"[The organization shall establish life cycle stage-specific plans addressing:] data provisioning plan","broader":"AidgoReq_7_3_3_2","collection":"AidgoDataLifeCyclePlansReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_2"},{"id":"AidgoConjReq_7.3.3.2_Re","clause":"7.3.3.2","label":"Life cycle plans \u2014 e","def":"[The organization shall establish life cycle stage-specific plans addressing:] data decommissioning plan","broader":"AidgoReq_7_3_3_2","collection":"AidgoDataLifeCyclePlansReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_3_2"},{"id":"AidgoConjReq_7.3.4.3_Ra","clause":"7.3.4.3","label":"Data collection \u2014 a","def":"[The organization shall document data collection. The organization shall document:] reasons for collection, including the relationship to the data specification","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Rb","clause":"7.3.4.3","label":"Data collection \u2014 b","def":"[The organization shall document data collection. The organization shall document:] the method of data collection","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Rc","clause":"7.3.4.3","label":"Data collection \u2014 c","def":"[The organization shall document data collection. The organization shall document:] the data collection specification including data item descriptions","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Rd","clause":"7.3.4.3","label":"Data collection \u2014 d","def":"[The organization shall document data collection. The organization shall document:] required resources and skills for data collection","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Re","clause":"7.3.4.3","label":"Data collection \u2014 e","def":"[The organization shall document data collection. The organization shall document:] anonymisation or pseudonymisation methods where applicable","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Rf","clause":"7.3.4.3","label":"Data collection \u2014 f","def":"[The organization shall document data collection. The organization shall document:] measurement scales and units","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.4.3_Rg","clause":"7.3.4.3","label":"Data collection \u2014 g","def":"[The organization shall document data collection. The organization shall document:] expected deviations from the data specification and their justification","broader":"AidgoReq_7_3_4_3","collection":"AidgoDataCollectionReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_4_3"},{"id":"AidgoConjReq_7.3.5.2_Ra","clause":"7.3.5.2","label":"Data cleaning \u2014 a","def":"[The organization shall specify data quality measures for cleaning, including measures for:] missing data items","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rb","clause":"7.3.5.2","label":"Data cleaning \u2014 b","def":"[The organization shall specify data quality measures for cleaning, including measures for:] duplication","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rc","clause":"7.3.5.2","label":"Data cleaning \u2014 c","def":"[The organization shall specify data quality measures for cleaning, including measures for:] outliers","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rd","clause":"7.3.5.2","label":"Data cleaning \u2014 d","def":"[The organization shall specify data quality measures for cleaning, including measures for:] bias and drift","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Re","clause":"7.3.5.2","label":"Data cleaning \u2014 e","def":"[The organization shall specify data quality measures for cleaning, including measures for:] non-standard or invalid data values","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rf","clause":"7.3.5.2","label":"Data cleaning \u2014 f","def":"[The organization shall specify data quality measures for cleaning, including measures for:] unneeded or irrelevant data items","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rg","clause":"7.3.5.2","label":"Data cleaning \u2014 g","def":"[The organization shall specify data quality measures for cleaning, including measures for:] required transformations","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Rh","clause":"7.3.5.2","label":"Data cleaning \u2014 h","def":"[The organization shall specify data quality measures for cleaning, including measures for:] verification that cleaning results meet the data specification","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.5.2_Ri","clause":"7.3.5.2","label":"Data cleaning \u2014 i","def":"[The organization shall specify data quality measures for cleaning, including measures for:] de-identification or anonymisation where applicable","broader":"AidgoReq_7_3_5_2","collection":"AidgoDataCleaningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_5_2"},{"id":"AidgoConjReq_7.3.7.1_Ra","clause":"7.3.7.1","label":"Data provisioning \u2014 a","def":"[The organization shall specify data provisioning processes. The organization shall:] specify data provisioning processes to meet the data specification","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Rb","clause":"7.3.7.1","label":"Data provisioning \u2014 b","def":"[The organization shall specify data provisioning processes. The organization shall:] provide auditable evidence that provisioned data meets all specified data quality requirements","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Rc","clause":"7.3.7.1","label":"Data provisioning \u2014 c","def":"[The organization shall specify data provisioning processes. The organization shall:] ensure that the provisioning process does not alter the data beyond what is specified","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Rd","clause":"7.3.7.1","label":"Data provisioning \u2014 d","def":"[The organization shall specify data provisioning processes. The organization shall:] document all provisioning activities","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Re","clause":"7.3.7.1","label":"Data provisioning \u2014 e","def":"[The organization shall specify data provisioning processes. The organization shall:] maintain a record of all data provisioned, including version and provenance information","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Rf","clause":"7.3.7.1","label":"Data provisioning \u2014 f","def":"[The organization shall specify data provisioning processes. The organization shall:] ensure that recipients are authorised to receive the provisioned data","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.1_Rg","clause":"7.3.7.1","label":"Data provisioning \u2014 g","def":"[The organization shall specify data provisioning processes. The organization shall:] ensure that provisioning complies with applicable legal and contractual obligations","broader":"AidgoReq_7_3_7_1","collection":"AidgoDataProvisioningReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_1"},{"id":"AidgoConjReq_7.3.7.3_Ra","clause":"7.3.7.3","label":"Provisioning docs \u2014 a","def":"[Documentation provisioned with data shall include:] scope of use and intended purpose","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rb","clause":"7.3.7.3","label":"Provisioning docs \u2014 b","def":"[Documentation provisioned with data shall include:] instructions for use","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rc","clause":"7.3.7.3","label":"Provisioning docs \u2014 c","def":"[Documentation provisioned with data shall include:] statistical properties of the dataset","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rd","clause":"7.3.7.3","label":"Provisioning docs \u2014 d","def":"[Documentation provisioned with data shall include:] description of each data item","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Re","clause":"7.3.7.3","label":"Provisioning docs \u2014 e","def":"[Documentation provisioned with data shall include:] list of stakeholders and their roles","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rf","clause":"7.3.7.3","label":"Provisioning docs \u2014 f","def":"[Documentation provisioned with data shall include:] duties and obligations of the recipient","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rg","clause":"7.3.7.3","label":"Provisioning docs \u2014 g","def":"[Documentation provisioned with data shall include:] use environment requirements","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rh","clause":"7.3.7.3","label":"Provisioning docs \u2014 h","def":"[Documentation provisioned with data shall include:] quality factors and their measurement results","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Ri","clause":"7.3.7.3","label":"Provisioning docs \u2014 i","def":"[Documentation provisioned with data shall include:] acceptance test methods","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.3_Rj","clause":"7.3.7.3","label":"Provisioning docs \u2014 j","def":"[Documentation provisioned with data shall include:] communication strategy for updates and issue reporting","broader":"AidgoReq_7_3_7_3","collection":"AidgoDataProvisioningDocReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_3"},{"id":"AidgoConjReq_7.3.7.5_Ra","clause":"7.3.7.5","label":"Data optimization \u2014 a","def":"[The organization shall specify data optimization processes that:] reduce storage and computational overhead without reducing quality below specified thresholds","broader":"AidgoReq_7_3_7_5","collection":"AidgoDataOptimizationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_5"},{"id":"AidgoConjReq_7.3.7.5_Rb","clause":"7.3.7.5","label":"Data optimization \u2014 b","def":"[The organization shall specify data optimization processes that:] apply only transformations that are documented and reversible or justified","broader":"AidgoReq_7_3_7_5","collection":"AidgoDataOptimizationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_5"},{"id":"AidgoConjReq_7.3.7.5_Rc","clause":"7.3.7.5","label":"Data optimization \u2014 c","def":"[The organization shall specify data optimization processes that:] validate that optimised data still meets the data specification","broader":"AidgoReq_7_3_7_5","collection":"AidgoDataOptimizationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_5"},{"id":"AidgoConjReq_7.3.7.5_Rd","clause":"7.3.7.5","label":"Data optimization \u2014 d","def":"[The organization shall specify data optimization processes that:] maintain a record of all optimisation operations applied","broader":"AidgoReq_7_3_7_5","collection":"AidgoDataOptimizationReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_5"},{"id":"AidgoConjReq_7.3.7.6_Ra","clause":"7.3.7.6","label":"Support commitment \u2014 a","def":"[The organization shall document all support commitments in a support agreement that covers:] scope of support","broader":"AidgoReq_7_3_7_6_R2","collection":"AidgoSupportCommitmentReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_6_R2"},{"id":"AidgoConjReq_7.3.7.6_Rb","clause":"7.3.7.6","label":"Support commitment \u2014 b","def":"[The organization shall document all support commitments in a support agreement that covers:] response times and service levels","broader":"AidgoReq_7_3_7_6_R2","collection":"AidgoSupportCommitmentReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_6_R2"},{"id":"AidgoConjReq_7.3.7.6_Rc","clause":"7.3.7.6","label":"Support commitment \u2014 c","def":"[The organization shall document all support commitments in a support agreement that covers:] versioning and update policy","broader":"AidgoReq_7_3_7_6_R2","collection":"AidgoSupportCommitmentReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_6_R2"},{"id":"AidgoConjReq_7.3.7.6_Rd","clause":"7.3.7.6","label":"Support commitment \u2014 d","def":"[The organization shall document all support commitments in a support agreement that covers:] conditions for withdrawal of data","broader":"AidgoReq_7_3_7_6_R2","collection":"AidgoSupportCommitmentReqColl","type":"conjreq","decomposes":"AidgoReq_7_3_7_6_R2"},{"id":"AidgoConjReq_8.3.3.3_Ra","clause":"8.3.3.3","label":"Change request spec \u2014 a","def":"[Each change request shall specify:] the data item or process affected","broader":"AidgoReq_8_3_3_3","collection":"AidgoChangeRequestSpecReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_3"},{"id":"AidgoConjReq_8.3.3.3_Rb","clause":"8.3.3.3","label":"Change request spec \u2014 b","def":"[Each change request shall specify:] the reason for the change","broader":"AidgoReq_8_3_3_3","collection":"AidgoChangeRequestSpecReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_3"},{"id":"AidgoConjReq_8.3.3.3_Rc","clause":"8.3.3.3","label":"Change request spec \u2014 c","def":"[Each change request shall specify:] the proposed change","broader":"AidgoReq_8_3_3_3","collection":"AidgoChangeRequestSpecReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_3"},{"id":"AidgoConjReq_8.3.3.3_Rd","clause":"8.3.3.3","label":"Change request spec \u2014 d","def":"[Each change request shall specify:] the requestor and date","broader":"AidgoReq_8_3_3_3","collection":"AidgoChangeRequestSpecReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_3"},{"id":"AidgoConjReq_8.3.3.4_Ra","clause":"8.3.3.4","label":"Change request analysis \u2014 a","def":"[Change requests shall be analysed to determine:] impact on data quality","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.4_Rb","clause":"8.3.3.4","label":"Change request analysis \u2014 b","def":"[Change requests shall be analysed to determine:] impact on dependent datasets, processes and plans","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.4_Rc","clause":"8.3.3.4","label":"Change request analysis \u2014 c","def":"[Change requests shall be analysed to determine:] risks introduced by the change","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.4_Rd","clause":"8.3.3.4","label":"Change request analysis \u2014 d","def":"[Change requests shall be analysed to determine:] alternative solutions","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.4_Re","clause":"8.3.3.4","label":"Change request analysis \u2014 e","def":"[Change requests shall be analysed to determine:] resources required","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.4_Rf","clause":"8.3.3.4","label":"Change request analysis \u2014 f","def":"[Change requests shall be analysed to determine:] impact on schedule","broader":"AidgoReq_8_3_3_4","collection":"AidgoChangeRequestAnalysisReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_4"},{"id":"AidgoConjReq_8.3.3.5_Ra","clause":"8.3.3.5","label":"Change request eval \u2014 a","def":"[Change requests shall be evaluated and:] approved, with conditions if necessary","broader":"AidgoReq_8_3_3_5","collection":"AidgoChangeRequestEvalReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_5"},{"id":"AidgoConjReq_8.3.3.5_Rb","clause":"8.3.3.5","label":"Change request eval \u2014 b","def":"[Change requests shall be evaluated and:] deferred to a later stage","broader":"AidgoReq_8_3_3_5","collection":"AidgoChangeRequestEvalReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_5"},{"id":"AidgoConjReq_8.3.3.5_Rc","clause":"8.3.3.5","label":"Change request eval \u2014 c","def":"[Change requests shall be evaluated and:] rejected with justification","broader":"AidgoReq_8_3_3_5","collection":"AidgoChangeRequestEvalReqColl","type":"conjreq","decomposes":"AidgoReq_8_3_3_5"},{"id":"AidgoConjReq_10.2_Ra","clause":"10.2","label":"DQ tools \u2014 a","def":"[The organization shall manage data processing tools covering:] approved tool list with version information","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Rb","clause":"10.2","label":"DQ tools \u2014 b","def":"[The organization shall manage data processing tools covering:] tool qualification and validation","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Rc","clause":"10.2","label":"DQ tools \u2014 c","def":"[The organization shall manage data processing tools covering:] access control and licensing","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Rd","clause":"10.2","label":"DQ tools \u2014 d","def":"[The organization shall manage data processing tools covering:] backup and recovery","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Re","clause":"10.2","label":"DQ tools \u2014 e","def":"[The organization shall manage data processing tools covering:] monitoring of tool-induced data quality issues","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Rf","clause":"10.2","label":"DQ tools \u2014 f","def":"[The organization shall manage data processing tools covering:] tool change management","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_10.2_Rg","clause":"10.2","label":"DQ tools \u2014 g","def":"[The organization shall manage data processing tools covering:] documentation of tool-specific data quality constraints","broader":"AidgoReq_10_2","collection":"AidgoDataProcessingToolsReqColl","type":"conjreq","decomposes":"AidgoReq_10_2"},{"id":"AidgoConjReq_11.2_Ra","clause":"11.2","label":"DQ dependencies \u2014 a","def":"[The organization shall manage data quality dependencies by:] identifying all data quality dependencies between datasets and processes","broader":"AidgoReq_11_2","collection":"AidgoDQDependenciesReqColl","type":"conjreq","decomposes":"AidgoReq_11_2"},{"id":"AidgoConjReq_11.2_Rb","clause":"11.2","label":"DQ dependencies \u2014 b","def":"[The organization shall manage data quality dependencies by:] documenting the impact of dependency failures on data quality","broader":"AidgoReq_11_2","collection":"AidgoDQDependenciesReqColl","type":"conjreq","decomposes":"AidgoReq_11_2"},{"id":"AidgoConjReq_11.2_Rc","clause":"11.2","label":"DQ dependencies \u2014 c","def":"[The organization shall manage data quality dependencies by:] specifying mitigation strategies for dependency-related quality risks","broader":"AidgoReq_11_2","collection":"AidgoDQDependenciesReqColl","type":"conjreq","decomposes":"AidgoReq_11_2"}],"legalReqs":[{"id":"AiaPrReq_10.1","label":"High-risk AI systems shall use datasets meeting quality criteria","def":"High-risk AI systems shall be developed on the basis of training, validation and testing data sets that meet the quality criteria referred to in paragraphs 2 to 5.","type":"legal"},{"id":"AiaPrReq_10.2_1","label":"Datasets shall be subject to appropriate data governance practices","def":"Training, validation and testing data sets shall be subject to data governance and management practices appropriate for the intended purpose.","type":"legal"},{"id":"AiaPrReq_10.2_2","label":"Governance shall concern relevant design choices","def":"[Data governance and management practices shall concern in particular] the relevant design choices.","type":"legal"},{"id":"AiaPrReq_10.2_3","label":"Governance shall concern data collection processes and origin","def":"[Data governance and management practices shall concern in particular] data collection processes and the origin of data, and in the case of personal data, the original purpose of the data collection.","type":"legal"},{"id":"AiaPrReq_10.2_4","label":"Governance shall concern data-preparation operations","def":"[Data governance and management practices shall concern in particular] relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation.","type":"legal"},{"id":"AiaPrReq_10.2_5","label":"Governance shall concern formulation of assumptions","def":"[Data governance and management practices shall concern in particular] the formulation of assumptions, in particular with respect to the information that the data is supposed to measure and represent.","type":"legal"},{"id":"AiaPrReq_10.2_6","label":"Governance shall concern assessment of dataset availability and suitability","def":"[Data governance and management practices shall concern in particular] an assessment of the availability, quantity and suitability of the data sets that are needed.","type":"legal"},{"id":"AiaPrReq_10.2_7","label":"Governance shall concern examination for biases affecting health, safety, rights","def":"[Data governance and management practices shall concern in particular] an examination of possible biases that could affect health and safety or lead to discrimination prohibited under Union law.","type":"legal"},{"id":"AiaPrReq_10.2_8","label":"Governance shall concern identification of data gaps and shortcomings","def":"[Data governance and management practices shall concern in particular] the identification of any data gaps or shortcomings, and how those gaps and shortcomings can be addressed.","type":"legal"},{"id":"AiaPrReq_10.3_1","label":"Datasets shall be sufficiently representative","def":"Training, validation and testing data sets shall be sufficiently representative for the intended purpose.","type":"legal"},{"id":"AiaPrReq_10.3_2","label":"Datasets shall have appropriate statistical properties for persons/groups","def":"Datasets shall have the appropriate statistical properties, including as regards the persons or groups of persons on which the high-risk AI system is intended to be used.","type":"legal"},{"id":"AiaPrReq_10.4","label":"Datasets shall account for characteristics of the deployment setting","def":"Datasets shall take into account the characteristics particular to the geographical, contextual, behavioural or functional setting of intended use.","type":"legal"},{"id":"AiaPrReq_10.5","label":"Special categories personal data may be processed for bias detection","def":"Providers may process special categories of personal data strictly necessary for bias detection, subject to appropriate safeguards.","type":"legal"},{"id":"AiaPrReq_10.5_a","label":"Bias cannot be fulfilled by synthetic/anonymised data alternatives","def":"Ensuring bias detection cannot effectively be fulfilled by processing other categories of data, including synthetic or anonymised data.","type":"legal"},{"id":"AiaPrReq_10.5_b","label":"Special data subject to technical limitations and state-of-art security measures","def":"Special categories data subject to technical limitations on re-use and state-of-the-art security and privacy-preserving measures.","type":"legal"},{"id":"AiaPrReq_10.5_e","label":"Special data deleted when bias corrected or retention period ends","def":"The data shall be deleted once the bias has been corrected or the retention period has expired.","type":"legal"},{"id":"AiaPrReq_10.6","label":"For non-training AI, paragraphs 2-5 apply only to testing datasets","def":"For high-risk AI not using training techniques, paragraphs 2-5 apply only to the testing data sets.","type":"legal"}],"mappings":[{"id":"Map_10.1_7.3.2.1","legalId":"AiaPrReq_10.1","legalLabel":"High-risk AI systems shall use datasets meeting quality criteria","techId":"AidgoReq_7_3_2_1","techLabel":"Data specification General","alignType":"PartiallySatisfies","basis":"FunctionalEquivalence","justification":"ISO 5259-3 \u00a77.3.2.1 requires a data specification validated as consistent and complete for intended use, functionally aligning with Art 10(1). Gap: ISO 5259 is sector-neutral and does not specifically","gap":"ISO 5259-3 does not reference the high-risk AI regulatory classification or the specific quality criteria in Art 10(2)-(5)."},{"id":"Map_10.1_7.3.3.1","legalId":"AiaPrReq_10.1","legalLabel":"High-risk AI systems shall use datasets meeting quality criteria","techId":"AidgoReq_7_3_3_1","techLabel":"Data quality plan General","alignType":"PartiallySatisfies","basis":"ConceptualCoverage","justification":"ISO 5259-3 \u00a77.3.3.1 requires a DQ plan covering processes throughout the data life cycle, supporting Art 10(1). Gap: ISO does not require the plan to demonstrate compliance with a regulation.","gap":"The DQ plan is not required to reference regulatory compliance or demonstrate that datasets satisfy a legal standard."},{"id":"Map_10.2.1_6.3.2","legalId":"AiaPrReq_10.2_1","legalLabel":"Datasets shall be subject to appropriate data governance practices","techId":"AidgoReq_6_3_2","techLabel":"Data quality culture","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a76.3.2 directly requires rules and processes to achieve data quality, DQM implementation, integration into management processes, and communication of policies (sub-items a-h). This complete","gap":""},{"id":"Map_10.2.1_7.3.1.1_Rb","legalId":"AiaPrReq_10.2_1","legalLabel":"Governance practices appropriate for intended purpose","techId":"AidgoConjReq_7.3.1.1_Rb","techLabel":"Data motivation \u2014 specify intended use","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a77.3.1.1(b) directly requires documenting scope, purpose and intended use. This completely satisfies the 'appropriate for intended purpose' element of Art 10(2).","gap":""},{"id":"Map_10.2.2_7.3.2.2","legalId":"AiaPrReq_10.2_2","legalLabel":"Governance shall concern relevant design choices","techId":"AidgoReq_7_3_2_2","techLabel":"Data format specification","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.2.2 requires specifying dataset design parameters, partially covering Art 10(2)(a) design choices. Gap: Art 10(2)(a) includes AI model and algorithm design choices beyond dataset forma","gap":"AI model architecture and algorithm selection \u2014 the AI system design choices sense \u2014 are outside ISO 5259 scope."},{"id":"Map_10.2.3_7.3.4.3","legalId":"AiaPrReq_10.2_3","legalLabel":"Governance shall concern data collection processes and origin","techId":"AidgoReq_7_3_4_3","techLabel":"Data collection","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.4.3 requires documenting reasons for collection, method and specification, covering collection processes and origin. Gap: ISO does not require the original purpose of personal data col","gap":"The original purpose of personal data collection as a GDPR-grounded requirement is not addressed by ISO 5259-3."},{"id":"Map_10.2.3_7.3.4.2","legalId":"AiaPrReq_10.2_3","legalLabel":"Governance shall concern data origin","techId":"AidgoReq_7_3_4_2","techLabel":"Data source delegation responsibility","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.4.2 requires taking into account licensing and reuse conditions, partially covering data origin. Gap: ISO does not require documenting provenance at the individual-collection-purpose l","gap":"Provenance of personal data at the individual collection purpose level is not addressed by ISO 5259-3."},{"id":"Map_10.2.4_7.3.5.2","legalId":"AiaPrReq_10.2_4","legalLabel":"Governance shall concern data-preparation operations","techId":"AidgoReq_7_3_5_2","techLabel":"Data cleaning","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.5.2 comprehensively covers data cleaning operations. Gap: Art 10(2)(c) requires documentation of annotation and labelling processes, which ISO 5259-3 does not explicitly mandate.","gap":"Annotation and labelling as formally documented data-preparation operations are not explicitly required by ISO 5259-3."},{"id":"Map_10.2.4_7.3.6.1","legalId":"AiaPrReq_10.2_4","legalLabel":"Governance shall concern data enrichment and augmentation","techId":"AidgoReq_7_3_6_1","techLabel":"Data augmentation specify processes","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a77.3.6.1 directly requires specifying data augmentation processes (covering enrichment and aggregation), completely satisfying Art 10(2)(c)'s enrichment/aggregation sub-element.","gap":""},{"id":"Map_10.2.5_7.3.2.3_R2","legalId":"AiaPrReq_10.2_5","legalLabel":"Governance shall concern formulation of assumptions","techId":"AidgoReq_7_3_2_3_R2","techLabel":"Statistical properties representativeness","alignType":"PartiallySatisfies","basis":"ConceptualCoverage","justification":"ISO 5259-3 \u00a77.3.2.3 requires specifying statistical properties and representativeness, implicitly addressing what data represents. Gap: ISO does not require explicitly documenting measurement assumpti","gap":"Explicit documentation of measurement assumptions (what the data is supposed to measure and represent) is not a distinct ISO 5259-3 requirement."},{"id":"Map_10.2.6_7.3.1.1_Ra","legalId":"AiaPrReq_10.2_6","legalLabel":"Governance shall concern assessment of dataset availability and suitability","techId":"AidgoConjReq_7.3.1.1_Ra","techLabel":"Data motivation document data need","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.1.1(a) requires documenting the motivation and origin of the data need, partially covering Art 10(2)(e). Gap: ISO does not require a formal prior assessment of availability, quantity a","gap":"A formal documented assessment of dataset availability, quantity and suitability before acquisition is not explicitly required by ISO 5259-3."},{"id":"Map_10.2.7_7.3.5.2_Rd","legalId":"AiaPrReq_10.2_7","legalLabel":"Governance shall concern examination for biases affecting health, safety, rights","techId":"AidgoConjReq_7.3.5.2_Rd","techLabel":"Data cleaning bias and drift","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.5.2(d) requires bias and drift detection/mitigation measures. Gap: Art 10(2)(f) frames bias examination around health, safety, fundamental rights and anti-discrimination \u2014 legal-rights","gap":"Fundamental rights and anti-discrimination framing of bias examination is outside ISO 5259 scope."},{"id":"Map_10.2.7_8.3.4_R1","legalId":"AiaPrReq_10.2_7","legalLabel":"Governance shall concern examination for possible biases","techId":"AidgoReq_8_3_4_R1","techLabel":"Risk management conduct assessment","alignType":"PartiallySatisfies","basis":"ConceptualCoverage","justification":"ISO 5259-3 \u00a78.3.4 requires risk assessment covering data quality risks including bias. Gap: ISO risk management does not address risks to fundamental rights or anti-discrimination under Union law.","gap":"ISO 5259-3 risk management does not address risks to fundamental rights or discrimination under Union law."},{"id":"Map_10.2.8_8.3.4_R2","legalId":"AiaPrReq_10.2_8","legalLabel":"Governance shall concern identification of data gaps and shortcomings","techId":"AidgoReq_8_3_4_R2","techLabel":"Risk management minimise risks","alignType":"PartiallySatisfies","basis":"FunctionalEquivalence","justification":"ISO 5259-3 \u00a78.3.4 requires identifying and mitigating data quality risks, functionally covering data gap identification. Gap: Art 10(2)(g/h) requires explicitly documenting gaps and HOW they will be a","gap":"The gap-documentation obligation (document gaps and the plan to address them) as a distinct governance item is not explicit in ISO 5259-3."},{"id":"Map_10.3.1_7.3.2.3_R2","legalId":"AiaPrReq_10.3_1","legalLabel":"Datasets shall be sufficiently representative","techId":"AidgoReq_7_3_2_3_R2","techLabel":"Statistical properties representativeness","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a77.3.2.3 directly requires maintaining representativeness with respect to the target population for each subset. This completely satisfies Art 10(3)'s representativeness requirement.","gap":""},{"id":"Map_10.3.1_7.3.5.2_Ra_Rb","legalId":"AiaPrReq_10.3_1","legalLabel":"Datasets shall be free of errors and complete","techId":"AidgoReq_7_3_5_2","techLabel":"Data cleaning","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a77.3.5.2(a)-(c) requires measures for missing data (completeness), duplication and outliers (error-freeness). This completely satisfies Art 10(3)'s error-free and completeness requirements.","gap":""},{"id":"Map_10.3.1_7.3.1.1_Rb","legalId":"AiaPrReq_10.3_1","legalLabel":"Datasets shall be relevant for intended purpose","techId":"AidgoConjReq_7.3.1.1_Rb","techLabel":"Data motivation specify intended use","alignType":"CompletelySatisfies","basis":"SemanticEquivalence","justification":"ISO 5259-3 \u00a77.3.1.1(b) requires specifying scope, purpose and intended use, directly ensuring relevance. This completely satisfies Art 10(3)'s relevance requirement.","gap":""},{"id":"Map_10.3.2_7.3.2.3_R1","legalId":"AiaPrReq_10.3_2","legalLabel":"Datasets shall have appropriate statistical properties for persons/groups","techId":"AidgoReq_7_3_2_3_R1","techLabel":"Statistical properties subset divisions","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.2.3 covers statistical properties per subset. Gap: ISO does not specifically require properties to account for the specific persons/groups the AI system is used on.","gap":"The fairness/demographic dimension \u2014 statistical properties adequate for specific persons/groups the AI system is used on \u2014 is absent from ISO 5259-3."},{"id":"Map_10.4_7.3.1.1_Rb","legalId":"AiaPrReq_10.4","legalLabel":"Datasets shall account for characteristics of the deployment setting","techId":"AidgoConjReq_7.3.1.1_Rb","techLabel":"Data motivation specify intended use","alignType":"PartiallySatisfies","basis":"ConceptualCoverage","justification":"ISO 5259-3 \u00a77.3.1.1(b) requires specifying scope and intended use, implicitly encompassing deployment setting. Gap: ISO does not explicitly require characterising geographical, behavioural or function","gap":"Explicit characterisation of geographical, contextual, behavioural and functional deployment setting is not required by ISO 5259-3."},{"id":"Map_10.5_NoAlignment","legalId":"AiaPrReq_10.5","legalLabel":"Special categories personal data may be processed for bias detection","techId":"rdf:nil","techLabel":"","alignType":"NoAlignment","basis":"GapIdentified","justification":"ISO 5259 has no provision for special categories of personal data processing. This is a legal obligation under GDPR Article 9 \u2014 structurally outside ISO 5259 scope.","gap":"Requires GDPR Art.9 + ISO/IEC 27701 compliance. ISO 5259 cannot satisfy this obligation."},{"id":"Map_10.5.a_NoAlignment","legalId":"AiaPrReq_10.5_a","legalLabel":"Bias cannot be fulfilled by synthetic/anonymised data alternatives","techId":"rdf:nil","techLabel":"","alignType":"NoAlignment","basis":"GapIdentified","justification":"ISO 5259 does not require demonstrating necessity of processing personal data over synthetic alternatives. This is a legal necessity test specific to data protection law.","gap":"GDPR proportionality principle \u2014 necessity test for personal data over synthetic alternatives \u2014 is outside ISO 5259 scope. Recommended: GDPR Art.9; AI Act Art.10(5)(a)."},{"id":"Map_10.5.b_NoAlignment","legalId":"AiaPrReq_10.5_b","legalLabel":"Special data subject to technical limitations and state-of-art security measures","techId":"rdf:nil","techLabel":"","alignType":"NoAlignment","basis":"GapIdentified","justification":"ISO 5259 does not impose pseudonymisation or state-of-art security measures as normative requirements. ISO 5259-4 mentions data privacy conceptually but not at the normative level Art 10(5)(b) require","gap":"Pseudonymisation, state-of-art security, strict GDPR access controls outside ISO 5259 scope. Recommended: ISO/IEC 27001; ISO/IEC 27701; ENISA AI Cybersecurity Guidelines."},{"id":"Map_10.5.e_7.3.8.3","legalId":"AiaPrReq_10.5_e","legalLabel":"Special data deleted when bias corrected or retention period ends","techId":"AidgoReq_7_3_8_3_R1","techLabel":"Data deletion from all storage","alignType":"PartiallySatisfies","basis":"FunctionalEquivalence","justification":"ISO 5259-3 \u00a77.3.8.3 requires deletion from all storage locations. Gap: ISO does not tie deletion to the legal trigger (bias corrected OR retention period ended).","gap":"The legal deletion trigger \u2014 bias corrected OR retention period ended \u2014 is not addressed by ISO 5259-3."},{"id":"Map_10.6_7.3.2.3_R1","legalId":"AiaPrReq_10.6","legalLabel":"For non-training AI, paragraphs 2-5 apply only to testing datasets","techId":"AidgoReq_7_3_2_3_R1","techLabel":"Statistical properties subset divisions","alignType":"PartiallySatisfies","basis":"ScopeOverlap","justification":"ISO 5259-3 \u00a77.3.2.3 covers subset specification including test data. Gap: ISO has no scoping provision limiting requirements to testing datasets only for non-training AI systems.","gap":"No ISO 5259-3 provision scopes requirements to testing datasets only for non-training AI systems."}]};
+
+// ═══ GRAPH CONSTRUCTION ══════════════════════════════════════════════════════
+const nodes = [];
+const links = [];
+const nodeById = {};
+
+// Alignment type → visual class
+const ATYPE_CLASS = {
+  CompletelySatisfies:'cs', PartiallySatisfies:'ps',
+  RelatedTo:'rt', ConflictsWith:'cw', NoAlignment:'na'
+};
+const ATYPE_COLOUR = {
+  CompletelySatisfies:'#22c55e', PartiallySatisfies:'#f59e0b',
+  RelatedTo:'#60a5fa', ConflictsWith:'#ff6b35', NoAlignment:'#ef4444'
+};
+
+function addNode(d) {
+  if (!nodeById[d.id]) {
+    nodeById[d.id] = d;
+    nodes.push(d);
+  }
+}
+
+function addLink(source, target, type, data={}) {
+  if (nodeById[source] && nodeById[target]) {
+    links.push({source, target, type, ...data});
+  }
+}
+
+// Add legal requirements
+KG.legalReqs.forEach(n => addNode({...n, nodeType:'legal', r:10}));
+
+// Add ISO collections
+KG.collections.forEach(n => addNode({...n, nodeType:'collection', r:7}));
+
+// Add requirements
+KG.requirements.forEach(n => addNode({...n, nodeType:'requirement', r:7}));
+
+// Add ConjReqs
+KG.conjReqs.forEach(n => addNode({...n, nodeType:'conjreq', r:5}));
+
+// Add ISO concepts
+KG.concepts.forEach(n => addNode({...n, nodeType:'concept', r:5}));
+
+// ── Build hierarchy links ─────────────────────────────────────────────────
+// Collection → parent collection
+KG.collections.forEach(c => {
+  if (c.broader && nodeById[c.broader])
+    addLink(c.id, c.broader, 'broader');
+});
+
+// Requirement → collection
+KG.requirements.forEach(r => {
+  const target = r.broader || r.collection;
+  if (target && nodeById[target])
+    addLink(r.id, target, 'broader');
+});
+
+// ConjReq → parent Requirement (tair:decomposes)
+KG.conjReqs.forEach(c => {
+  if (c.decomposes && nodeById[c.decomposes])
+    addLink(c.id, c.decomposes, 'decomp');
+  // Also to collection
+  const coll = c.collection || c.broader;
+  if (coll && nodeById[coll])
+    addLink(c.id, coll, 'broader');
+});
+
+// Concept → broader concept
+KG.concepts.forEach(c => {
+  if (c.broader && nodeById[c.broader])
+    addLink(c.id, c.broader, 'broader');
+});
+
+// ── Alignment links ───────────────────────────────────────────────────────
+KG.mappings.forEach(m => {
+  // Ensure legal node exists
+  if (!nodeById[m.legalId]) {
+    addNode({id:m.legalId, label:m.legalLabel, def:'', type:'legal', nodeType:'legal', r:10});
+  }
+  const atype = m.alignType;
+  const techId = m.techId;
+  if (techId && techId !== 'rdf:nil' && nodeById[techId]) {
+    addLink(techId, m.legalId, 'align', {
+      alignType: atype,
+      alignClass: ATYPE_CLASS[atype] || 'na',
+      basis: m.basis,
+      justification: m.justification,
+      gap: m.gap,
+      mappingId: m.id
+    });
+  } else if (techId === 'rdf:nil' || !techId) {
+    // NoAlignment — attach a dummy null node to show the gap
+    const nullId = 'gap_' + m.legalId;
+    if (!nodeById[nullId]) {
+      addNode({id:nullId, label:'GAP', def:m.gap, nodeType:'gap', r:6});
+    }
+    addLink(nullId, m.legalId, 'align', {
+      alignType: 'NoAlignment', alignClass: 'na',
+      justification: m.justification, gap: m.gap
+    });
+  }
+});
+
+console.log(`Nodes: ${nodes.length}, Links: ${links.length}`);
+
+// ═══ FILTER STATE ════════════════════════════════════════════════════════════
+const visibleTypes = new Set(['legal','collection','requirement','conjreq','concept','gap']);
+const visibleAligns = new Set(['CompletelySatisfies','PartiallySatisfies','RelatedTo','ConflictsWith','NoAlignment']);
+let showLabels = false;
+let physicsOn = true;
+let selectedNode = null;
+let searchQuery = '';
+
+const NODE_TYPES = [
+  {type:'legal',    label:'Legal Req',     colour:'#fb923c', shape:'dot'},
+  {type:'collection',label:'Collection',   colour:'#a78bfa', shape:'hex'},
+  {type:'requirement',label:'tair:Req',    colour:'#2dd4bf', shape:'dot'},
+  {type:'conjreq',  label:'ConjReq',       colour:'#67e8f9', shape:'dot'},
+  {type:'concept',  label:'Concept',       colour:'#86efac', shape:'dia'},
+  {type:'gap',      label:'Gap (NoAlign)', colour:'#ef4444', shape:'dot'},
+];
+
+const EDGE_TYPES = [
+  {type:'cs', align:'CompletelySatisfies', label:'CompletelySatisfies', colour:'#22c55e'},
+  {type:'ps', align:'PartiallySatisfies',  label:'PartiallySatisfies',  colour:'#f59e0b'},
+  {type:'rt', align:'RelatedTo',           label:'RelatedTo',           colour:'#60a5fa'},
+  {type:'cw', align:'ConflictsWith',       label:'ConflictsWith',       colour:'#ff6b35'},
+  {type:'na', align:'NoAlignment',         label:'NoAlignment',         colour:'#ef4444'},
+];
+
+// ═══ BUILD FILTER UI ═════════════════════════════════════════════════════════
+function buildFilters() {
+  const nf = document.getElementById('node-filters');
+  NODE_TYPES.forEach(nt => {
+    const cnt = nodes.filter(n=>n.nodeType===nt.type).length;
+    const shapeEl = nt.shape==='hex'
+      ? `<div class="hex" style="background:${nt.colour}"></div>`
+      : nt.shape==='dia'
+      ? `<div class="dia" style="background:${nt.colour}"></div>`
+      : `<div class="dot" style="background:${nt.colour}"></div>`;
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.type = nt.type;
+    btn.innerHTML = `${shapeEl}<span class="filter-label">${nt.label}</span><span class="filter-count">${cnt}</span>`;
+    btn.onclick = () => toggleNodeType(nt.type, btn);
+    nf.appendChild(btn);
+  });
+
+  const ef = document.getElementById('edge-filters');
+  EDGE_TYPES.forEach(et => {
+    const cnt = links.filter(l=>l.alignType===et.align).length;
+    const btn = document.createElement('button');
+    btn.className = 'edge-btn';
+    btn.dataset.align = et.align;
+    btn.innerHTML = `<div class="edge-line" style="background:${et.colour}"></div><span class="edge-label">${et.label}</span><span class="edge-count">${cnt}</span>`;
+    btn.onclick = () => toggleAlignType(et.align, btn);
+    ef.appendChild(btn);
+  });
+}
+
+function toggleNodeType(type, btn) {
+  if (visibleTypes.has(type)) visibleTypes.delete(type);
+  else visibleTypes.add(type);
+  btn.classList.toggle('off', !visibleTypes.has(type));
+  refreshVisibility();
+}
+
+function toggleAlignType(align, btn) {
+  if (visibleAligns.has(align)) visibleAligns.delete(align);
+  else visibleAligns.add(align);
+  btn.classList.toggle('off', !visibleAligns.has(align));
+  refreshVisibility();
+}
+
+function updateStats() {
+  const sg = document.getElementById('stats-grid');
+  sg.innerHTML = '';
+  const stats = [
+    {n:nodes.filter(n=>n.nodeType==='legal').length,     l:'Legal Reqs'},
+    {n:nodes.filter(n=>n.nodeType==='requirement').length,l:'ISO Reqs'},
+    {n:nodes.filter(n=>n.nodeType==='conjreq').length,   l:'ConjReqs'},
+    {n:nodes.filter(n=>n.nodeType==='collection').length, l:'Collections'},
+    {n:nodes.filter(n=>n.nodeType==='concept').length,    l:'Concepts'},
+    {n:links.filter(l=>l.type==='align').length,          l:'Mappings'},
+  ];
+  stats.forEach(s => {
+    sg.innerHTML += `<div class="stat-box"><div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div></div>`;
+  });
+}
+
+// ═══ D3 FORCE SIMULATION ═════════════════════════════════════════════════════
+const svg = d3.select('#kg-canvas');
+const wrap = document.getElementById('canvas-wrap');
+let W = wrap.clientWidth, H = wrap.clientHeight;
+svg.attr('width', W).attr('height', H);
+
+const g = svg.append('g');
+
+// Zoom
+const zoom = d3.zoom()
+  .scaleExtent([.1, 8])
+  .on('zoom', e => g.attr('transform', e.transform));
+svg.call(zoom);
+
+// Arrow markers for alignment edges
+const defs = svg.append('defs');
+Object.entries(ATYPE_COLOUR).forEach(([type, colour]) => {
+  defs.append('marker')
+    .attr('id', 'arrow-' + ATYPE_CLASS[type])
+    .attr('viewBox','0 -3 8 6').attr('refX',14).attr('refY',0)
+    .attr('markerWidth',5).attr('markerHeight',5)
+    .attr('orient','auto')
+    .append('path').attr('d','M0,-3L8,0L0,3').attr('fill',colour);
+});
+
+const simulation = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id)
+    .distance(d => {
+      if (d.type==='decomp') return 35;
+      if (d.type==='broader') return 50;
+      if (d.type==='uses') return 60;
+      if (d.type==='align') return 120;
+      return 60;
+    })
+    .strength(d => {
+      if (d.type==='decomp') return 0.8;
+      if (d.type==='broader') return 0.5;
+      if (d.type==='align') return 0.3;
+      return 0.4;
+    }))
+  .force('charge', d3.forceManyBody()
+    .strength(d => d.nodeType==='conjreq' ? -60 : d.nodeType==='concept' ? -40 : -120))
+  .force('center', d3.forceCenter(W/2, H/2))
+  .force('x', d3.forceX().x(d => {
+    if (d.nodeType==='legal') return W * 0.15;
+    if (d.nodeType==='collection') return W * 0.55;
+    if (d.nodeType==='requirement') return W * 0.65;
+    if (d.nodeType==='conjreq') return W * 0.75;
+    if (d.nodeType==='concept') return W * 0.88;
+    if (d.nodeType==='gap') return W * 0.12;
+    return W / 2;
+  }).strength(0.12))
+  .force('collision', d3.forceCollide().radius(d => (d.r||6)+4));
+
+// Draw links
+const linkSel = g.selectAll('.link')
+  .data(links).enter().append('line').attr('class', d => {
+    if (d.type==='decomp') return 'link link-decomp';
+    if (d.type==='broader') return 'link link-broader';
+    if (d.type==='uses') return 'link link-uses';
+    return `link link-${d.alignClass||'na'}`;
+  })
+  .attr('marker-end', d => d.type==='align' ? `url(#arrow-${d.alignClass||'na'})` : null)
+  .style('opacity', 0.6);
+
+// Draw nodes
+const nodeSel = g.selectAll('.node')
+  .data(nodes).enter().append('g').attr('class','node')
+  .call(d3.drag()
+    .on('start', dragStart)
+    .on('drag',  dragged)
+    .on('end',   dragEnd))
+  .on('mouseover', onHover)
+  .on('mouseout',  onHoverOut)
+  .on('click', onNodeClick);
+
+// Node shapes
+nodeSel.each(function(d) {
+  const sel = d3.select(this);
+  const colour = nodeColour(d);
+  const r = d.r || 6;
+  if (d.nodeType==='collection') {
+    // Hexagon
+    const pts = hexPoints(r);
+    sel.append('polygon').attr('points', pts).attr('fill', colour)
+       .attr('stroke', '#0a0e1a').attr('stroke-width', 1);
+  } else if (d.nodeType==='concept') {
+    // Diamond
+    sel.append('rect').attr('width', r*1.4).attr('height', r*1.4)
+       .attr('x', -r*0.7).attr('y', -r*0.7)
+       .attr('transform','rotate(45)')
+       .attr('fill', colour).attr('stroke','#0a0e1a').attr('stroke-width',1);
+  } else {
+    sel.append('circle').attr('r', r).attr('fill', colour)
+       .attr('stroke', '#0a0e1a').attr('stroke-width', 1.5);
+  }
+});
+
+// Node labels (hidden by default)
+const labelSel = g.selectAll('.node-label')
+  .data(nodes).enter().append('text').attr('class','node-label')
+  .style('display','none')
+  .text(d => (d.label||d.id||'').slice(0,18));
+
+function hexPoints(r) {
+  return Array.from({length:6}, (_,i) => {
+    const a = (i*60-30)*Math.PI/180;
+    return `${r*Math.cos(a)},${r*Math.sin(a)}`;
+  }).join(' ');
+}
+
+function nodeColour(d) {
+  const m = {legal:'#fb923c',collection:'#a78bfa',requirement:'#2dd4bf',
+             conjreq:'#67e8f9',concept:'#86efac',gap:'#ef4444'};
+  return m[d.nodeType] || '#64748b';
+}
+
+// Tick
+simulation.on('tick', () => {
+  linkSel
+    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+  nodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
+  labelSel.attr('transform', d => `translate(${d.x},${d.y+18})`);
+});
+
+// ═══ DRAG ═════════════════════════════════════════════════════════════════════
+function dragStart(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+function dragEnd(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+
+// ═══ HOVER ════════════════════════════════════════════════════════════════════
+function onHover(event, d) {
+  const tt = document.getElementById('tooltip');
+  document.getElementById('tt-type').textContent = d.nodeType.toUpperCase();
+  document.getElementById('tt-id').textContent = d.id;
+  document.getElementById('tt-label').textContent = d.label || d.id;
+  tt.style.display = 'block';
+  tt.style.left = (event.offsetX + 14) + 'px';
+  tt.style.top  = (event.offsetY - 10) + 'px';
+}
+function onHoverOut() {
+  document.getElementById('tooltip').style.display = 'none';
+}
+
+// ═══ CLICK → DETAIL PANEL ════════════════════════════════════════════════════
+function onNodeClick(event, d) {
+  event.stopPropagation();
+  selectedNode = d;
+  renderDetail(d);
+  highlightNeighbours(d);
+}
+
+svg.on('click', () => {
+  selectedNode = null;
+  clearHighlight();
+  renderDetail(null);
+});
+
+function highlightNeighbours(d) {
+  const connectedIds = new Set([d.id]);
+  const connectedLinks = new Set();
+  links.forEach((l, i) => {
+    const sid = l.source.id||l.source;
+    const tid = l.target.id||l.target;
+    if (sid===d.id||tid===d.id) {
+      connectedIds.add(sid); connectedIds.add(tid);
+      connectedLinks.add(i);
+    }
+  });
+  nodeSel.classed('faded', nd => !connectedIds.has(nd.id));
+  nodeSel.classed('highlighted', nd => nd.id===d.id);
+  linkSel.classed('faded', (_, i) => !connectedLinks.has(i));
+  linkSel.classed('highlighted', (_, i) => connectedLinks.has(i));
+}
+
+function clearHighlight() {
+  nodeSel.classed('faded',false).classed('highlighted',false);
+  linkSel.classed('faded',false).classed('highlighted',false);
+}
+
+function renderDetail(d) {
+  const title = document.getElementById('detail-title');
+  const sub = document.getElementById('detail-sub');
+  const body = document.getElementById('detail-body');
+
+  if (!d) {
+    title.textContent = 'Node Inspector';
+    sub.textContent = 'Click any node to inspect';
+    body.innerHTML = '<div class="detail-empty">Select a node in the graph to inspect its properties, connections, and alignment data.</div>';
+    return;
+  }
+
+  const typeLabel = {legal:'Legal Requirement',collection:'Requirement Collection',
+    requirement:'tair:Requirement',conjreq:'tair:ConjuntiveRequirement',
+    concept:'Concept',gap:'Gap Marker'}[d.nodeType]||d.nodeType;
+  title.textContent = d.id;
+  sub.textContent = typeLabel;
+
+  let html = '';
+  const prop = (k,v,mono=false) => v ? `<div class="prop-row"><div class="prop-key">${k}</div><div class="prop-val${mono?' mono':''}">${v}</div></div>` : '';
+
+  html += prop('ID', d.id, true);
+  html += prop('Label', d.label||d.id);
+  if (d.clause) html += prop('Clause', d.clause, true);
+  if (d.source) html += prop('Source', d.source, true);
+  if (d.broader) html += prop('skos:broader', d.broader, true);
+  if (d.decomposes) html += prop('tair:decomposes', d.decomposes, true);
+  if (d.def) html += prop('Definition', d.def);
+
+  // Alignment info if legal
+  if (d.nodeType==='legal') {
+    const myMappings = links.filter(l => (l.target.id||l.target)===d.id && l.type==='align');
+    if (myMappings.length) {
+      html += '<div class="prop-row"><div class="prop-key">Alignments</div><div class="connected-list">';
+      myMappings.forEach(l => {
+        const cls = `badge badge-${l.alignClass||'na'}`;
+        const srcId = l.source.id||l.source;
+        html += `<div class="connected-item" onclick="focusNode('${srcId}')">
+          <span class="${cls}">${l.alignType}</span> ${srcId}</div>`;
+      });
+      html += '</div></div>';
+    }
+  }
+
+  // For tech requirements — show which legal reqs they map to
+  if (d.nodeType==='requirement'||d.nodeType==='conjreq') {
+    const myAligns = links.filter(l => (l.source.id||l.source)===d.id && l.type==='align');
+    if (myAligns.length) {
+      html += '<div class="prop-row"><div class="prop-key">Maps to Legal</div><div class="connected-list">';
+      myAligns.forEach(l => {
+        const cls = `badge badge-${l.alignClass||'na'}`;
+        const tgtId = l.target.id||l.target;
+        html += `<div class="connected-item" onclick="focusNode('${tgtId}')">
+          <span class="${cls}">${l.alignType||'?'}</span> ${tgtId}
+          ${l.justification ? `<div style="font-size:9px;color:var(--muted);margin-top:2px">${l.justification.slice(0,80)}…</div>` : ''}
+        </div>`;
+      });
+      html += '</div></div>';
+    }
+    // For conjreq — show parent
+    const decomp = links.filter(l => (l.source.id||l.source)===d.id && l.type==='decomp');
+    if (decomp.length) {
+      const pid = decomp[0].target.id||decomp[0].target;
+      html += prop('Parent Req', `<span class="connected-item" onclick="focusNode('${pid}')" style="display:inline">${pid}</span>`);
+    }
+    // Children
+    const children = links.filter(l => (l.target.id||l.target)===d.id && l.type==='decomp');
+    if (children.length) {
+      html += `<div class="prop-row"><div class="prop-key">ConjReqs (${children.length})</div><div class="connected-list">`;
+      children.slice(0,6).forEach(l => {
+        const sid = l.source.id||l.source;
+        html += `<div class="connected-item" onclick="focusNode('${sid}')">${sid}</div>`;
+      });
+      if (children.length>6) html += `<div style="font-size:9px;color:var(--muted);padding:4px 8px">+${children.length-6} more</div>`;
+      html += '</div></div>';
+    }
+  }
+
+  // For collections — show member requirements
+  if (d.nodeType==='collection') {
+    const members = links.filter(l => (l.target.id||l.target)===d.id && l.type==='broader');
+    if (members.length) {
+      html += `<div class="prop-row"><div class="prop-key">Members (${members.length})</div><div class="connected-list">`;
+      members.slice(0,8).forEach(l => {
+        const sid = l.source.id||l.source;
+        html += `<div class="connected-item" onclick="focusNode('${sid}')">${sid}</div>`;
+      });
+      if (members.length>8) html += `<div style="font-size:9px;color:var(--muted);padding:4px 8px">+${members.length-8} more</div>`;
+      html += '</div></div>';
+    }
+  }
+
+  body.innerHTML = html;
+}
+
+function focusNode(id) {
+  const d = nodeById[id];
+  if (!d) return;
+  selectedNode = d;
+  renderDetail(d);
+  highlightNeighbours(d);
+  // Pan to node
+  const scale = d3.zoomTransform(svg.node()).k;
+  svg.transition().duration(400).call(
+    zoom.transform,
+    d3.zoomIdentity.translate(W/2 - d.x*scale, H/2 - d.y*scale).scale(scale)
+  );
+}
+
+// ═══ VISIBILITY ═══════════════════════════════════════════════════════════════
+function refreshVisibility() {
+  nodeSel.style('display', d => visibleTypes.has(d.nodeType) ? null : 'none');
+  linkSel.style('display', l => {
+    const sid = l.source.id||l.source;
+    const tid = l.target.id||l.target;
+    const sn = nodeById[sid], tn = nodeById[tid];
+    if (!sn||!tn) return 'none';
+    if (!visibleTypes.has(sn.nodeType)||!visibleTypes.has(tn.nodeType)) return 'none';
+    if (l.type==='align' && !visibleAligns.has(l.alignType)) return 'none';
+    return null;
+  });
+}
+
+// ═══ CONTROLS ════════════════════════════════════════════════════════════════
+function togglePhysics() {
+  physicsOn = !physicsOn;
+  const btn = document.getElementById('btn-physics');
+  if (physicsOn) { simulation.alphaTarget(0.1).restart(); btn.classList.add('active'); }
+  else { simulation.alphaTarget(0).stop(); btn.classList.remove('active'); }
+}
+
+function toggleLabels() {
+  showLabels = !showLabels;
+  const btn = document.getElementById('btn-labels');
+  btn.classList.toggle('active', showLabels);
+  labelSel.style('display', showLabels ? null : 'none');
+}
+
+function resetCamera() {
+  svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+}
+
+function onSearch(q) {
+  searchQuery = q.toLowerCase().trim();
+  if (!searchQuery) { clearHighlight(); return; }
+  const matches = new Set();
+  nodes.forEach(n => {
+    const idL = (n.id||'').toLowerCase();
+    const labL = (n.label||'').toLowerCase();
+    if (idL.includes(searchQuery)||labL.includes(searchQuery)) matches.add(n.id);
+  });
+  nodeSel.classed('faded', d => !matches.has(d.id));
+  nodeSel.classed('highlighted', d => matches.has(d.id));
+  linkSel.classed('faded', l => {
+    const sid = l.source.id||l.source;
+    const tid = l.target.id||l.target;
+    return !matches.has(sid)&&!matches.has(tid);
+  });
+}
+
+function exportSVG() {
+  const svgEl = document.getElementById('kg-canvas');
+  const s = new XMLSerializer().serializeToString(svgEl);
+  const blob = new Blob([s], {type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'aidgo_knowledge_graph.svg';
+  a.click();
+}
+
+// ═══ RESIZE ══════════════════════════════════════════════════════════════════
+window.addEventListener('resize', () => {
+  W = wrap.clientWidth; H = wrap.clientHeight;
+  svg.attr('width',W).attr('height',H);
+  simulation.force('center', d3.forceCenter(W/2,H/2));
+  simulation.force('x', d3.forceX().x(d => {
+    if (d.nodeType==='legal') return W * 0.15;
+    if (d.nodeType==='collection') return W * 0.55;
+    if (d.nodeType==='requirement') return W * 0.65;
+    if (d.nodeType==='conjreq') return W * 0.75;
+    if (d.nodeType==='concept') return W * 0.88;
+    return W / 2;
+  }).strength(0.12));
+  simulation.alpha(0.3).restart();
+});
+
+// ═══ INIT ════════════════════════════════════════════════════════════════════
+buildFilters();
+updateStats();
+
+// Slow cool-down after 3s
+setTimeout(() => simulation.alphaTarget(0), 3000);
+</script>
+</body>
+</html>
