@@ -2,7 +2,7 @@
 
 These CSVs are the single source of truth for the knowledge graph. They were produced from the
 v1 site's embedded dataset by `aidgo_tools/migrate.py` (see its docstring for the exact command)
-and are edited directly from now on. After any change run `make && make test`.
+and are edited directly from now on; `migrate.py` refuses to overwrite them unless given `--force`. After any change run `make && make test`.
 
 All files are UTF-8, comma-separated, with a header row. Empty cell = no value.
 
@@ -39,7 +39,7 @@ no atomic obligation in the v2 dataset.
 | alignment_type | CompletelySatisfies, PartiallySatisfies, RelatedTo, ConflictsWith, NoAlignment |
 | alignment_basis | SemanticEquivalence, FunctionalEquivalence, ConceptualCoverage, ScopeOverlap, GapIdentified |
 | legal_focus | when the assertion targets one element of the obligation, that element (else empty) |
-| legal_focus_text | the wording of that element (else empty) |
+| legal_focus_text | the wording of that element (else empty); becomes `aidgo:legalFocusText` |
 | justification | why the type was assigned (required unless NoAlignment) |
 | gap | what is left unaddressed (required for PartiallySatisfies and NoAlignment) |
 | covered_cqs | competency questions the assertion helps answer |

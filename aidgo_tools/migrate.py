@@ -63,6 +63,8 @@ ARELLANO_CROSSWALK = {
 
 
 def write_csv(path: Path, header: list[str], rows: list[dict]) -> None:
+    if path.exists() and "--force" not in sys.argv:
+        raise SystemExit(f"{path} exists; data/ is edited directly now. Re-run with --force to overwrite.")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")
@@ -153,6 +155,7 @@ def migrate_arellano(xlsx: Path) -> None:
 
 
 def main(argv: list[str]) -> None:
+    argv = [a for a in argv if a != "--force"]
     if len(argv) < 3:
         raise SystemExit(__doc__)
     migrate_curated(extract_onto_data(Path(argv[1])), extract_onto_data(Path(argv[2]), "KG"))

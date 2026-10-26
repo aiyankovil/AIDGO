@@ -34,7 +34,6 @@ assertion as an annotated triple for SPARQL-star queries."""@en ;
     vann:preferredNamespacePrefix "aidgo" ;
     vann:preferredNamespaceUri "https://w3id.org/aidgo#" ;
     rdfs:seeAlso <https://github.com/aiyankovil/AIDGO> ;
-    owl:priorVersion <https://w3id.org/aidgo/1.0> ;
     owl:versionIRI <https://w3id.org/aidgo/2.0.0> ;
     owl:versionInfo "2.0.0" .
 
@@ -54,7 +53,7 @@ aidgo:LexicalConceptLinking_v1 a prov:Activity ;
 
 aidgo:Map_10.1_7.3.2.1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.1_7.3.2.1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
@@ -68,7 +67,7 @@ aidgo:Map_10.1_7.3.2.1 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.1_7.3.3.1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.1_7.3.3.1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ConceptualCoverage ;
@@ -82,7 +81,7 @@ aidgo:Map_10.1_7.3.3.1 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.1_6.3.2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.1_6.3.2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -95,7 +94,7 @@ aidgo:Map_10.2.1_6.3.2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.1_7.3.1.1_Rb" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -103,13 +102,14 @@ aidgo:Map_10.2.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:CompletelySatisfies ;
     aidgo:coveredCQs "CQ-M1, CQ-M5" ;
     aidgo:legalFocus "Governance practices appropriate for intended purpose"@en ;
+    aidgo:legalFocusText "Training, validation and testing data sets shall be subject to data governance practices appropriate for the intended purpose."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.2_1 ;
     aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Rb ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.2.2_7.3.2.2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.2_7.3.2.2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -123,7 +123,7 @@ aidgo:Map_10.2.2_7.3.2.2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.3_7.3.4.2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.3_7.3.4.2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -132,13 +132,14 @@ aidgo:Map_10.2.3_7.3.4.2 a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:PartiallySatisfies ;
     aidgo:coveredCQs "CQ-M2, CQ-M5" ;
     aidgo:legalFocus "Governance shall concern data origin"@en ;
+    aidgo:legalFocusText "[Data governance and management practices shall concern in particular] the origin of data."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.2_3 ;
     aidgo:technicalRequirement iso5259:AidgoReq_7_3_4_2 ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.2.3_7.3.4.3 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.3_7.3.4.3" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -152,7 +153,7 @@ aidgo:Map_10.2.3_7.3.4.3 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.4_7.3.5.2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.4_7.3.5.2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -166,7 +167,7 @@ aidgo:Map_10.2.4_7.3.5.2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.4_7.3.6.1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.4_7.3.6.1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -174,13 +175,14 @@ aidgo:Map_10.2.4_7.3.6.1 a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:CompletelySatisfies ;
     aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
     aidgo:legalFocus "Governance shall concern data enrichment and augmentation"@en ;
+    aidgo:legalFocusText "[Data governance and management practices shall concern in particular] enrichment and aggregation."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.2_4 ;
     aidgo:technicalRequirement iso5259:AidgoReq_7_3_6_1 ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.2.5_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.5_7.3.2.3_R2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ConceptualCoverage ;
@@ -194,7 +196,7 @@ aidgo:Map_10.2.5_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.6_7.3.1.1_Ra a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.6_7.3.1.1_Ra" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -208,7 +210,7 @@ aidgo:Map_10.2.6_7.3.1.1_Ra a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.7_7.3.5.2_Rd a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.7_7.3.5.2_Rd" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -222,7 +224,7 @@ aidgo:Map_10.2.7_7.3.5.2_Rd a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.2.7_8.3.4_R1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.7_8.3.4_R1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ConceptualCoverage ;
@@ -231,13 +233,14 @@ aidgo:Map_10.2.7_8.3.4_R1 a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:PartiallySatisfies ;
     aidgo:coveredCQs "CQ-M2, CQ-M5" ;
     aidgo:legalFocus "Governance shall concern examination for possible biases"@en ;
+    aidgo:legalFocusText "[Data governance and management practices shall concern in particular] an examination of possible biases."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.2_7 ;
     aidgo:technicalRequirement iso5259:AidgoReq_8_3_4_R1 ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.2.8_8.3.4_R2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.2.8_8.3.4_R2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
@@ -251,7 +254,7 @@ aidgo:Map_10.2.8_8.3.4_R2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.3.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.3.1_7.3.1.1_Rb" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -259,13 +262,14 @@ aidgo:Map_10.3.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:CompletelySatisfies ;
     aidgo:coveredCQs "CQ-M1, CQ-M5" ;
     aidgo:legalFocus "Datasets shall be relevant for intended purpose"@en ;
+    aidgo:legalFocusText "Training, validation and testing data sets shall be relevant for the intended purpose."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.3_1 ;
     aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Rb ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.3.1_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.3.1_7.3.2.3_R2" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -278,7 +282,7 @@ aidgo:Map_10.3.1_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.3.1_7.3.5.2_Ra_Rb a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.3.1_7.3.5.2_Ra_Rb" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:SemanticEquivalence ;
@@ -286,13 +290,14 @@ aidgo:Map_10.3.1_7.3.5.2_Ra_Rb a aidgo:AlignmentAssertion ;
     aidgo:alignmentType aidgo:CompletelySatisfies ;
     aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
     aidgo:legalFocus "Datasets shall be free of errors and complete"@en ;
+    aidgo:legalFocusText "Training, validation and testing data sets shall be, to the best extent possible, free of errors and complete for the intended purpose."@en ;
     aidgo:legalRequirement aiapr:AiaPrReq_10.3_1 ;
     aidgo:technicalRequirement iso5259:AidgoReq_7_3_5_2 ;
     aidgo:validationStatus aidgo:ExpertValidated .
 
 aidgo:Map_10.3.2_7.3.2.3_R1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.3.2_7.3.2.3_R1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -306,7 +311,7 @@ aidgo:Map_10.3.2_7.3.2.3_R1 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.4_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.4_7.3.1.1_Rb" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ConceptualCoverage ;
@@ -320,7 +325,7 @@ aidgo:Map_10.4_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.5.a_NoAlignment a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.5.a_NoAlignment" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:GapIdentified ;
@@ -334,7 +339,7 @@ aidgo:Map_10.5.a_NoAlignment a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.5.b_NoAlignment a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.5.b_NoAlignment" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:GapIdentified ;
@@ -348,7 +353,7 @@ aidgo:Map_10.5.b_NoAlignment a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.5.e_7.3.8.3 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.5.e_7.3.8.3" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
@@ -362,7 +367,7 @@ aidgo:Map_10.5.e_7.3.8.3 a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.5_NoAlignment a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.5_NoAlignment" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:GapIdentified ;
@@ -376,7 +381,7 @@ aidgo:Map_10.5_NoAlignment a aidgo:AlignmentAssertion ;
 
 aidgo:Map_10.6_7.3.2.3_R1 a aidgo:AlignmentAssertion ;
     dct:identifier "Map_10.6_7.3.2.3_R1" ;
-    prov:generatedAtTime "2026-04-14"^^xsd:date ;
+    prov:generatedAtTime "2026-04-14T00:00:00+00:00"^^xsd:dateTime ;
     prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil ;
     prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
     aidgo:alignmentBasis aidgo:ScopeOverlap ;
@@ -409,6 +414,11 @@ aidgo:SupplyChainStage a aidgo:DQMLCStage ;
     skos:notation "9" ;
     skos:prefLabel "Data quality in supply chains"@en .
 
+aidgo:Unassessed a aidgo:CoverageStatus ;
+    skos:definition "No alignment assertion has been made on the obligation yet."@en ;
+    skos:inScheme aidgo:CoverageStatusScheme ;
+    skos:prefLabel "Unassessed"@en .
+
 aidgo:alignedWith a owl:ObjectProperty ;
     rdfs:label "aligned with"@en ;
     rdfs:comment "Shortcut legal -> technical edge. Used as the annotated triple in the RDF-star layer; each occurrence is reified by exactly one aidgo:AlignmentAssertion."@en ;
@@ -424,13 +434,11 @@ aidgo:alignmentBasis a owl:FunctionalProperty,
 aidgo:alignmentGap a owl:DatatypeProperty ;
     rdfs:label "alignment gap"@en ;
     rdfs:comment "What the technical requirement leaves unaddressed relative to the legal requirement."@en ;
-    rdfs:domain aidgo:AlignmentAssertion ;
-    rdfs:range rdf:langString .
+    rdfs:domain aidgo:AlignmentAssertion .
 
 aidgo:alignmentJustification a owl:DatatypeProperty ;
     rdfs:label "alignment justification"@en ;
-    rdfs:domain aidgo:AlignmentAssertion ;
-    rdfs:range rdf:langString .
+    rdfs:domain aidgo:AlignmentAssertion .
 
 aidgo:alignmentType a owl:FunctionalProperty,
         owl:ObjectProperty ;
@@ -450,8 +458,7 @@ aidgo:clauseNumber a owl:DatatypeProperty ;
 
 aidgo:conflictDescription a owl:DatatypeProperty ;
     rdfs:label "conflict description"@en ;
-    rdfs:domain aidgo:AlignmentAssertion ;
-    rdfs:range rdf:langString .
+    rdfs:domain aidgo:AlignmentAssertion .
 
 aidgo:coverageStatus a owl:FunctionalProperty,
         owl:ObjectProperty ;
@@ -469,16 +476,21 @@ aidgo:dqmlcStage a owl:ObjectProperty ;
     rdfs:label "DQMLC stage"@en ;
     rdfs:range aidgo:DQMLCStage .
 
-aidgo:hasAssertion a owl:ObjectProperty ;
-    rdfs:label "has assertion"@en ;
-    rdfs:comment "RDF-star layer: links an annotated (quoted) triple to the AlignmentAssertion that reifies it."@en ;
-    rdfs:range aidgo:AlignmentAssertion .
+aidgo:inCollection a owl:ObjectProperty ;
+    rdfs:label "in collection"@en ;
+    rdfs:comment "Membership of a requirement in a clause-level collection (not a SKOS hierarchy relation)."@en ;
+    rdfs:domain tair:Requirement ;
+    rdfs:range aidgo:RequirementCollection .
 
 aidgo:legalFocus a owl:DatatypeProperty ;
     rdfs:label "legal focus"@en ;
     rdfs:comment "When an assertion targets one element of a legal requirement (e.g. only 'enrichment and aggregation' within Art. 10(2)(c)), the element it targets. The alignment type is judged against this focus, not the whole obligation."@en ;
-    rdfs:domain aidgo:AlignmentAssertion ;
-    rdfs:range rdf:langString .
+    rdfs:domain aidgo:AlignmentAssertion .
+
+aidgo:legalFocusText a owl:DatatypeProperty ;
+    rdfs:label "legal focus text"@en ;
+    rdfs:comment "Wording of the element of the legal requirement named by aidgo:legalFocus."@en ;
+    rdfs:domain aidgo:AlignmentAssertion .
 
 aidgo:legalRequirement a owl:FunctionalProperty,
         owl:ObjectProperty ;
@@ -509,11 +521,11 @@ iso5259:AidgoConjReq_10.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] approved tool list with version information"@en ;
     skos:prefLabel "DQ tools — a"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
 iso5259:AidgoConjReq_10.2_Rb a aidgo:ConjunctiveRequirement,
@@ -522,11 +534,11 @@ iso5259:AidgoConjReq_10.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] tool qualification and validation"@en ;
     skos:prefLabel "DQ tools — b"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
 iso5259:AidgoConjReq_10.2_Rc a aidgo:ConjunctiveRequirement,
@@ -535,11 +547,11 @@ iso5259:AidgoConjReq_10.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] access control and licensing"@en ;
     skos:prefLabel "DQ tools — c"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
 iso5259:AidgoConjReq_10.2_Rd a aidgo:ConjunctiveRequirement,
@@ -548,11 +560,11 @@ iso5259:AidgoConjReq_10.2_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] backup and recovery"@en ;
     skos:prefLabel "DQ tools — d"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
 iso5259:AidgoConjReq_10.2_Re a aidgo:ConjunctiveRequirement,
@@ -561,11 +573,11 @@ iso5259:AidgoConjReq_10.2_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] monitoring of tool-induced data quality issues"@en ;
     skos:prefLabel "DQ tools — e"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
@@ -575,11 +587,11 @@ iso5259:AidgoConjReq_10.2_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] tool change management"@en ;
     skos:prefLabel "DQ tools — f"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     aidgo:uses iso5259:changeManagement ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
@@ -589,11 +601,11 @@ iso5259:AidgoConjReq_10.2_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_10.2_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "[The organization shall manage data processing tools covering:] documentation of tool-specific data quality constraints"@en ;
     skos:prefLabel "DQ tools — g"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_10_2 .
 
@@ -603,11 +615,11 @@ iso5259:AidgoConjReq_11.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_11.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQDependenciesReqColl ;
     skos:definition "[The organization shall manage data quality dependencies by:] identifying all data quality dependencies between datasets and processes"@en ;
     skos:prefLabel "DQ dependencies — a"@en ;
     aidgo:clauseNumber "11.2" ;
     aidgo:dqmlcStage aidgo:DependencyManagementStage ;
+    aidgo:inCollection iso5259:AidgoDQDependenciesReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataset ;
     tair:decomposes iso5259:AidgoReq_11_2 .
@@ -618,11 +630,11 @@ iso5259:AidgoConjReq_11.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_11.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQDependenciesReqColl ;
     skos:definition "[The organization shall manage data quality dependencies by:] documenting the impact of dependency failures on data quality"@en ;
     skos:prefLabel "DQ dependencies — b"@en ;
     aidgo:clauseNumber "11.2" ;
     aidgo:dqmlcStage aidgo:DependencyManagementStage ;
+    aidgo:inCollection iso5259:AidgoDQDependenciesReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_11_2 .
 
@@ -632,11 +644,11 @@ iso5259:AidgoConjReq_11.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_11.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQDependenciesReqColl ;
     skos:definition "[The organization shall manage data quality dependencies by:] specifying mitigation strategies for dependency-related quality risks"@en ;
     skos:prefLabel "DQ dependencies — c"@en ;
     aidgo:clauseNumber "11.2" ;
     aidgo:dqmlcStage aidgo:DependencyManagementStage ;
+    aidgo:inCollection iso5259:AidgoDQDependenciesReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_11_2 .
 
@@ -646,11 +658,11 @@ iso5259:AidgoConjReq_6.3.10_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.10_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
     skos:definition "[The organization shall manage project-specific data. The organization shall:] establish a suitable project-specific DQM process"@en ;
     skos:prefLabel "Project-specific DQM — a"@en ;
     aidgo:clauseNumber "6.3.10" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoProjectSpecificDQReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_10 .
 
 iso5259:AidgoConjReq_6.3.10_Rb a aidgo:ConjunctiveRequirement,
@@ -659,11 +671,11 @@ iso5259:AidgoConjReq_6.3.10_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.10_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
     skos:definition "[The organization shall manage project-specific data. The organization shall:] maintain a list of relevant DQ claims with benchmarks for each milestone"@en ;
     skos:prefLabel "Project-specific DQM — b"@en ;
     aidgo:clauseNumber "6.3.10" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoProjectSpecificDQReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_10 .
 
 iso5259:AidgoConjReq_6.3.10_Rc a aidgo:ConjunctiveRequirement,
@@ -672,11 +684,11 @@ iso5259:AidgoConjReq_6.3.10_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.10_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
     skos:definition "[The organization shall manage project-specific data. The organization shall:] adopt processes to identify and manage all relevant DQ measures"@en ;
     skos:prefLabel "Project-specific DQM — c"@en ;
     aidgo:clauseNumber "6.3.10" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoProjectSpecificDQReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_10 .
 
 iso5259:AidgoConjReq_6.3.2_Ra a aidgo:ConjunctiveRequirement,
@@ -685,11 +697,11 @@ iso5259:AidgoConjReq_6.3.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] have rules and processes to achieve quality (according to this document) taking into account the data quality model as applied to the applicable products and services"@en ;
     skos:prefLabel "Data quality culture — a"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityModel ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
@@ -700,11 +712,11 @@ iso5259:AidgoConjReq_6.3.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] define and implement data quality management processes, and performing related data quality activities"@en ;
     skos:prefLabel "Data quality culture — b"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
@@ -715,11 +727,11 @@ iso5259:AidgoConjReq_6.3.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] integrate the data quality management processes and activities, to the extent appropriate, into other management processes and activities, such as general quality management and risk management"@en ;
     skos:prefLabel "Data quality culture — c"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityManagement,
         iso5259:riskManagement ;
@@ -731,11 +743,11 @@ iso5259:AidgoConjReq_6.3.2_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] document the performed activities"@en ;
     skos:prefLabel "Data quality culture — d"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
 
@@ -745,11 +757,11 @@ iso5259:AidgoConjReq_6.3.2_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] provide resources sufficient to perform data quality management"@en ;
     skos:prefLabel "Data quality culture — e"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
@@ -760,11 +772,11 @@ iso5259:AidgoConjReq_6.3.2_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] monitor, and to the extent necessary, review and improve the data quality management processes"@en ;
     skos:prefLabel "Data quality culture — f"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
@@ -775,11 +787,11 @@ iso5259:AidgoConjReq_6.3.2_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] provide the required authority to involved personnel"@en ;
     skos:prefLabel "Data quality culture — g"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
 
@@ -789,11 +801,11 @@ iso5259:AidgoConjReq_6.3.2_Rh a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.2_Rh" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "[The organization should sustain a data quality culture. The organization shall:] communicate data quality policies within the organization"@en ;
     skos:prefLabel "Data quality culture — h"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_2 .
 
@@ -803,11 +815,11 @@ iso5259:AidgoConjReq_6.3.3_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.3_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     skos:definition "[The organization shall meet data quality requirements. The organization shall:] have processes for communicating, analysing, evaluating, resolving and closing (implementing a resolution or giving a reason for not being an unreasonable risk) issues of data quality"@en ;
     skos:prefLabel "DQ issues management — a"@en ;
     aidgo:clauseNumber "6.3.3" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:qualityRequirement ;
     tair:decomposes iso5259:AidgoReq_6_3_3 .
@@ -818,11 +830,11 @@ iso5259:AidgoConjReq_6.3.3_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.3_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     skos:definition "[The organization shall meet data quality requirements. The organization shall:] document closed issues"@en ;
     skos:prefLabel "DQ issues management — b"@en ;
     aidgo:clauseNumber "6.3.3" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     aidgo:uses iso5259:qualityRequirement ;
     tair:decomposes iso5259:AidgoReq_6_3_3 .
 
@@ -832,11 +844,11 @@ iso5259:AidgoConjReq_6.3.3_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.3_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     skos:definition "[The organization shall meet data quality requirements. The organization shall:] escalate issues that cannot be closed"@en ;
     skos:prefLabel "DQ issues management — c"@en ;
     aidgo:clauseNumber "6.3.3" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     aidgo:uses iso5259:qualityRequirement ;
     tair:decomposes iso5259:AidgoReq_6_3_3 .
 
@@ -846,11 +858,11 @@ iso5259:AidgoConjReq_6.3.4_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.4_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
     skos:definition "[The organization shall manage competence. The organization shall:] document required skills and tools to process the data"@en ;
     skos:prefLabel "Competence management — a"@en ;
     aidgo:clauseNumber "6.3.4" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoCompetenceMgmtReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_4 .
 
 iso5259:AidgoConjReq_6.3.4_Rb a aidgo:ConjunctiveRequirement,
@@ -859,11 +871,11 @@ iso5259:AidgoConjReq_6.3.4_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.4_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
     skos:definition "[The organization shall manage competence. The organization shall:] ensure that involved persons have sufficient skills to perform their activities and duties"@en ;
     skos:prefLabel "Competence management — b"@en ;
     aidgo:clauseNumber "6.3.4" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoCompetenceMgmtReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_4 .
 
 iso5259:AidgoConjReq_6.3.4_Rc a aidgo:ConjunctiveRequirement,
@@ -872,11 +884,11 @@ iso5259:AidgoConjReq_6.3.4_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.4_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
     skos:definition "[The organization shall manage competence. The organization shall:] maintain proof of sufficient skill with the data quality system"@en ;
     skos:prefLabel "Competence management — c"@en ;
     aidgo:clauseNumber "6.3.4" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoCompetenceMgmtReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_4 .
 
@@ -886,11 +898,11 @@ iso5259:AidgoConjReq_6.3.4_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.4_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
     skos:definition "[The organization shall manage competence. The organization shall:] keep appropriate records of training and experience that substantiate claims of competency"@en ;
     skos:prefLabel "Competence management — d"@en ;
     aidgo:clauseNumber "6.3.4" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoCompetenceMgmtReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_4 .
 
 iso5259:AidgoConjReq_6.3.5_Ra a aidgo:ConjunctiveRequirement,
@@ -899,11 +911,11 @@ iso5259:AidgoConjReq_6.3.5_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.5_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoResourceMgmtReqColl ;
     skos:definition "[The organization shall provide the resources required for data quality management, including:] appropriate software licenses and technical support for required tools"@en ;
     skos:prefLabel "Resource management — a"@en ;
     aidgo:clauseNumber "6.3.5" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoResourceMgmtReqColl ;
     aidgo:uses iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_5 .
 
@@ -913,11 +925,11 @@ iso5259:AidgoConjReq_6.3.5_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.5_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoResourceMgmtReqColl ;
     skos:definition "[The organization shall provide the resources required for data quality management, including:] required IT infrastructure or services to meet the storage and compute requirements"@en ;
     skos:prefLabel "Resource management — b"@en ;
     aidgo:clauseNumber "6.3.5" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoResourceMgmtReqColl ;
     aidgo:uses iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_5 .
 
@@ -927,11 +939,11 @@ iso5259:AidgoConjReq_6.3.5_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.5_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoResourceMgmtReqColl ;
     skos:definition "[The organization shall provide the resources required for data quality management, including:] availability of skilled persons"@en ;
     skos:prefLabel "Resource management — c"@en ;
     aidgo:clauseNumber "6.3.5" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoResourceMgmtReqColl ;
     aidgo:uses iso5259:dataQualityManagement ;
     tair:decomposes iso5259:AidgoReq_6_3_5 .
 
@@ -941,11 +953,11 @@ iso5259:AidgoConjReq_6.3.8_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.8_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "[The implemented processes shall be audited. The audit shall:] evaluate the data quality plan against the organizational rules and processes for data quality"@en ;
     skos:prefLabel "DQ audit — a"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityPlan ;
     tair:decomposes iso5259:AidgoReq_6_3_8 .
@@ -956,11 +968,11 @@ iso5259:AidgoConjReq_6.3.8_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.8_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "[The implemented processes shall be audited. The audit shall:] determine whether planned activities have been implemented and maintained effectively"@en ;
     skos:prefLabel "DQ audit — b"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_8 .
 
 iso5259:AidgoConjReq_6.3.8_Rc a aidgo:ConjunctiveRequirement,
@@ -969,11 +981,11 @@ iso5259:AidgoConjReq_6.3.8_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.8_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "[The implemented processes shall be audited. The audit shall:] identify non-compliances and propose corrective actions"@en ;
     skos:prefLabel "DQ audit — c"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_8 .
 
 iso5259:AidgoConjReq_6.3.8_Rd a aidgo:ConjunctiveRequirement,
@@ -982,11 +994,11 @@ iso5259:AidgoConjReq_6.3.8_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.8_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "[The implemented processes shall be audited. The audit shall:] document audit findings and conclusions"@en ;
     skos:prefLabel "DQ audit — d"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     tair:decomposes iso5259:AidgoReq_6_3_8 .
 
 iso5259:AidgoConjReq_6.3.8_Re a aidgo:ConjunctiveRequirement,
@@ -995,11 +1007,11 @@ iso5259:AidgoConjReq_6.3.8_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.8_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "[The implemented processes shall be audited. The audit shall:] communicate findings to relevant stakeholders"@en ;
     skos:prefLabel "DQ audit — e"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     aidgo:uses iso5259:stakeholder ;
     tair:decomposes iso5259:AidgoReq_6_3_8 .
 
@@ -1009,11 +1021,11 @@ iso5259:AidgoConjReq_6.3.9_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.9_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] confirm that work products meet the data specification"@en ;
     skos:prefLabel "Confirmation review — a"@en ;
     aidgo:clauseNumber "6.3.9" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_6_3_9 .
@@ -1024,11 +1036,11 @@ iso5259:AidgoConjReq_6.3.9_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.9_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] confirm that data quality measures have been applied correctly"@en ;
     skos:prefLabel "Confirmation review — b"@en ;
     aidgo:clauseNumber "6.3.9" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_6_3_9 .
@@ -1039,11 +1051,11 @@ iso5259:AidgoConjReq_6.3.9_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.9_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] identify any remaining open issues"@en ;
     skos:prefLabel "Confirmation review — c"@en ;
     aidgo:clauseNumber "6.3.9" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_9 .
 
@@ -1053,11 +1065,11 @@ iso5259:AidgoConjReq_6.3.9_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_6.3.9_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "[Data quality shall be confirmed. All work products shall undergo confirmation reviews that:] authorise progression to the next life cycle stage"@en ;
     skos:prefLabel "Confirmation review — d"@en ;
     aidgo:clauseNumber "6.3.9" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_6_3_9 .
 
@@ -1067,11 +1079,11 @@ iso5259:AidgoConjReq_7.3.1.1_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.1.1_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataMotivationReqColl ;
     skos:definition "[The organization shall complete data motivation and conceptualization. The organization shall:] document the data quality requirements"@en ;
     skos:prefLabel "Data motivation — c"@en ;
     aidgo:clauseNumber "7.3.1.1" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoDataMotivationReqColl ;
     aidgo:uses iso5259:qualityRequirement ;
     tair:decomposes iso5259:AidgoReq_7_3_1_1 .
 
@@ -1081,11 +1093,11 @@ iso5259:AidgoConjReq_7.3.1.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.1.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoStakeholderAnalysisReqColl ;
     skos:definition "[The organization shall conduct stakeholder analysis. The organization shall:] identify all stakeholders relevant to the data and the intended use"@en ;
     skos:prefLabel "Stakeholder analysis — a"@en ;
     aidgo:clauseNumber "7.3.1.2" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoStakeholderAnalysisReqColl ;
     aidgo:uses iso5259:stakeholder ;
     tair:decomposes iso5259:AidgoReq_7_3_1_2 .
 
@@ -1095,11 +1107,11 @@ iso5259:AidgoConjReq_7.3.1.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.1.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoStakeholderAnalysisReqColl ;
     skos:definition "[The organization shall conduct stakeholder analysis. The organization shall:] document stakeholder data quality requirements and expectations"@en ;
     skos:prefLabel "Stakeholder analysis — b"@en ;
     aidgo:clauseNumber "7.3.1.2" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoStakeholderAnalysisReqColl ;
     aidgo:uses iso5259:qualityRequirement,
         iso5259:stakeholder ;
     tair:decomposes iso5259:AidgoReq_7_3_1_2 .
@@ -1110,11 +1122,11 @@ iso5259:AidgoConjReq_7.3.2.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] the data type(s) of each data item"@en ;
     skos:prefLabel "Data format — a"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataSpecificationDoc,
         iso5259:dataType ;
@@ -1126,11 +1138,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] the allowed range or set of values for each data item"@en ;
     skos:prefLabel "Data format — b"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
@@ -1141,11 +1153,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] the encoding and representation standards"@en ;
     skos:prefLabel "Data format — c"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
 
@@ -1155,11 +1167,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] the unit of measurement for quantitative data items"@en ;
     skos:prefLabel "Data format — d"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataSpecificationDoc,
         iso5259:measurement ;
@@ -1171,11 +1183,11 @@ iso5259:AidgoConjReq_7.3.2.2_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] the definition of missing or null values"@en ;
     skos:prefLabel "Data format — e"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
 
@@ -1185,11 +1197,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] any required data structure (e.g. tabular, hierarchical, graph)"@en ;
     skos:prefLabel "Data format — f"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
 
@@ -1199,11 +1211,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] inter-data constraints and integrity rules"@en ;
     skos:prefLabel "Data format — g"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
 
@@ -1213,11 +1225,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rh a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rh" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] metadata requirements"@en ;
     skos:prefLabel "Data format — h"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc,
         iso5259:metadata ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
@@ -1228,11 +1240,11 @@ iso5259:AidgoConjReq_7.3.2.2_Ri a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Ri" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] versioning and provenance requirements"@en ;
     skos:prefLabel "Data format — i"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataProvenance,
         iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
@@ -1243,11 +1255,11 @@ iso5259:AidgoConjReq_7.3.2.2_Rj a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.2.2_Rj" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "[The data specification shall include the following format specifications:] any other format constraints relevant to intended use"@en ;
     skos:prefLabel "Data format — j"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_2_2 .
 
@@ -1257,11 +1269,11 @@ iso5259:AidgoConjReq_7.3.3.1_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.1_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "[The organization shall establish a data quality plan that covers:] the processes, activities and resources required to meet the data specification throughout the data life cycle"@en ;
     skos:prefLabel "Data planning — a"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataLifeCycle,
         iso5259:dataQualityPlan,
         iso5259:dataSpecificationDoc ;
@@ -1273,11 +1285,11 @@ iso5259:AidgoConjReq_7.3.3.1_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.1_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "[The organization shall establish a data quality plan that covers:] entry and exit criteria for each DQMLC stage"@en ;
     skos:prefLabel "Data planning — b"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle,
         iso5259:dataQualityPlan ;
     tair:decomposes iso5259:AidgoReq_7_3_3_1 .
@@ -1288,11 +1300,11 @@ iso5259:AidgoConjReq_7.3.3.1_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.1_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "[The organization shall establish a data quality plan that covers:] the data quality measures to be applied"@en ;
     skos:prefLabel "Data planning — c"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure,
         iso5259:dataQualityPlan ;
     tair:decomposes iso5259:AidgoReq_7_3_3_1 .
@@ -1303,11 +1315,11 @@ iso5259:AidgoConjReq_7.3.3.1_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.1_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "[The organization shall establish a data quality plan that covers:] responsibilities and authorities for DQM activities"@en ;
     skos:prefLabel "Data planning — d"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataQualityPlan ;
     tair:decomposes iso5259:AidgoReq_7_3_3_1 .
 
@@ -1317,11 +1329,11 @@ iso5259:AidgoConjReq_7.3.3.1_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.1_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "[The organization shall establish a data quality plan that covers:] schedule and milestones for DQM activities"@en ;
     skos:prefLabel "Data planning — e"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataQualityPlan ;
     tair:decomposes iso5259:AidgoReq_7_3_3_1 .
 
@@ -1331,11 +1343,11 @@ iso5259:AidgoConjReq_7.3.3.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "[The organization shall establish life cycle stage-specific plans addressing:] data acquisition plan"@en ;
     skos:prefLabel "Life cycle plans — a"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataAcquisition ;
     tair:decomposes iso5259:AidgoReq_7_3_3_2 .
 
@@ -1345,11 +1357,11 @@ iso5259:AidgoConjReq_7.3.3.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "[The organization shall establish life cycle stage-specific plans addressing:] data preprocessing plan"@en ;
     skos:prefLabel "Life cycle plans — b"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataPreprocessing ;
     tair:decomposes iso5259:AidgoReq_7_3_3_2 .
 
@@ -1359,11 +1371,11 @@ iso5259:AidgoConjReq_7.3.3.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "[The organization shall establish life cycle stage-specific plans addressing:] data augmentation plan"@en ;
     skos:prefLabel "Life cycle plans — c"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataAugmentation ;
     tair:decomposes iso5259:AidgoReq_7_3_3_2 .
 
@@ -1373,11 +1385,11 @@ iso5259:AidgoConjReq_7.3.3.2_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.2_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "[The organization shall establish life cycle stage-specific plans addressing:] data provisioning plan"@en ;
     skos:prefLabel "Life cycle plans — d"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_3_2 .
 
@@ -1387,11 +1399,11 @@ iso5259:AidgoConjReq_7.3.3.2_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.3.2_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "[The organization shall establish life cycle stage-specific plans addressing:] data decommissioning plan"@en ;
     skos:prefLabel "Life cycle plans — e"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataDecommissioning ;
     tair:decomposes iso5259:AidgoReq_7_3_3_2 .
 
@@ -1401,11 +1413,11 @@ iso5259:AidgoConjReq_7.3.4.3_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] reasons for collection, including the relationship to the data specification"@en ;
     skos:prefLabel "Data collection — a"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
@@ -1415,11 +1427,11 @@ iso5259:AidgoConjReq_7.3.4.3_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] the method of data collection"@en ;
     skos:prefLabel "Data collection — b"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
 iso5259:AidgoConjReq_7.3.4.3_Rc a aidgo:ConjunctiveRequirement,
@@ -1428,11 +1440,11 @@ iso5259:AidgoConjReq_7.3.4.3_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] the data collection specification including data item descriptions"@en ;
     skos:prefLabel "Data collection — c"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     aidgo:uses iso5259:dataItem ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
@@ -1442,11 +1454,11 @@ iso5259:AidgoConjReq_7.3.4.3_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] required resources and skills for data collection"@en ;
     skos:prefLabel "Data collection — d"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
 iso5259:AidgoConjReq_7.3.4.3_Re a aidgo:ConjunctiveRequirement,
@@ -1455,11 +1467,11 @@ iso5259:AidgoConjReq_7.3.4.3_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] anonymisation or pseudonymisation methods where applicable"@en ;
     skos:prefLabel "Data collection — e"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
 iso5259:AidgoConjReq_7.3.4.3_Rf a aidgo:ConjunctiveRequirement,
@@ -1468,11 +1480,11 @@ iso5259:AidgoConjReq_7.3.4.3_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] measurement scales and units"@en ;
     skos:prefLabel "Data collection — f"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     aidgo:uses iso5259:measurementScale ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
@@ -1482,11 +1494,11 @@ iso5259:AidgoConjReq_7.3.4.3_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.4.3_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "[The organization shall document data collection. The organization shall document:] expected deviations from the data specification and their justification"@en ;
     skos:prefLabel "Data collection — g"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_4_3 .
 
@@ -1496,11 +1508,11 @@ iso5259:AidgoConjReq_7.3.5.2_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] missing data items"@en ;
     skos:prefLabel "Data cleaning — a"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
@@ -1511,11 +1523,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] duplication"@en ;
     skos:prefLabel "Data cleaning — b"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
 
@@ -1525,11 +1537,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] outliers"@en ;
     skos:prefLabel "Data cleaning — c"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
 
@@ -1539,11 +1551,11 @@ iso5259:AidgoConjReq_7.3.5.2_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] non-standard or invalid data values"@en ;
     skos:prefLabel "Data cleaning — e"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure,
         iso5259:dataValue ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
@@ -1554,11 +1566,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] unneeded or irrelevant data items"@en ;
     skos:prefLabel "Data cleaning — f"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
@@ -1569,11 +1581,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] required transformations"@en ;
     skos:prefLabel "Data cleaning — g"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
 
@@ -1583,11 +1595,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rh a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rh" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] verification that cleaning results meet the data specification"@en ;
     skos:prefLabel "Data cleaning — h"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure,
         iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
@@ -1598,11 +1610,11 @@ iso5259:AidgoConjReq_7.3.5.2_Ri a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Ri" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] de-identification or anonymisation where applicable"@en ;
     skos:prefLabel "Data cleaning — i"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
 
@@ -1612,11 +1624,11 @@ iso5259:AidgoConjReq_7.3.7.1_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] specify data provisioning processes to meet the data specification"@en ;
     skos:prefLabel "Data provisioning — a"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning,
         iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
@@ -1627,11 +1639,11 @@ iso5259:AidgoConjReq_7.3.7.1_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] provide auditable evidence that provisioned data meets all specified data quality requirements"@en ;
     skos:prefLabel "Data provisioning — b"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning,
         iso5259:qualityRequirement ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
@@ -1642,11 +1654,11 @@ iso5259:AidgoConjReq_7.3.7.1_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] ensure that the provisioning process does not alter the data beyond what is specified"@en ;
     skos:prefLabel "Data provisioning — c"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
 
@@ -1656,11 +1668,11 @@ iso5259:AidgoConjReq_7.3.7.1_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] document all provisioning activities"@en ;
     skos:prefLabel "Data provisioning — d"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
 
@@ -1670,11 +1682,11 @@ iso5259:AidgoConjReq_7.3.7.1_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] maintain a record of all data provisioned, including version and provenance information"@en ;
     skos:prefLabel "Data provisioning — e"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvenance,
         iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
@@ -1685,11 +1697,11 @@ iso5259:AidgoConjReq_7.3.7.1_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] ensure that recipients are authorised to receive the provisioned data"@en ;
     skos:prefLabel "Data provisioning — f"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
 
@@ -1699,11 +1711,11 @@ iso5259:AidgoConjReq_7.3.7.1_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.1_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "[The organization shall specify data provisioning processes. The organization shall:] ensure that provisioning complies with applicable legal and contractual obligations"@en ;
     skos:prefLabel "Data provisioning — g"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvisioning ;
     tair:decomposes iso5259:AidgoReq_7_3_7_1 .
 
@@ -1713,11 +1725,11 @@ iso5259:AidgoConjReq_7.3.7.3_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] scope of use and intended purpose"@en ;
     skos:prefLabel "Provisioning docs — a"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.3_Rb a aidgo:ConjunctiveRequirement,
@@ -1726,11 +1738,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] instructions for use"@en ;
     skos:prefLabel "Provisioning docs — b"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.3_Rc a aidgo:ConjunctiveRequirement,
@@ -1739,11 +1751,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] statistical properties of the dataset"@en ;
     skos:prefLabel "Provisioning docs — c"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     aidgo:uses iso5259:dataset ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
@@ -1753,11 +1765,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] description of each data item"@en ;
     skos:prefLabel "Provisioning docs — d"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     aidgo:uses iso5259:dataItem ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
@@ -1767,11 +1779,11 @@ iso5259:AidgoConjReq_7.3.7.3_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] list of stakeholders and their roles"@en ;
     skos:prefLabel "Provisioning docs — e"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     aidgo:uses iso5259:stakeholder ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
@@ -1781,11 +1793,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] duties and obligations of the recipient"@en ;
     skos:prefLabel "Provisioning docs — f"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.3_Rg a aidgo:ConjunctiveRequirement,
@@ -1794,11 +1806,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rg a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rg" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] use environment requirements"@en ;
     skos:prefLabel "Provisioning docs — g"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.3_Rh a aidgo:ConjunctiveRequirement,
@@ -1807,11 +1819,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rh a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rh" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] quality factors and their measurement results"@en ;
     skos:prefLabel "Provisioning docs — h"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     aidgo:uses iso5259:measurement ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
@@ -1821,11 +1833,11 @@ iso5259:AidgoConjReq_7.3.7.3_Ri a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Ri" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] acceptance test methods"@en ;
     skos:prefLabel "Provisioning docs — i"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.3_Rj a aidgo:ConjunctiveRequirement,
@@ -1834,11 +1846,11 @@ iso5259:AidgoConjReq_7.3.7.3_Rj a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.3_Rj" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "[Documentation provisioned with data shall include:] communication strategy for updates and issue reporting"@en ;
     skos:prefLabel "Provisioning docs — j"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_3 .
 
 iso5259:AidgoConjReq_7.3.7.5_Ra a aidgo:ConjunctiveRequirement,
@@ -1847,11 +1859,11 @@ iso5259:AidgoConjReq_7.3.7.5_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.5_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataOptimizationReqColl ;
     skos:definition "[The organization shall specify data optimization processes that:] reduce storage and computational overhead without reducing quality below specified thresholds"@en ;
     skos:prefLabel "Data optimization — a"@en ;
     aidgo:clauseNumber "7.3.7.5" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataOptimizationReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_5 .
 
 iso5259:AidgoConjReq_7.3.7.5_Rb a aidgo:ConjunctiveRequirement,
@@ -1860,11 +1872,11 @@ iso5259:AidgoConjReq_7.3.7.5_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.5_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataOptimizationReqColl ;
     skos:definition "[The organization shall specify data optimization processes that:] apply only transformations that are documented and reversible or justified"@en ;
     skos:prefLabel "Data optimization — b"@en ;
     aidgo:clauseNumber "7.3.7.5" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataOptimizationReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_5 .
 
 iso5259:AidgoConjReq_7.3.7.5_Rc a aidgo:ConjunctiveRequirement,
@@ -1873,11 +1885,11 @@ iso5259:AidgoConjReq_7.3.7.5_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.5_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataOptimizationReqColl ;
     skos:definition "[The organization shall specify data optimization processes that:] validate that optimised data still meets the data specification"@en ;
     skos:prefLabel "Data optimization — c"@en ;
     aidgo:clauseNumber "7.3.7.5" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataOptimizationReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc ;
     tair:decomposes iso5259:AidgoReq_7_3_7_5 .
 
@@ -1887,11 +1899,11 @@ iso5259:AidgoConjReq_7.3.7.5_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.5_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataOptimizationReqColl ;
     skos:definition "[The organization shall specify data optimization processes that:] maintain a record of all optimisation operations applied"@en ;
     skos:prefLabel "Data optimization — d"@en ;
     aidgo:clauseNumber "7.3.7.5" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataOptimizationReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_5 .
 
 iso5259:AidgoConjReq_7.3.7.6_Ra a aidgo:ConjunctiveRequirement,
@@ -1900,11 +1912,11 @@ iso5259:AidgoConjReq_7.3.7.6_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.6_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "[The organization shall document all support commitments in a support agreement that covers:] scope of support"@en ;
     skos:prefLabel "Support commitment — a"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
 
 iso5259:AidgoConjReq_7.3.7.6_Rb a aidgo:ConjunctiveRequirement,
@@ -1913,11 +1925,11 @@ iso5259:AidgoConjReq_7.3.7.6_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.6_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "[The organization shall document all support commitments in a support agreement that covers:] response times and service levels"@en ;
     skos:prefLabel "Support commitment — b"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
 
 iso5259:AidgoConjReq_7.3.7.6_Rc a aidgo:ConjunctiveRequirement,
@@ -1926,11 +1938,11 @@ iso5259:AidgoConjReq_7.3.7.6_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.6_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "[The organization shall document all support commitments in a support agreement that covers:] versioning and update policy"@en ;
     skos:prefLabel "Support commitment — c"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
 
 iso5259:AidgoConjReq_7.3.7.6_Rd a aidgo:ConjunctiveRequirement,
@@ -1939,11 +1951,11 @@ iso5259:AidgoConjReq_7.3.7.6_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.7.6_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "[The organization shall document all support commitments in a support agreement that covers:] conditions for withdrawal of data"@en ;
     skos:prefLabel "Support commitment — d"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
 
 iso5259:AidgoConjReq_8.3.3.3_Ra a aidgo:ConjunctiveRequirement,
@@ -1952,11 +1964,11 @@ iso5259:AidgoConjReq_8.3.3.3_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.3_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
     skos:definition "[Each change request shall specify:] the data item or process affected"@en ;
     skos:prefLabel "Change request spec — a"@en ;
     aidgo:clauseNumber "8.3.3.3" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestSpecReqColl ;
     aidgo:uses iso5259:dataItem ;
     tair:decomposes iso5259:AidgoReq_8_3_3_3 .
 
@@ -1966,11 +1978,11 @@ iso5259:AidgoConjReq_8.3.3.3_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.3_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
     skos:definition "[Each change request shall specify:] the reason for the change"@en ;
     skos:prefLabel "Change request spec — b"@en ;
     aidgo:clauseNumber "8.3.3.3" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestSpecReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_3 .
 
 iso5259:AidgoConjReq_8.3.3.3_Rc a aidgo:ConjunctiveRequirement,
@@ -1979,11 +1991,11 @@ iso5259:AidgoConjReq_8.3.3.3_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.3_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
     skos:definition "[Each change request shall specify:] the proposed change"@en ;
     skos:prefLabel "Change request spec — c"@en ;
     aidgo:clauseNumber "8.3.3.3" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestSpecReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_3 .
 
 iso5259:AidgoConjReq_8.3.3.3_Rd a aidgo:ConjunctiveRequirement,
@@ -1992,11 +2004,11 @@ iso5259:AidgoConjReq_8.3.3.3_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.3_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
     skos:definition "[Each change request shall specify:] the requestor and date"@en ;
     skos:prefLabel "Change request spec — d"@en ;
     aidgo:clauseNumber "8.3.3.3" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestSpecReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_3 .
 
 iso5259:AidgoConjReq_8.3.3.4_Ra a aidgo:ConjunctiveRequirement,
@@ -2005,11 +2017,11 @@ iso5259:AidgoConjReq_8.3.3.4_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] impact on data quality"@en ;
     skos:prefLabel "Change request analysis — a"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     aidgo:uses iso5259:dataQuality ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
@@ -2019,11 +2031,11 @@ iso5259:AidgoConjReq_8.3.3.4_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] impact on dependent datasets, processes and plans"@en ;
     skos:prefLabel "Change request analysis — b"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     aidgo:uses iso5259:dataset ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
@@ -2033,11 +2045,11 @@ iso5259:AidgoConjReq_8.3.3.4_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] risks introduced by the change"@en ;
     skos:prefLabel "Change request analysis — c"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
 iso5259:AidgoConjReq_8.3.3.4_Rd a aidgo:ConjunctiveRequirement,
@@ -2046,11 +2058,11 @@ iso5259:AidgoConjReq_8.3.3.4_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] alternative solutions"@en ;
     skos:prefLabel "Change request analysis — d"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
 iso5259:AidgoConjReq_8.3.3.4_Re a aidgo:ConjunctiveRequirement,
@@ -2059,11 +2071,11 @@ iso5259:AidgoConjReq_8.3.3.4_Re a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Re" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] resources required"@en ;
     skos:prefLabel "Change request analysis — e"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
 iso5259:AidgoConjReq_8.3.3.4_Rf a aidgo:ConjunctiveRequirement,
@@ -2072,11 +2084,11 @@ iso5259:AidgoConjReq_8.3.3.4_Rf a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.4_Rf" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "[Change requests shall be analysed to determine:] impact on schedule"@en ;
     skos:prefLabel "Change request analysis — f"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_4 .
 
 iso5259:AidgoConjReq_8.3.3.5_Ra a aidgo:ConjunctiveRequirement,
@@ -2085,11 +2097,11 @@ iso5259:AidgoConjReq_8.3.3.5_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.5_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
     skos:definition "[Change requests shall be evaluated and:] approved, with conditions if necessary"@en ;
     skos:prefLabel "Change request eval — a"@en ;
     aidgo:clauseNumber "8.3.3.5" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestEvalReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_5 .
 
 iso5259:AidgoConjReq_8.3.3.5_Rb a aidgo:ConjunctiveRequirement,
@@ -2098,11 +2110,11 @@ iso5259:AidgoConjReq_8.3.3.5_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.5_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
     skos:definition "[Change requests shall be evaluated and:] deferred to a later stage"@en ;
     skos:prefLabel "Change request eval — b"@en ;
     aidgo:clauseNumber "8.3.3.5" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestEvalReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_5 .
 
 iso5259:AidgoConjReq_8.3.3.5_Rc a aidgo:ConjunctiveRequirement,
@@ -2111,11 +2123,11 @@ iso5259:AidgoConjReq_8.3.3.5_Rc a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_8.3.3.5_Rc" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
     skos:definition "[Change requests shall be evaluated and:] rejected with justification"@en ;
     skos:prefLabel "Change request eval — c"@en ;
     aidgo:clauseNumber "8.3.3.5" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestEvalReqColl ;
     tair:decomposes iso5259:AidgoReq_8_3_3_5 .
 
 iso5259:AidgoContextOfOrganizationReqColl a aidgo:RequirementCollection ;
@@ -2140,76 +2152,76 @@ iso5259:AidgoReq_6_3_7_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_7_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDocumentationReqColl ;
     skos:definition "Documentation shall be intelligible to relevant stakeholders in accordance with their role."@en ;
     skos:prefLabel "Documentation — intelligibility"@en ;
     aidgo:clauseNumber "6.3.7" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDocumentationReqColl ;
     aidgo:uses iso5259:stakeholder .
 
 iso5259:AidgoReq_6_3_7_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_7_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDocumentationReqColl ;
     skos:definition "Documentation shall be accessible to relevant stakeholders as appropriate and authorized."@en ;
     skos:prefLabel "Documentation — accessibility"@en ;
     aidgo:clauseNumber "6.3.7" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDocumentationReqColl ;
     aidgo:uses iso5259:stakeholder .
 
 iso5259:AidgoReq_6_3_9_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_9_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "Confirmation reviews shall be performed by personnel independent of the activities under review."@en ;
     skos:prefLabel "Confirmation review — independent personnel"@en ;
     aidgo:clauseNumber "6.3.9" ;
-    aidgo:dqmlcStage aidgo:OrganisationalStage .
+    aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl .
 
 iso5259:AidgoReq_7_2_1_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_2_1_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQLCReqColl ;
     skos:definition "The organization shall specify the processes to be performed in each stage of the DQMLC in accordance with the requirements of this document."@en ;
     skos:prefLabel "DQMLC — specify processes"@en ;
     aidgo:clauseNumber "7.2.1" ;
     aidgo:dqmlcStage aidgo:LifeCycleGeneralStage ;
+    aidgo:inCollection iso5259:AidgoDQLCReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle .
 
 iso5259:AidgoReq_7_2_1_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_2_1_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQLCReqColl ;
     skos:definition "The organization shall ensure that each stage of the DQMLC is only entered when all quality gates for the preceding stage have been met."@en ;
     skos:prefLabel "DQMLC — quality gates"@en ;
     aidgo:clauseNumber "7.2.1" ;
     aidgo:dqmlcStage aidgo:LifeCycleGeneralStage ;
+    aidgo:inCollection iso5259:AidgoDQLCReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle .
 
 iso5259:AidgoReq_7_2_1_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_2_1_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQLCReqColl ;
     skos:definition "The organization shall document all deviations from the defined DQMLC together with a justification and any compensating measures."@en ;
     skos:prefLabel "DQMLC — document deviations"@en ;
     aidgo:clauseNumber "7.2.1" ;
     aidgo:dqmlcStage aidgo:LifeCycleGeneralStage ;
+    aidgo:inCollection iso5259:AidgoDQLCReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle .
 
 iso5259:AidgoReq_7_3_4_1_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_1_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
     skos:definition "The organization shall specify data acquisition processes to meet the data specification and include them in the data quality plan."@en ;
     skos:prefLabel "Data acquisition — specify processes"@en ;
     aidgo:clauseNumber "7.3.4.1" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataAcquisitionReqColl ;
     aidgo:uses iso5259:dataAcquisition,
         iso5259:dataQualityPlan,
         iso5259:dataSpecificationDoc .
@@ -2218,11 +2230,11 @@ iso5259:AidgoReq_7_3_4_1_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_1_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
     skos:definition "The organization shall monitor data acquisition processes to ensure compliance with the data specification."@en ;
     skos:prefLabel "Data acquisition — monitoring"@en ;
     aidgo:clauseNumber "7.3.4.1" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataAcquisitionReqColl ;
     aidgo:uses iso5259:dataAcquisition,
         iso5259:dataSpecificationDoc .
 
@@ -2230,22 +2242,22 @@ iso5259:AidgoReq_7_3_4_1_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_1_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
     skos:definition "Risks that arise from incompleteness of the acquired data shall be documented and mitigated."@en ;
     skos:prefLabel "Data acquisition — risk documentation"@en ;
     aidgo:clauseNumber "7.3.4.1" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataAcquisitionReqColl ;
     aidgo:uses iso5259:dataAcquisition .
 
 iso5259:AidgoReq_7_3_4_4_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_4_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataHandlingReqColl ;
     skos:definition "The organization shall ensure that collected data meets the data specification before progressing to the next DQMLC stage."@en ;
     skos:prefLabel "Data handling — meets specification"@en ;
     aidgo:clauseNumber "7.3.4.4" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataHandlingReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle,
         iso5259:dataSpecificationDoc .
 
@@ -2253,21 +2265,21 @@ iso5259:AidgoReq_7_3_4_4_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_4_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataHandlingReqColl ;
     skos:definition "The organization shall specify processes for data handling, including storage, access control, format conversion and integrity checking."@en ;
     skos:prefLabel "Data handling — processes"@en ;
     aidgo:clauseNumber "7.3.4.4" ;
-    aidgo:dqmlcStage aidgo:AcquisitionStage .
+    aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataHandlingReqColl .
 
 iso5259:AidgoReq_7_3_5_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_5_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPreprocessingReqColl ;
     skos:definition "The organization shall specify data preprocessing processes to meet the data specification and include them in the data quality plan."@en ;
     skos:prefLabel "Data preprocessing — specify processes"@en ;
     aidgo:clauseNumber "7.3.5.1" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataPreprocessingReqColl ;
     aidgo:uses iso5259:dataPreprocessing,
         iso5259:dataQualityPlan,
         iso5259:dataSpecificationDoc .
@@ -2276,64 +2288,64 @@ iso5259:AidgoReq_7_3_7_4_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_4_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoTrackingImprovementReqColl ;
     skos:definition "The organization shall monitor the use of provisioned data to detect any degradation of data quality or deviations from the intended use."@en ;
     skos:prefLabel "Tracking — data usage monitoring"@en ;
     aidgo:clauseNumber "7.3.7.4" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoTrackingImprovementReqColl ;
     aidgo:uses iso5259:dataQuality .
 
 iso5259:AidgoReq_7_3_7_4_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_4_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoTrackingImprovementReqColl ;
     skos:definition "The organization shall define and apply corrective actions when deviations or degradation are detected."@en ;
     skos:prefLabel "Tracking — corrective actions"@en ;
     aidgo:clauseNumber "7.3.7.4" ;
-    aidgo:dqmlcStage aidgo:ProvisioningStage .
+    aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoTrackingImprovementReqColl .
 
 iso5259:AidgoReq_7_3_7_4_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_4_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoTrackingImprovementReqColl ;
     skos:definition "The organization shall use tracking results as feedback to improve data quality planning and acquisition processes."@en ;
     skos:prefLabel "Tracking — improvement feedback"@en ;
     aidgo:clauseNumber "7.3.7.4" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoTrackingImprovementReqColl ;
     aidgo:uses iso5259:dataQuality .
 
 iso5259:AidgoReq_7_3_7_6_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_6_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "The organization shall specify the support it will provide for provisioned data, including the duration of support and conditions for termination."@en ;
     skos:prefLabel "Support commitment — specify"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
-    aidgo:dqmlcStage aidgo:ProvisioningStage .
+    aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl .
 
 iso5259:AidgoReq_7_3_8_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataDecommissioningReqColl ;
     skos:definition "The organization shall choose an appropriate method to decommission the data either through data deletion or through data transfer to a qualified recipient."@en ;
     skos:prefLabel "Data decommissioning — choose method"@en ;
     aidgo:clauseNumber "7.3.8.1" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataDecommissioningReqColl ;
     aidgo:uses iso5259:dataDecommissioning .
 
 iso5259:AidgoReq_7_3_8_1_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_1_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataDecommissioningReqColl ;
     skos:definition "The organization shall specify data decommissioning processes in the data quality plan, including the schedule and criteria for decommissioning."@en ;
     skos:prefLabel "Data decommissioning — specify processes"@en ;
     aidgo:clauseNumber "7.3.8.1" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataDecommissioningReqColl ;
     aidgo:uses iso5259:dataDecommissioning,
         iso5259:dataQualityPlan .
 
@@ -2341,75 +2353,75 @@ iso5259:AidgoReq_7_3_8_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataTransferReqColl ;
     skos:definition "When transferring data, the organization shall ensure that the recipient meets the data quality requirements and has the authority to receive the data."@en ;
     skos:prefLabel "Data transfer — conditions"@en ;
     aidgo:clauseNumber "7.3.8.2" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataTransferReqColl ;
     aidgo:uses iso5259:qualityRequirement .
 
 iso5259:AidgoReq_7_3_8_3_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_3_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataDeletionReqColl ;
     skos:definition "The organization shall ensure that data deletion does not violate applicable legal, contractual or regulatory obligations."@en ;
     skos:prefLabel "Data deletion — legal obligations"@en ;
     aidgo:clauseNumber "7.3.8.3" ;
-    aidgo:dqmlcStage aidgo:DecommissioningStage .
+    aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataDeletionReqColl .
 
 iso5259:AidgoReq_7_3_8_3_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_3_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataDeletionReqColl ;
     skos:definition "The organization shall document confirmation that data has been deleted from all locations."@en ;
     skos:prefLabel "Data deletion — confirmation"@en ;
     aidgo:clauseNumber "7.3.8.3" ;
-    aidgo:dqmlcStage aidgo:DecommissioningStage .
+    aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataDeletionReqColl .
 
 iso5259:AidgoReq_7_3_8_4_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_4_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoPartialDeletionReqColl ;
     skos:definition "When partial data deletion is requested, the organization shall identify the exact scope of data items to be deleted."@en ;
     skos:prefLabel "Partial deletion — identify scope"@en ;
     aidgo:clauseNumber "7.3.8.4" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoPartialDeletionReqColl ;
     aidgo:uses iso5259:dataItem .
 
 iso5259:AidgoReq_7_3_8_4_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_4_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoPartialDeletionReqColl ;
     skos:definition "The organization shall assess the impact of partial deletion on the remaining dataset quality."@en ;
     skos:prefLabel "Partial deletion — impact assessment"@en ;
     aidgo:clauseNumber "7.3.8.4" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoPartialDeletionReqColl ;
     aidgo:uses iso5259:dataset .
 
 iso5259:AidgoReq_7_3_8_4_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_4_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoPartialDeletionReqColl ;
     skos:definition "The organization shall execute the partial deletion and confirm that the requested data items have been removed."@en ;
     skos:prefLabel "Partial deletion — execute and confirm"@en ;
     aidgo:clauseNumber "7.3.8.4" ;
     aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoPartialDeletionReqColl ;
     aidgo:uses iso5259:dataItem .
 
 iso5259:AidgoReq_8_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoHorizontalGeneralReqColl ;
     skos:definition "The organization shall apply the horizontal processes (verification and validation, configuration management, change management, and risk management) across all stages of the DQMLC."@en ;
     skos:prefLabel "Horizontal processes General"@en ;
     aidgo:clauseNumber "8.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoHorizontalGeneralReqColl ;
     aidgo:uses iso5259:changeManagement,
         iso5259:configurationManagement,
         iso5259:dataQualityManagementLifeCycle,
@@ -2420,11 +2432,11 @@ iso5259:AidgoReq_8_3_1_1_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_1_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoVVReqColl ;
     skos:definition "The organization shall apply verification and validation processes throughout all stages of the DQMLC."@en ;
     skos:prefLabel "V&V — apply throughout"@en ;
     aidgo:clauseNumber "8.3.1.1" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoVVReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle,
         iso5259:verificationAndValidation .
 
@@ -2432,22 +2444,22 @@ iso5259:AidgoReq_8_3_1_1_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_1_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoVVReqColl ;
     skos:definition "Verification and validation activities shall be performed by personnel with appropriate independence from the activities being verified or validated."@en ;
     skos:prefLabel "V&V — independent personnel"@en ;
     aidgo:clauseNumber "8.3.1.1" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoVVReqColl ;
     aidgo:uses iso5259:verificationAndValidation .
 
 iso5259:AidgoReq_8_3_1_2_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_2_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoQualityGatesReqColl ;
     skos:definition "The organization shall define quality gate criteria for each DQMLC stage in the data quality plan."@en ;
     skos:prefLabel "Quality gates — define criteria"@en ;
     aidgo:clauseNumber "8.3.1.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoQualityGatesReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle,
         iso5259:dataQualityPlan .
 
@@ -2455,43 +2467,43 @@ iso5259:AidgoReq_8_3_1_2_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_2_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoQualityGatesReqColl ;
     skos:definition "A DQMLC stage shall only be entered when all quality gate criteria for the preceding stage have been met and documented."@en ;
     skos:prefLabel "Quality gates — enforce progression"@en ;
     aidgo:clauseNumber "8.3.1.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoQualityGatesReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle .
 
 iso5259:AidgoReq_8_3_1_2_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_2_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoQualityGatesReqColl ;
     skos:definition "Any deviation from quality gate criteria shall be documented with a justification and approved by appropriate authority before progression."@en ;
     skos:prefLabel "Quality gates — deviations"@en ;
     aidgo:clauseNumber "8.3.1.2" ;
-    aidgo:dqmlcStage aidgo:HorizontalProcessStage .
+    aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoQualityGatesReqColl .
 
 iso5259:AidgoReq_8_3_1_2_R4 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_1_2_R4" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoQualityGatesReqColl ;
     skos:definition "Quality gate criteria shall be objectively measurable using defined data quality measures."@en ;
     skos:prefLabel "Quality gates — objectively measurable"@en ;
     aidgo:clauseNumber "8.3.1.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoQualityGatesReqColl ;
     aidgo:uses iso5259:dataQualityMeasure .
 
 iso5259:AidgoReq_8_3_2_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_2_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfigMgmtReqColl ;
     skos:definition "The organization shall identify all configuration items (data, data specifications, plans, tools, and work products) subject to configuration management."@en ;
     skos:prefLabel "Configuration management — identify items"@en ;
     aidgo:clauseNumber "8.3.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoConfigMgmtReqColl ;
     aidgo:uses iso5259:configurationManagement,
         iso5259:dataSpecificationDoc .
 
@@ -2499,22 +2511,22 @@ iso5259:AidgoReq_8_3_2_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_2_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfigMgmtReqColl ;
     skos:definition "The organization shall implement version control for all configuration items to ensure traceability and reproducibility."@en ;
     skos:prefLabel "Configuration management — version control"@en ;
     aidgo:clauseNumber "8.3.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoConfigMgmtReqColl ;
     aidgo:uses iso5259:configurationManagement .
 
 iso5259:AidgoReq_8_3_2_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_2_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfigMgmtReqColl ;
     skos:definition "The organization shall establish and maintain baselines for configuration items at defined DQMLC milestones."@en ;
     skos:prefLabel "Configuration management — baseline"@en ;
     aidgo:clauseNumber "8.3.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoConfigMgmtReqColl ;
     aidgo:uses iso5259:configurationManagement,
         iso5259:dataQualityManagementLifeCycle .
 
@@ -2522,11 +2534,11 @@ iso5259:AidgoReq_8_3_2_R4 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_2_R4" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfigMgmtReqColl ;
     skos:definition "The organization shall maintain records of the status of all configuration items throughout the DQMLC."@en ;
     skos:prefLabel "Configuration management — status accounting"@en ;
     aidgo:clauseNumber "8.3.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoConfigMgmtReqColl ;
     aidgo:uses iso5259:configurationManagement,
         iso5259:dataQualityManagementLifeCycle .
 
@@ -2534,42 +2546,42 @@ iso5259:AidgoReq_8_3_3_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeMgmtReqColl ;
     skos:definition "The organization shall establish and maintain a change management process that ensures all changes to data, requirements or processes are assessed and approved before implementation."@en ;
     skos:prefLabel "Change management planning"@en ;
     aidgo:clauseNumber "8.3.3.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeMgmtReqColl ;
     aidgo:uses iso5259:changeManagement .
 
 iso5259:AidgoReq_8_3_3_6_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_6_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeDocumentationReqColl ;
     skos:definition "Approved changes shall be implemented in accordance with the approved change request and all affected configuration items shall be updated."@en ;
     skos:prefLabel "Change implementation — implement"@en ;
     aidgo:clauseNumber "8.3.3.6" ;
-    aidgo:dqmlcStage aidgo:HorizontalProcessStage .
+    aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeDocumentationReqColl .
 
 iso5259:AidgoReq_8_3_3_6_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_6_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeDocumentationReqColl ;
     skos:definition "The organization shall verify that the implemented change achieves the intended objective without introducing unacceptable side effects."@en ;
     skos:prefLabel "Change implementation — verify"@en ;
     aidgo:clauseNumber "8.3.3.6" ;
-    aidgo:dqmlcStage aidgo:HorizontalProcessStage .
+    aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeDocumentationReqColl .
 
 iso5259:AidgoReq_8_3_4_R3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_4_R3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoRiskManagementReqColl ;
     skos:definition "The organization shall monitor identified risks throughout the DQMLC and update the risk assessment when the risk environment changes."@en ;
     skos:prefLabel "Risk management — monitor"@en ;
     aidgo:clauseNumber "8.3.4.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoRiskManagementReqColl ;
     aidgo:uses iso5259:dataQualityManagementLifeCycle,
         iso5259:riskManagement .
 
@@ -2577,11 +2589,11 @@ iso5259:AidgoReq_8_3_4_R4 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_4_R4" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoRiskManagementReqColl ;
     skos:definition "The organization shall communicate significant data quality risks to relevant stakeholders."@en ;
     skos:prefLabel "Risk management — communicate"@en ;
     aidgo:clauseNumber "8.3.4.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoRiskManagementReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:riskManagement,
         iso5259:stakeholder .
@@ -3118,11 +3130,11 @@ iso5259:AidgoConjReq_7.3.1.1_Ra a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.1.1_Ra" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataMotivationReqColl ;
     skos:definition "[The organization shall complete data motivation and conceptualization. The organization shall:] document motivation and origin of the data need"@en ;
     skos:prefLabel "Data motivation — a"@en ;
     aidgo:clauseNumber "7.3.1.1" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoDataMotivationReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_1_1 .
 
 iso5259:AidgoConjReq_7.3.5.2_Rd a aidgo:ConjunctiveRequirement,
@@ -3131,11 +3143,11 @@ iso5259:AidgoConjReq_7.3.5.2_Rd a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.5.2_Rd" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "[The organization shall specify data quality measures for cleaning, including measures for:] bias and drift"@en ;
     skos:prefLabel "Data cleaning — d"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataQualityMeasure ;
     tair:decomposes iso5259:AidgoReq_7_3_5_2 .
 
@@ -3167,11 +3179,11 @@ iso5259:AidgoReq_7_3_1_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_1_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoStakeholderAnalysisReqColl ;
     skos:definition "The organization shall: a) identify all stakeholders relevant to the data and the intended use; b) document stakeholder data quality requirements and expectations."@en ;
     skos:prefLabel "Stakeholder analysis"@en ;
     aidgo:clauseNumber "7.3.1.2" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoStakeholderAnalysisReqColl ;
     aidgo:uses iso5259:qualityRequirement,
         iso5259:stakeholder .
 
@@ -3179,22 +3191,22 @@ iso5259:AidgoReq_7_3_2_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_2_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataSpecificationReqColl ;
     skos:definition "The organization shall specify data requirements in a data specification and validate that these requirements are consistent and complete for the intended use."@en ;
     skos:prefLabel "Data specification General"@en ;
     aidgo:clauseNumber "7.3.2.1" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataSpecificationReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc .
 
 iso5259:AidgoReq_7_3_4_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataSourceReqColl ;
     skos:definition "Documented conditions of the reuse or license of a dataset shall be taken into account. The organization can delegate data acquisition to a third party but remains responsible for meeting data quality requirements."@en ;
     skos:prefLabel "Data source — delegation responsibility"@en ;
     aidgo:clauseNumber "7.3.4.2" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataSourceReqColl ;
     aidgo:uses iso5259:dataAcquisition,
         iso5259:dataset,
         iso5259:qualityRequirement .
@@ -3203,11 +3215,11 @@ iso5259:AidgoReq_7_3_6_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_6_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataAugmentationReqColl ;
     skos:definition "The organization shall specify data augmentation processes to meet the data specification and include them in the data quality plan."@en ;
     skos:prefLabel "Data augmentation — specify processes"@en ;
     aidgo:clauseNumber "7.3.6.1" ;
     aidgo:dqmlcStage aidgo:AugmentationStage ;
+    aidgo:inCollection iso5259:AidgoDataAugmentationReqColl ;
     aidgo:uses iso5259:dataAugmentation,
         iso5259:dataQualityPlan,
         iso5259:dataSpecificationDoc .
@@ -3216,21 +3228,21 @@ iso5259:AidgoReq_7_3_8_3_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_8_3_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataDeletionReqColl ;
     skos:definition "When deleting data, the organization shall ensure that data is deleted from all storage locations, including backups and replicas."@en ;
     skos:prefLabel "Data deletion — from all storage"@en ;
     aidgo:clauseNumber "7.3.8.3" ;
-    aidgo:dqmlcStage aidgo:DecommissioningStage .
+    aidgo:dqmlcStage aidgo:DecommissioningStage ;
+    aidgo:inCollection iso5259:AidgoDataDeletionReqColl .
 
 iso5259:AidgoReq_8_3_4_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_4_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoRiskManagementReqColl ;
     skos:definition "The organization shall conduct a risk assessment and maintain documentation with respect to risks associated to data quality."@en ;
     skos:prefLabel "Risk management — conduct assessment"@en ;
     aidgo:clauseNumber "8.3.4.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoRiskManagementReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:riskManagement .
 
@@ -3238,11 +3250,11 @@ iso5259:AidgoReq_8_3_4_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_4_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoRiskManagementReqColl ;
     skos:definition "The organization shall manage and maintain appropriate processes to minimise identified risks. Risks shall be specified, justified and documented."@en ;
     skos:prefLabel "Risk management — minimise risks"@en ;
     aidgo:clauseNumber "8.3.4.2" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoRiskManagementReqColl ;
     aidgo:uses iso5259:riskManagement .
 
 iso5259:AidgoStatisticalPropertiesReqColl a aidgo:RequirementCollection ;
@@ -3357,10 +3369,6 @@ aiapr:AiaPrReq_10.2_7 a aidgo:LegalRequirement,
     aidgo:articleReference "Art. 10(2)(f)" ;
     aidgo:coverageStatus aidgo:PartiallyCovered .
 
-aidgo:CoverageStatusScheme a skos:ConceptScheme ;
-    skos:prefLabel "Obligation coverage status"@en ;
-    skos:scopeNote "FullyCovered iff every assertion on the obligation is CompletelySatisfies; NotCovered iff every assertion is NoAlignment; PartiallyCovered otherwise."@en .
-
 aidgo:FunctionalEquivalence a aidgo:AlignmentBasis ;
     skos:definition "Different wording, but performing the technical requirement produces the outcome the legal requirement demands."@en ;
     skos:inScheme aidgo:AlignmentBasisScheme ;
@@ -3419,11 +3427,11 @@ iso5259:AidgoReq_11_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_11_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDQDependenciesReqColl ;
     skos:definition "The organization shall manage data quality dependencies by: a) identifying all data quality dependencies between datasets and processes; b) documenting the impact of dependency failures on data quality; c) specifying mitigation strategies for dependency-related quality risks."@en ;
     skos:prefLabel "Data quality dependencies — management"@en ;
     aidgo:clauseNumber "11.2" ;
     aidgo:dqmlcStage aidgo:DependencyManagementStage ;
+    aidgo:inCollection iso5259:AidgoDQDependenciesReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataset .
 
@@ -3431,21 +3439,21 @@ iso5259:AidgoReq_6_3_10 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_10" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
     skos:definition "The organization shall manage project-specific data by: a) establishing a suitable project-specific DQM process; b) maintaining a list of relevant DQ claims with benchmarks for each milestone; c) adopting processes to identify and manage all relevant DQ measures."@en ;
     skos:prefLabel "Project-specific DQM"@en ;
     aidgo:clauseNumber "6.3.10" ;
-    aidgo:dqmlcStage aidgo:OrganisationalStage .
+    aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoProjectSpecificDQReqColl .
 
 iso5259:AidgoReq_6_3_3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     skos:definition "The organization shall meet data quality requirements by: a) having processes for communicating, analysing, evaluating, resolving and closing (implementing a resolution or giving a reason for not being an unreasonable risk) issues of data quality; b) documenting closed issues; c) escalating issues that cannot be closed."@en ;
     skos:prefLabel "Management of data quality issues"@en ;
     aidgo:clauseNumber "6.3.3" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityIssuesMgmtReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:qualityRequirement .
 
@@ -3453,33 +3461,33 @@ iso5259:AidgoReq_6_3_5 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_5" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoResourceMgmtReqColl ;
     skos:definition "The organization shall provide the resources required for data quality management, including: a) appropriate software licenses and technical support for required tools; b) required IT infrastructure or services to meet the storage and compute requirements; c) availability of skilled persons."@en ;
     skos:prefLabel "Resource management"@en ;
     aidgo:clauseNumber "6.3.5" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoResourceMgmtReqColl ;
     aidgo:uses iso5259:dataQualityManagement .
 
 iso5259:AidgoReq_7_3_1_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_1_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataMotivationReqColl ;
     skos:definition "The organization shall: a) document motivation and origin of the data need; b) specify scope, purpose and intended use of data; c) document the data quality requirements."@en ;
     skos:prefLabel "Data motivation and conceptualization"@en ;
     aidgo:clauseNumber "7.3.1.1" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoDataMotivationReqColl ;
     aidgo:uses iso5259:qualityRequirement .
 
 iso5259:AidgoReq_8_3_3_5 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_5" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
     skos:definition "Change requests shall be evaluated and: a) approved, with conditions if necessary; b) deferred to a later stage; c) rejected with justification."@en ;
     skos:prefLabel "Change request evaluation and approval"@en ;
     aidgo:clauseNumber "8.3.3.5" ;
-    aidgo:dqmlcStage aidgo:HorizontalProcessStage .
+    aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestEvalReqColl .
 
 iso5259:AidgoStakeholderAnalysisReqColl a aidgo:RequirementCollection ;
     dct:identifier "AidgoStakeholderAnalysisReqColl" ;
@@ -3537,10 +3545,9 @@ aidgo:ConceptualCoverage a aidgo:AlignmentBasis ;
     skos:inScheme aidgo:AlignmentBasisScheme ;
     skos:prefLabel "Conceptual coverage"@en .
 
-aidgo:CoverageStatus a owl:Class ;
-    rdfs:label "Obligation coverage status"@en ;
-    rdfs:subClassOf skos:Concept ;
-    skos:definition "Obligation-level summary derived from all alignment assertions on a legal requirement."@en .
+aidgo:CoverageStatusScheme a skos:ConceptScheme ;
+    skos:prefLabel "Obligation coverage status"@en ;
+    skos:scopeNote "FullyCovered iff every assertion on the obligation is CompletelySatisfies; NotCovered iff every assertion is NoAlignment; PartiallyCovered otherwise."@en .
 
 aidgo:DependencyManagementStage a aidgo:DQMLCStage ;
     skos:inScheme aidgo:DQMLCStageScheme ;
@@ -3594,22 +3601,22 @@ iso5259:AidgoReq_6_3_4 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_4" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
     skos:definition "The organization shall: a) document required skills and tools to process the data; b) ensure that involved persons have sufficient skills to perform their activities and duties; c) maintain proof of sufficient skill with the data quality system; d) keep appropriate records of training and experience that substantiate claims of competency."@en ;
     skos:prefLabel "Competence management"@en ;
     aidgo:clauseNumber "6.3.4" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoCompetenceMgmtReqColl ;
     aidgo:uses iso5259:dataQuality .
 
 iso5259:AidgoReq_6_3_9 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_9" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
     skos:definition "Data quality shall be confirmed by appropriate data quality measures in accordance with ISO/IEC 5259-2. All work products shall undergo confirmation reviews that: a) confirm that work products meet the data specification; b) confirm that data quality measures have been applied correctly; c) identify any remaining open issues; d) authorise progression to the next life cycle stage."@en ;
     skos:prefLabel "Confirmation review and DQ measures"@en ;
     aidgo:clauseNumber "6.3.9" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoConfirmationReviewReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityMeasure,
         iso5259:dataSpecificationDoc .
@@ -3618,11 +3625,11 @@ iso5259:AidgoReq_7_3_2_3_R1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_2_3_R1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoStatisticalPropertiesReqColl ;
     skos:definition "The data specification shall include specification of valid divisions into subsets (e.g. training, validation and test data) and the criteria for assigning data items to subsets."@en ;
     skos:prefLabel "Statistical properties — subset divisions"@en ;
     aidgo:clauseNumber "7.3.2.3" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoStatisticalPropertiesReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataSpecificationDoc,
         iso5259:testData .
@@ -3631,43 +3638,43 @@ iso5259:AidgoReq_7_3_2_3_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_2_3_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoStatisticalPropertiesReqColl ;
     skos:definition "The organization shall determine and maintain for each subset: relevant statistical properties, representativeness with respect to the target population, and appropriate size to meet the intended purpose."@en ;
     skos:prefLabel "Statistical properties — representativeness"@en ;
     aidgo:clauseNumber "7.3.2.3" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoStatisticalPropertiesReqColl ;
     aidgo:uses iso5259:representativeness .
 
 iso5259:AidgoReq_7_3_7_5 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_5" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataOptimizationReqColl ;
     skos:definition "The organization shall specify data optimization processes that: a) reduce storage and computational overhead without reducing quality below specified thresholds; b) apply only transformations that are documented and reversible or justified; c) validate that optimised data still meets the data specification; d) maintain a record of all optimisation operations applied."@en ;
     skos:prefLabel "Data optimization"@en ;
     aidgo:clauseNumber "7.3.7.5" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataOptimizationReqColl ;
     aidgo:uses iso5259:dataSpecificationDoc .
 
 iso5259:AidgoReq_7_3_7_6_R2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_6_R2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
     skos:definition "The organization shall document all support commitments in a support agreement that covers: a) scope of support; b) response times and service levels; c) versioning and update policy; d) conditions for withdrawal of data."@en ;
     skos:prefLabel "Support commitment — documentation"@en ;
     aidgo:clauseNumber "7.3.7.6" ;
-    aidgo:dqmlcStage aidgo:ProvisioningStage .
+    aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoSupportCommitmentReqColl .
 
 iso5259:AidgoReq_8_3_3_3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
     skos:definition "Each change request shall specify: a) the data item or process affected; b) the reason for the change; c) the proposed change; d) the requestor and date."@en ;
     skos:prefLabel "Change request specification"@en ;
     aidgo:clauseNumber "8.3.3.3" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestSpecReqColl ;
     aidgo:uses iso5259:dataItem .
 
 iso5259:AidgoResourceMgmtReqColl a aidgo:RequirementCollection ;
@@ -3726,6 +3733,11 @@ iso5259:targetData a aidgo:Concept ;
 aidgo:AlignmentBasisScheme a skos:ConceptScheme ;
     skos:prefLabel "AIDGO alignment bases"@en .
 
+aidgo:CoverageStatus a owl:Class ;
+    rdfs:label "Obligation coverage status"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "Obligation-level summary derived from all alignment assertions on a legal requirement."@en .
+
 iso5259:AidgoChangeMgmtReqColl a aidgo:RequirementCollection ;
     dct:identifier "AidgoChangeMgmtReqColl" ;
     dct:source "ISO/IEC 5259-3" ;
@@ -3782,11 +3794,11 @@ iso5259:AidgoReq_6_3_8 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_8" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
     skos:definition "The implemented processes shall be audited when appropriate. The audit shall: a) evaluate the data quality plan against the organizational rules and processes for data quality; b) determine whether planned activities have been implemented and maintained effectively; c) identify non-compliances and propose corrective actions; d) document audit findings and conclusions; e) communicate findings to relevant stakeholders."@en ;
     skos:prefLabel "Data quality audit and assessment"@en ;
     aidgo:clauseNumber "6.3.8" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityAuditReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityPlan,
         iso5259:stakeholder .
@@ -3795,11 +3807,11 @@ iso5259:AidgoReq_7_3_3_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_3_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
     skos:definition "The organization shall establish life cycle stage-specific plans addressing: a) data acquisition plan; b) data preprocessing plan; c) data augmentation plan; d) data provisioning plan; e) data decommissioning plan."@en ;
     skos:prefLabel "Data life cycle specific plans"@en ;
     aidgo:clauseNumber "7.3.3.2" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataLifeCyclePlansReqColl ;
     aidgo:uses iso5259:dataAcquisition,
         iso5259:dataAugmentation,
         iso5259:dataDecommissioning,
@@ -3844,11 +3856,11 @@ iso5259:AidgoConjReq_7.3.1.1_Rb a aidgo:ConjunctiveRequirement,
         tair:Requirement ;
     dct:identifier "AidgoConjReq_7.3.1.1_Rb" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataMotivationReqColl ;
     skos:definition "[The organization shall complete data motivation and conceptualization. The organization shall:] specify scope, purpose and intended use of data"@en ;
     skos:prefLabel "Data motivation — b"@en ;
     aidgo:clauseNumber "7.3.1.1" ;
     aidgo:dqmlcStage aidgo:MotivationStage ;
+    aidgo:inCollection iso5259:AidgoDataMotivationReqColl ;
     tair:decomposes iso5259:AidgoReq_7_3_1_1 .
 
 iso5259:AidgoDataAcquisitionReqColl a aidgo:RequirementCollection ;
@@ -3879,11 +3891,11 @@ iso5259:AidgoReq_8_3_3_4 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_8_3_3_4" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
     skos:definition "Change requests shall be analysed to determine: a) impact on data quality; b) impact on dependent datasets, processes and plans; c) risks introduced by the change; d) alternative solutions; e) resources required; f) impact on schedule."@en ;
     skos:prefLabel "Change request analysis"@en ;
     aidgo:clauseNumber "8.3.3.4" ;
     aidgo:dqmlcStage aidgo:HorizontalProcessStage ;
+    aidgo:inCollection iso5259:AidgoChangeRequestAnalysisReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataset .
 
@@ -3950,11 +3962,11 @@ iso5259:AidgoReq_10_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_10_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
     skos:definition "The organization shall manage data processing tools to ensure they support data quality requirements, covering: a) approved tool list with version information; b) tool qualification and validation; c) access control and licensing; d) backup and recovery; e) monitoring of tool-induced data quality issues; f) tool change management; g) documentation of tool-specific data quality constraints."@en ;
     skos:prefLabel "Data processing tools — management"@en ;
     aidgo:clauseNumber "10.2" ;
     aidgo:dqmlcStage aidgo:ToolManagementStage ;
+    aidgo:inCollection iso5259:AidgoDataProcessingToolsReqColl ;
     aidgo:uses iso5259:changeManagement,
         iso5259:dataQuality,
         iso5259:qualityRequirement .
@@ -3963,11 +3975,11 @@ iso5259:AidgoReq_7_3_3_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_3_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataPlanningReqColl ;
     skos:definition "The organization shall establish a data quality plan that covers: a) the processes, activities and resources required to meet the data specification throughout the data life cycle; b) entry and exit criteria for each DQMLC stage; c) the data quality measures to be applied; d) responsibilities and authorities for DQM activities; e) schedule and milestones for DQM activities."@en ;
     skos:prefLabel "Data planning General"@en ;
     aidgo:clauseNumber "7.3.3.1" ;
     aidgo:dqmlcStage aidgo:PlanningStage ;
+    aidgo:inCollection iso5259:AidgoDataPlanningReqColl ;
     aidgo:uses iso5259:dataLifeCycle,
         iso5259:dataQualityManagementLifeCycle,
         iso5259:dataQualityMeasure,
@@ -3978,11 +3990,11 @@ iso5259:AidgoReq_7_3_7_1 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_1" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningReqColl ;
     skos:definition "The organization shall: a) specify data provisioning processes to meet the data specification; b) provide auditable evidence that provisioned data meets all specified data quality requirements; c) ensure that the provisioning process does not alter the data beyond what is specified; d) document all provisioning activities; e) maintain a record of all data provisioned, including version and provenance information; f) ensure that recipients are authorised to receive the provisioned data; g) ensure that provisioning complies with applicable legal and contractual obligations."@en ;
     skos:prefLabel "Data provisioning General"@en ;
     aidgo:clauseNumber "7.3.7.1" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningReqColl ;
     aidgo:uses iso5259:dataProvenance,
         iso5259:dataProvisioning,
         iso5259:dataSpecificationDoc,
@@ -4046,11 +4058,11 @@ iso5259:AidgoReq_7_3_4_3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_4_3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCollectionReqColl ;
     skos:definition "The organization shall document: a) reasons for collection, including the relationship to the data specification; b) the method of data collection; c) the data collection specification including data item descriptions; d) required resources and skills for data collection; e) anonymisation or pseudonymisation methods where applicable; f) measurement scales and units; g) expected deviations from the data specification and their justification."@en ;
     skos:prefLabel "Data collection"@en ;
     aidgo:clauseNumber "7.3.4.3" ;
     aidgo:dqmlcStage aidgo:AcquisitionStage ;
+    aidgo:inCollection iso5259:AidgoDataCollectionReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataSpecificationDoc,
         iso5259:measurementScale .
@@ -4097,11 +4109,11 @@ iso5259:AidgoReq_6_3_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_6_3_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
     skos:definition "The organization should sustain a data quality culture. The organization shall: a) have rules and processes to achieve quality (according to this document) taking into account the data quality model as applied to the applicable products and services; b) define and implement data quality management processes, and performing related data quality activities; c) integrate the data quality management processes and activities, to the extent appropriate, into other management processes and activities, such as general quality management and risk management; d) document the performed activities; e) provide resources sufficient to perform data quality management; f) monitor, and to the extent necessary, review and improve the data quality management processes; g) provide the required authority to involved personnel; h) communicate data quality policies within the organization."@en ;
     skos:prefLabel "Data quality culture"@en ;
     aidgo:clauseNumber "6.3.2" ;
     aidgo:dqmlcStage aidgo:OrganisationalStage ;
+    aidgo:inCollection iso5259:AidgoDataQualityCultureReqColl ;
     aidgo:uses iso5259:dataQuality,
         iso5259:dataQualityManagement,
         iso5259:dataQualityModel,
@@ -4111,11 +4123,11 @@ iso5259:AidgoReq_7_3_7_3 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_7_3" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
     skos:definition "Documentation provisioned with data shall include: a) scope of use and intended purpose; b) instructions for use; c) statistical properties of the dataset; d) description of each data item; e) list of stakeholders and their roles; f) duties and obligations of the recipient; g) use environment requirements; h) quality factors and their measurement results; i) acceptance test methods; j) communication strategy for updates and issue reporting."@en ;
     skos:prefLabel "Data provisioning documentation"@en ;
     aidgo:clauseNumber "7.3.7.3" ;
     aidgo:dqmlcStage aidgo:ProvisioningStage ;
+    aidgo:inCollection iso5259:AidgoDataProvisioningDocReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataProvisioning,
         iso5259:dataset,
@@ -4187,11 +4199,11 @@ iso5259:AidgoReq_7_3_2_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_2_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataFormatReqColl ;
     skos:definition "The data specification shall include: a) the data type(s) of each data item; b) the allowed range or set of values for each data item; c) the encoding and representation standards; d) the unit of measurement for quantitative data items; e) the definition of missing or null values; f) any required data structure (e.g. tabular, hierarchical, graph); g) inter-data constraints and integrity rules; h) metadata requirements; i) versioning and provenance requirements; j) any other format constraints relevant to intended use."@en ;
     skos:prefLabel "Data format specification"@en ;
     aidgo:clauseNumber "7.3.2.2" ;
     aidgo:dqmlcStage aidgo:SpecificationStage ;
+    aidgo:inCollection iso5259:AidgoDataFormatReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataProvenance,
         iso5259:dataSpecificationDoc,
@@ -4211,11 +4223,11 @@ iso5259:AidgoReq_7_3_5_2 a aidgo:TechnicalRequirement,
         tair:Requirement ;
     dct:identifier "AidgoReq_7_3_5_2" ;
     dct:source "ISO/IEC 5259-3" ;
-    skos:broader iso5259:AidgoDataCleaningReqColl ;
     skos:definition "The organization shall specify data quality measures to be applied for cleaning, including measures for: a) missing data items; b) duplication; c) outliers; d) bias and drift; e) non-standard or invalid data values; f) unneeded or irrelevant data items; g) required transformations; h) verification that cleaning results meet the data specification; i) de-identification or anonymisation where applicable."@en ;
     skos:prefLabel "Data cleaning"@en ;
     aidgo:clauseNumber "7.3.5.2" ;
     aidgo:dqmlcStage aidgo:PreprocessingStage ;
+    aidgo:inCollection iso5259:AidgoDataCleaningReqColl ;
     aidgo:uses iso5259:dataItem,
         iso5259:dataQualityMeasure,
         iso5259:dataSpecificationDoc,
@@ -4350,13 +4362,13 @@ aidgo:Concept a owl:Class ;
 
 aidgo:ConjunctiveRequirement a owl:Class ;
     rdfs:label "Conjunctive requirement"@en ;
-    rdfs:subClassOf aidgo:TechnicalRequirement ;
-    owl:equivalentClass tair:ConjuntiveRequirement ;
+    rdfs:subClassOf aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
     skos:definition "An atomic requirement obtained by bracket-context decomposition of a compound requirement: the shared lead-in is kept in square brackets and each list item becomes one conjunct."@en .
 
 tair:ConjuntiveRequirement a owl:Class ;
     rdfs:label "Conjunctive requirement (TAIR)"@en ;
-    rdfs:comment "IRI spelled as published by TAIR (missing 't'). AIDGO reuses it unchanged for interoperability and provides the correctly spelled aidgo:ConjunctiveRequirement as an equivalent class."@en ;
+    rdfs:comment "IRI spelled as published by TAIR (missing 't'). AIDGO reuses it unchanged for interoperability and provides the correctly spelled aidgo:ConjunctiveRequirement (ISO-side atomic requirements) as a subclass."@en ;
     rdfs:isDefinedBy <https://w3id.org/tair> ;
     rdfs:subClassOf tair:Requirement .
 

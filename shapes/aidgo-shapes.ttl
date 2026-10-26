@@ -33,7 +33,7 @@ aidgosh:AlignmentAssertionShape a sh:NodeShape ;
     sh:property [ sh:path aidgo:validationStatus ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:in ( aidgo:ExpertValidated aidgo:AgentGenerated ) ] ;
     sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class prov:Activity ] ;
-    sh:property [ sh:path prov:generatedAtTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path prov:generatedAtTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
     sh:property [ sh:path prov:wasAttributedTo ; sh:minCount 1 ] ;
     sh:property [ sh:path aidgo:alignmentJustification ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path aidgo:alignmentGap ; sh:datatype rdf:langString ] .
@@ -97,13 +97,32 @@ aidgosh:LegalRequirementShape a sh:NodeShape ;
     sh:property [ sh:path aidgo:coverageStatus ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:message "Every Article 10 obligation must be covered by at least one alignment assertion" ] .
 
+aidgosh:CoverageAgreesWithAssertions a sh:NodeShape ;
+    sh:targetClass aidgo:LegalRequirement ;
+    sh:sparql [
+        sh:message "aidgo:coverageStatus disagrees with the alignment assertions on this obligation" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            SELECT $this WHERE {
+              $this aidgo:coverageStatus ?s .
+              BIND(EXISTS { ?m1 aidgo:legalRequirement $this } AS ?any)
+              BIND(EXISTS { ?m2 aidgo:legalRequirement $this ; aidgo:alignmentType ?t2 .
+                            FILTER (?t2 != aidgo:CompletelySatisfies) } AS ?nonCS)
+              BIND(EXISTS { ?m3 aidgo:legalRequirement $this ; aidgo:alignmentType ?t3 .
+                            FILTER (?t3 != aidgo:NoAlignment) } AS ?nonNA)
+              BIND(IF(!?any, aidgo:Unassessed, IF(!?nonCS, aidgo:FullyCovered,
+                   IF(!?nonNA, aidgo:NotCovered, aidgo:PartiallyCovered))) AS ?expected)
+              FILTER (?s != ?expected)
+            }""" ] .
+
 aidgosh:TechnicalRequirementShape a sh:NodeShape ;
     sh:targetClass aidgo:TechnicalRequirement ;
     sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path skos:definition ; sh:minCount 1 ] ;
     sh:property [ sh:path aidgo:clauseNumber ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:pattern "^[0-9]+(\\.[0-9]+)*$" ] ;
-    sh:property [ sh:path aidgo:dqmlcStage ; sh:minCount 1 ; sh:maxCount 1 ; sh:class aidgo:DQMLCStage ] .
+    sh:property [ sh:path aidgo:dqmlcStage ; sh:minCount 1 ; sh:maxCount 1 ; sh:class aidgo:DQMLCStage ] ;
+    sh:property [ sh:path aidgo:inCollection ; sh:maxCount 1 ; sh:class aidgo:RequirementCollection ] .
 
 aidgosh:ConjunctiveRequirementShape a sh:NodeShape ;
     sh:targetClass aidgo:ConjunctiveRequirement ;
@@ -137,4 +156,6 @@ aidgosh:BroaderResolves a sh:NodeShape ;
     sh:targetSubjectsOf skos:broader ;
     sh:property [ sh:path skos:broader ;
                   sh:or ( [ sh:class aidgo:Concept ] [ sh:class aidgo:RequirementCollection ] ) ;
-                  sh:message "skos:broader must point to a defined concept or requirement collection" ] .
+                  sh:message "skos:broader must point to a defined concept or requirement collection" ] ;
+    sh:not [ sh:class tair:Requirement ] ;
+    sh:message "Requirements use aidgo:inCollection, not skos:broader" .

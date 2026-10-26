@@ -35,7 +35,7 @@ EDGE_WEIGHTS = {
     "CompletelySatisfies": 1.0,  # direct normative equivalence
     "decomposes": 1.0,           # same normative family (atomic -> clause-level requirement)
     "PartiallySatisfies": 2.0,   # partial coverage with documented gap
-    "broader": 1.5,              # hierarchy step requirement -> collection (Wu & Palmer)
+    "broader": 1.5,              # hierarchy / membership step (flat penalty, after Wu & Palmer)
     "broaderConcept": 1.5,       # concept hierarchy step
     "uses": 2.0,                 # requirement -> concept (optional, derived)
     "RelatedTo": 3.0,            # associative only
@@ -63,6 +63,8 @@ def build_adjacency(g: Graph, with_concept_links: bool = False) -> dict[str, lis
             edge(g.value(m, AIDGO.legalRequirement), tr, t)
     for s, o in g.subject_objects(TAIR.decomposes):
         edge(s, o, "decomposes")
+    for s, o in g.subject_objects(AIDGO.inCollection):
+        edge(s, o, "broader")
     for s, o in g.subject_objects(SKOS.broader):
         kind = "broaderConcept" if (s, RDF.type, AIDGO.Concept) in g else "broader"
         edge(s, o, kind)

@@ -10,5 +10,7 @@ aidgo:AugmentationStage,Data augmentation,1,0
 aidgo:ProvisioningStage,Data provisioning,8,25
 aidgo:DecommissioningStage,Data decommissioning,9,0
 aidgo:HorizontalProcessStage,Horizontal processes,21,13
+aidgo:SupplyChainStage,Data quality in supply chains,0,0
 aidgo:ToolManagementStage,Management of data processing tools,1,7
 aidgo:DependencyManagementStage,Management of data quality dependencies,1,3
+aidgo:ProjectSpecificStage,Project-specific data quality management,0,0

@@ -29,7 +29,7 @@ Single steps: `python -m aidgo_tools build | validate | query [CQ-M1 …] | dist
 | ISO/IEC 5259-1…5 defined concepts | 74 | `data/iso_concepts.csv` |
 | Expert alignment assertions | 24 | `data/alignments.csv` |
 
-The 190 technical-requirement nodes are 71 clause-level requirements plus 119 atomic ones; they are not 190 requirements.
+The 190 technical-requirement nodes are 71 clause-level requirements plus 119 atomic ones; they are not 190 requirements. The 3 NoAlignment assertions are obligation-level verdicts (they have no technical requirement), so the 6/15/3 split mixes 21 pair-level judgements with 3 obligation-level ones; say so when reporting it.
 
 **Assertion level (24 assertions):** 6 CompletelySatisfies · 15 PartiallySatisfies · 3 NoAlignment · 0 RelatedTo · 0 ConflictsWith (`queries/CQ-M5.rq`).
 
@@ -90,7 +90,7 @@ Namespaces: `aidgo: https://w3id.org/aidgo#` · `iso5259: https://w3id.org/aidgo
 
 ## Semantic distance
 
-`python -m aidgo_tools distance` scores every obligation–requirement pair with similarity = 1/(1+d), where d is the weighted shortest path (Dijkstra) over alignment, decomposition and hierarchy edges: CompletelySatisfies 1.0, decomposes 1.0, broader 1.5, PartiallySatisfies 2.0, RelatedTo 3.0, ConflictsWith 5.0 (Rada et al. 1989; Wu & Palmer 1994; Li et al. 2003). `distance AiaPrReq_10.1 AidgoReq_6_3_4` prints the path behind a single score. Lexically derived concept links are excluded unless `--with-concept-links` is passed.
+`python -m aidgo_tools distance` scores every obligation–requirement pair with similarity = 1/(1+d), where d is the weighted shortest path (Dijkstra) over undirected alignment, decomposition, collection-membership and hierarchy edges: CompletelySatisfies 1.0, decomposes 1.0, membership/hierarchy step 1.5 (a flat per-step penalty, not Wu & Palmer's depth-scaled measure), PartiallySatisfies 2.0, RelatedTo 3.0, ConflictsWith 5.0 (edge counting after Rada et al. 1989; transform after Li et al. 2003). Paths may pass through other obligations, as the example below shows. `distance AiaPrReq_10.1 AidgoReq_6_3_4` prints the path behind a single score. Lexically derived concept links are excluded unless `--with-concept-links` is passed.
 
 ## Updating the data
 

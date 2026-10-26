@@ -155,7 +155,7 @@ def build_graph(ds: Dataset | None = None) -> tuple[Graph, list[tuple[str, str]]
         if r["definition"]:
             g.add((s, SKOS.definition, en(r["definition"])))
         if r["collection"]:
-            g.add((s, SKOS.broader, ISO[r["collection"]]))
+            g.add((s, AIDGO.inCollection, ISO[r["collection"]]))
         g.add((s, DCTERMS.source, Literal("ISO/IEC 5259-3")))
         g.add((s, AIDGO.clauseNumber, Literal(r["clause"])))
         stage = stage_for_clause(r["clause"])
@@ -197,11 +197,13 @@ def build_graph(ds: Dataset | None = None) -> tuple[Graph, list[tuple[str, str]]
             g.add((m, AIDGO.alignmentGap, en(a["gap"])))
         if a["legal_focus"]:
             g.add((m, AIDGO.legalFocus, en(a["legal_focus"])))
+        if a["legal_focus_text"]:
+            g.add((m, AIDGO.legalFocusText, en(a["legal_focus_text"])))
         if a["covered_cqs"]:
             g.add((m, AIDGO.coveredCQs, Literal(a["covered_cqs"])))
         g.add((m, AIDGO.validationStatus, AIDGO.ExpertValidated))
         g.add((m, PROV.wasGeneratedBy, MAPPING_PROCESS))
-        g.add((m, PROV.generatedAtTime, Literal(MAPPING_DATE, datatype=XSD.date)))
+        g.add((m, PROV.generatedAtTime, Literal(MAPPING_DATE + "T00:00:00Z", datatype=XSD.dateTime)))
         g.add((m, PROV.wasAttributedTo, AUTHOR))
         if a["tech_id"]:
             g.add((lr, AIDGO.alignedWith, tr))
