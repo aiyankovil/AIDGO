@@ -1,0 +1,18 @@
+# CQ-M5: How many alignment assertions are there of each alignment type? (assertion level, all five types)
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?alignmentType (COUNT(?m) AS ?assertions) WHERE {
+  VALUES ?alignmentType { aidgo:CompletelySatisfies aidgo:PartiallySatisfies aidgo:RelatedTo
+                          aidgo:ConflictsWith aidgo:NoAlignment }
+  OPTIONAL { ?m a aidgo:AlignmentAssertion ; aidgo:alignmentType ?alignmentType . }
+} GROUP BY ?alignmentType ORDER BY DESC(?assertions) ?alignmentType

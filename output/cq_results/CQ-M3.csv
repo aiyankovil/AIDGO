@@ -1,0 +1,4 @@
+mappingID,articleRef,legalReqID,legalLabel,gap
+Map_10.5_NoAlignment,Art. 10(5),AiaPrReq_10.5,Special categories personal data may be processed for bias detection,Requires GDPR Art.9 + ISO/IEC 27701 compliance. ISO 5259 cannot satisfy this obligation.
+Map_10.5.a_NoAlignment,Art. 10(5)(a),AiaPrReq_10.5_a,Bias cannot be fulfilled by synthetic/anonymised data alternatives,GDPR proportionality principle — necessity test for personal data over synthetic alternatives — is outside ISO 5259 scope. Recommended: GDPR Art.9; AI Act Art.10(5)(a).
+Map_10.5.b_NoAlignment,Art. 10(5)(b),AiaPrReq_10.5_b,Special data subject to technical limitations and state-of-art security measures,"Pseudonymisation, state-of-art security, strict GDPR access controls outside ISO 5259 scope. Recommended: ISO/IEC 27001; ISO/IEC 27701; ENISA AI Cybersecurity Guidelines."

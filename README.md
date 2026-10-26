@@ -1,15 +1,105 @@
-# AIDGO
-**AIDGO: an ontology for AI Data Governance**
-Semantic Alignment between EU AI Act and ISO 5259: Bridging Data Governance Requirements. 
-[https://w3id.org/aidgo](https://w3id.org/aidgo)
+# AIDGO — AI Data Governance Ontology
 
-Cite as: . Publisher: IOS Press, pp. 51–65.
+**Semantic alignment of EU AI Act Article 10 data-governance obligations with ISO/IEC 5259 data-quality requirements.**
 
-**Contact:**
-This ontology is created and maintained by:
-Kuruvilla George Aiyankovil
-PhD Researcher
-ADAPT Centre, Trinity College Dublin, Dublin, Ireland
-kuruvilla.george@adaptcentre.ie
-GitHub: aiyankovil
+Documentation: [https://w3id.org/aidgo](https://w3id.org/aidgo) · Knowledge-graph explorer: [aidgo_knowledge_graph.html](aidgo_knowledge_graph.html) · Licence: [CC BY 4.0](LICENSE)
 
+AIDGO represents legal obligations and technical requirements as machine-interpretable entities and links them with first-class, provenance-bearing **alignment assertions**. Each assertion carries one of five alignment types (CompletelySatisfies, PartiallySatisfies, RelatedTo, ConflictsWith, NoAlignment), one of five alignment bases, a justification, the residual gap, and PROV-O provenance. An RDF 1.2 (RDF-star) layer mirrors every assertion as an annotated triple so it can be queried with SPARQL-star. Everything in this repository is generated from `data/` by one command and checked by SHACL shapes and tests.
+
+## Quick start
+
+```bash
+pip install -r requirements.txt     # rdflib, pySHACL, pyoxigraph, openpyxl, pytest (Python >= 3.10)
+make                                 # = python -m aidgo_tools all
+make test                            # = python -m pytest -q
+```
+
+`make` builds the knowledge graph, validates it, answers every competency question, computes the distance scores and the coding-agreement report, and regenerates the data-driven parts of the two web pages. The build is deterministic, so a clean checkout followed by `make` changes nothing; CI fails if committed outputs are stale.
+
+Single steps: `python -m aidgo_tools build | validate | query [CQ-M1 …] | distance [legalId techId] | agreement | site [--check]`.
+
+## What the knowledge graph contains
+
+| | Count | Source |
+|---|---|---|
+| Article 10 atomic obligations (`aidgo:LegalRequirement`) | 17 | `data/legal_requirements.csv` |
+| ISO/IEC 5259-3 clause-level requirements (`tair:Requirement`) | 71 | `data/iso_requirements.csv` |
+| ISO/IEC 5259-3 atomic requirements (`aidgo:ConjunctiveRequirement`) | 119 | `data/iso_conjunctive_requirements.csv` |
+| Requirement collections (clause tree) | 51 | `data/iso_collections.csv` |
+| ISO/IEC 5259-1…5 defined concepts | 74 | `data/iso_concepts.csv` |
+| Expert alignment assertions | 24 | `data/alignments.csv` |
+
+The 190 technical-requirement nodes are 71 clause-level requirements plus 119 atomic ones; they are not 190 requirements.
+
+**Assertion level (24 assertions):** 6 CompletelySatisfies · 15 PartiallySatisfies · 3 NoAlignment · 0 RelatedTo · 0 ConflictsWith (`queries/CQ-M5.rq`).
+
+**Obligation level (17 obligations):** 2 fully covered · 12 partially covered · 3 not covered (`queries/CQ-COV.rq`). An obligation is *fully covered* only if every assertion on it is CompletelySatisfies, *not covered* if every assertion is NoAlignment, and *partially covered* otherwise. The rule is stated in the ontology (`aidgo:CoverageStatusScheme`), materialised as `aidgo:coverageStatus`, and independently re-derived by the query; a test checks the two agree. Report coverage as counts over obligations — assertion percentages are not obligation coverage.
+
+## Repository layout
+
+```
+ontology/aidgo.ttl          OWL 2 ontology (TBox): classes, properties, alignment types with
+                            conditional-entailment semantics, bases, coverage rule, DQMLC stages
+shapes/aidgo-shapes.ttl     SHACL constraints the KG must satisfy
+data/                       source data (CSV) - the single source of truth, see data/README.md
+data/coding/                independent second coding of ISO/IEC 5259-3 (M. Arellano), no ISO text
+queries/*.rq                competency questions CQ-M1..M8, CQ-COV, CQ-STAR, CQ-L1, CQ-T1, CQ-T2
+aidgo_tools/                pipeline code (build, validate, query, distance, agreement, site, migrate)
+tests/                      pytest suite pinning every reported figure
+output/aidgo_kg.ttl         GENERATED  ontology + data, plain RDF 1.1
+output/aidgo_kg_star.ttl    GENERATED  + RDF 1.2 annotation layer (needs a SPARQL 1.2 engine)
+output/aidgo_kg.nt          GENERATED  sorted N-Triples for line-level diffs
+output/cq_results/          GENERATED  answer to every query (CSV) + index
+output/distance/            GENERATED  semantic distance for every obligation x requirement pair
+output/coding_agreement/    GENERATED  extraction agreement with the second coding
+index.html                  ontology documentation (served at w3id.org/aidgo); tables, counts,
+                            embedded data and SPARQL presets regenerated by `aidgo_tools site`
+aidgo_knowledge_graph.html  D3 explorer; embedded data regenerated by `aidgo_tools site`
+sources/                    working spreadsheets (TAIR 2.0 workbook etc.), kept for provenance
+w3id/.htaccess              content-negotiation rules to submit to perma-id/w3id.org
+legacy/                     superseded v1 prototypes (see legacy/README.md)
+```
+
+## Modelling at a glance
+
+```turtle
+aidgo:Map_10.2.7_7.3.5.2_Rd a aidgo:AlignmentAssertion ;
+    aidgo:legalRequirement     aiapr:AiaPrReq_10.2_7 ;          # Art. 10(2)(f) - examination for bias
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.5.2_Rd ;
+    aidgo:alignmentType        aidgo:PartiallySatisfies ;
+    aidgo:alignmentBasis       aidgo:ScopeOverlap ;
+    aidgo:alignmentJustification "…"@en ;
+    aidgo:alignmentGap         "…"@en ;
+    aidgo:validationStatus     aidgo:ExpertValidated ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ; prov:wasAttributedTo aidgo:KuruvillaGeorgeAiyankovil .
+
+# RDF 1.2 layer (output/aidgo_kg_star.ttl): the assertion node reifies its own triple
+aiapr:AiaPrReq_10.2_7 aidgo:alignedWith iso5259:AidgoConjReq_7.3.5.2_Rd
+    ~ aidgo:Map_10.2.7_7.3.5.2_Rd {| aidgo:alignmentType aidgo:PartiallySatisfies |} .
+```
+
+Alignment types are defined by conditional entailment over system states S, not text similarity: **CompletelySatisfies** — for all S, Sat(S, R_iso) ∧ A ⊨ Sat(S, R_legal); **PartiallySatisfies** — R_iso constrains a condition of R_legal but some S satisfies R_iso and A without satisfying R_legal (the residual is the recorded gap). See `ontology/aidgo.ttl` for all five.
+
+Namespaces: `aidgo: https://w3id.org/aidgo#` · `iso5259: https://w3id.org/aidgo/iso5259#` · `aiapr: https://w3id.org/euaiact/art10#` · `tair: https://w3id.org/tair#`.
+
+## Querying
+
+* In the browser: the **Live SPARQL** section of `index.html` runs Oxigraph (WebAssembly) on `output/aidgo_kg_star.ttl`; every preset is a file in `queries/`.
+* Locally: `python -m aidgo_tools query CQ-M2` prints one answer; `python -m aidgo_tools query` writes all of them to `output/cq_results/`.
+* Elsewhere: load `output/aidgo_kg.ttl` (any triple store) or `output/aidgo_kg_star.ttl` (SPARQL 1.2: Oxigraph ≥ 0.5, Jena ≥ 5) and run the `.rq` files as they are; each carries its own prefixes.
+
+## Semantic distance
+
+`python -m aidgo_tools distance` scores every obligation–requirement pair with similarity = 1/(1+d), where d is the weighted shortest path (Dijkstra) over alignment, decomposition and hierarchy edges: CompletelySatisfies 1.0, decomposes 1.0, broader 1.5, PartiallySatisfies 2.0, RelatedTo 3.0, ConflictsWith 5.0 (Rada et al. 1989; Wu & Palmer 1994; Li et al. 2003). `distance AiaPrReq_10.1 AidgoReq_6_3_4` prints the path behind a single score. Lexically derived concept links are excluded unless `--with-concept-links` is passed.
+
+## Updating the data
+
+Edit the CSVs in `data/` (see `data/README.md` for every column), then `make && make test`. Never edit `output/` or the generated parts of the HTML pages by hand.
+
+## Copyright of standards text
+
+EU AI Act text is public law. ISO/IEC 5259 text is copyrighted by ISO/IEC. The `definition` columns of `data/iso_*.csv` (and the pages generated from them) contain requirement and definition text taken from the FDIS drafts, as did v1 of this repository. Confirm that publishing this text is permitted; if not, blank those columns and rebuild — the pipeline, shapes and queries do not depend on them except for the lexical concept links behind CQ-M8. The second coding in `data/coding/` deliberately contains identifiers, clause numbers and concept links only.
+
+## Citation and contact
+
+See [CITATION.cff](CITATION.cff). Kuruvilla George Aiyankovil, ADAPT Centre, Trinity College Dublin — kuruvilla.george@adaptcentre.ie · supervised by David Lewis.

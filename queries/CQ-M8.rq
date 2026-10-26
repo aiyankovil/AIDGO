@@ -1,0 +1,19 @@
+# CQ-M8: Which ISO/IEC 5259 terminology concepts do the aligned technical requirements use,
+#        and how often? (aidgo:uses links are lexically derived - see their RDF-star provenance)
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?concept ?conceptLabel ?source (COUNT(DISTINCT ?m) AS ?assertions) WHERE {
+  ?m a aidgo:AlignmentAssertion ; aidgo:technicalRequirement ?tr .
+  ?tr aidgo:uses ?concept .
+  ?concept skos:prefLabel ?conceptLabel ; dct:source ?source .
+} GROUP BY ?concept ?conceptLabel ?source ORDER BY DESC(?assertions) ?conceptLabel

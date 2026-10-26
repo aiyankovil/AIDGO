@@ -1,0 +1,14 @@
+stage,stageLabel,clauseLevel,atomicLevel
+aidgo:OrganisationalStage,Overall data quality management,10,30
+aidgo:LifeCycleGeneralStage,Life cycle (general),3,0
+aidgo:MotivationStage,Data motivation and conceptualization,2,5
+aidgo:SpecificationStage,Data specification,4,10
+aidgo:PlanningStage,Data planning,2,10
+aidgo:AcquisitionStage,Data acquisition,7,7
+aidgo:PreprocessingStage,Data preprocessing,2,9
+aidgo:AugmentationStage,Data augmentation,1,0
+aidgo:ProvisioningStage,Data provisioning,8,25
+aidgo:DecommissioningStage,Data decommissioning,9,0
+aidgo:HorizontalProcessStage,Horizontal processes,21,13
+aidgo:ToolManagementStage,Management of data processing tools,1,7
+aidgo:DependencyManagementStage,Management of data quality dependencies,1,3

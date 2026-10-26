@@ -1,0 +1,52 @@
+id,label,definition,broader,clause
+AidgoContextOfOrganizationReqColl,Context of the organization,,,4
+AidgoLeadershipReqColl,Leadership,,,5
+AidgoPlanningReqColl,Planning (DQM System),,,6
+AidgoDataQualityCultureReqColl,Data quality culture,Requirements for the organisation to establish and sustain a data quality culture.,AidgoPlanningReqColl,6.3.2
+AidgoDataQualityIssuesMgmtReqColl,Management of data quality issues,"Requirements for processes to communicate, analyse, evaluate, resolve and close data quality issues.",AidgoPlanningReqColl,6.3.3
+AidgoCompetenceMgmtReqColl,Competence management,Requirements for managing skills and competence of persons involved in DQM activities.,AidgoPlanningReqColl,6.3.4
+AidgoResourceMgmtReqColl,Resource management,Requirements for providing sufficient resources for DQM activities.,AidgoPlanningReqColl,6.3.5
+AidgoDocumentationReqColl,Documentation,Requirements for documentation to be intelligible and accessible.,AidgoPlanningReqColl,6.3.7
+AidgoDataQualityAuditReqColl,Data quality audit and assessment,Requirements for auditing implemented DQM processes.,AidgoPlanningReqColl,6.3.8
+AidgoConfirmationReviewReqColl,Confirmation review and DQ measures,Requirements for confirming data quality via measures and confirmation reviews.,AidgoPlanningReqColl,6.3.9
+AidgoProjectSpecificDQReqColl,Project-specific DQM,Requirements for project-specific data quality management.,AidgoPlanningReqColl,6.3.10
+AidgoSupportReqColl,Support (DQMLC),,,7
+AidgoDQLCReqColl,Data quality management life cycle General,General requirements for the DQMLC.,AidgoSupportReqColl,7.2.1
+AidgoDataMotivationReqColl,Data motivation and conceptualization,"Requirements for documenting motivation, origin and intended use of data.",AidgoSupportReqColl,7.3.1.1
+AidgoStakeholderAnalysisReqColl,Stakeholder analysis,Requirements for identifying and engaging stakeholders.,AidgoDataMotivationReqColl,7.3.1.2
+AidgoDataSpecificationReqColl,Data specification General,Requirements for specifying data requirements consistently and completely.,AidgoSupportReqColl,7.3.2.1
+AidgoDataFormatReqColl,Data format,Requirements for specifying data format.,AidgoDataSpecificationReqColl,7.3.2.2
+AidgoStatisticalPropertiesReqColl,Statistical properties and divisibility,Requirements for specifying statistical properties and subset divisions.,AidgoDataSpecificationReqColl,7.3.2.3
+AidgoDataPlanningReqColl,Data planning General,Requirements for establishing a data quality plan.,AidgoSupportReqColl,7.3.3.1
+AidgoDataLifeCyclePlansReqColl,Data life cycle specific plans,Requirements for stage-specific planning.,AidgoDataPlanningReqColl,7.3.3.2
+AidgoDataAcquisitionReqColl,Data acquisition General,Requirements for data acquisition processes.,AidgoSupportReqColl,7.3.4.1
+AidgoDataSourceReqColl,Data source delegation,Requirements concerning data source and delegation of acquisition responsibilities.,AidgoDataAcquisitionReqColl,7.3.4.2
+AidgoDataCollectionReqColl,Data collection,Requirements for documenting data collection.,AidgoDataAcquisitionReqColl,7.3.4.3
+AidgoDataHandlingReqColl,Data handling,Requirements for data handling after collection.,AidgoDataAcquisitionReqColl,7.3.4.4
+AidgoDataPreprocessingReqColl,Data preprocessing General,Requirements for data preprocessing processes.,AidgoSupportReqColl,7.3.5.1
+AidgoDataCleaningReqColl,Data cleaning,Requirements for specifying and applying data cleaning measures.,AidgoDataPreprocessingReqColl,7.3.5.2
+AidgoDataAugmentationReqColl,Data augmentation General,Requirements for data augmentation processes.,AidgoSupportReqColl,7.3.6.1
+AidgoDataProvisioningReqColl,Data provisioning General,Requirements for data provisioning processes.,AidgoSupportReqColl,7.3.7.1
+AidgoDataProvisioningDocReqColl,Data provisioning documentation,Requirements for documentation provisioned with data.,AidgoDataProvisioningReqColl,7.3.7.3
+AidgoTrackingImprovementReqColl,Tracking and improvement,Requirements for tracking provisioned data and improving the provisioning process.,AidgoDataProvisioningReqColl,7.3.7.4
+AidgoDataOptimizationReqColl,Data optimization,Requirements for optimising provisioned data.,AidgoDataProvisioningReqColl,7.3.7.5
+AidgoSupportCommitmentReqColl,Support commitment,Requirements for ongoing support commitment for provisioned data.,AidgoDataProvisioningReqColl,7.3.7.6
+AidgoDataDecommissioningReqColl,Data decommissioning General,Requirements for decommissioning data.,AidgoSupportReqColl,7.3.8.1
+AidgoDataTransferReqColl,Data transfer,,AidgoDataDecommissioningReqColl,7.3.8.2
+AidgoDataDeletionReqColl,Data deletion,,AidgoDataDecommissioningReqColl,7.3.8.3
+AidgoPartialDeletionReqColl,Partial data deletion on request,,AidgoDataDecommissioningReqColl,7.3.8.4
+AidgoOperationReqColl,Operation (horizontal processes),,,8
+AidgoHorizontalGeneralReqColl,Horizontal processes General,,AidgoOperationReqColl,8.2
+AidgoVVReqColl,Verification and validation General,,AidgoOperationReqColl,8.3.1.1
+AidgoQualityGatesReqColl,Data life cycle quality gates,,AidgoVVReqColl,8.3.1.2
+AidgoVVImprovementReqColl,V&V improvement,,AidgoVVReqColl,8.3.1.3
+AidgoConfigMgmtReqColl,Configuration management,,AidgoOperationReqColl,8.3.2
+AidgoChangeMgmtReqColl,Change management,,AidgoOperationReqColl,8.3.3
+AidgoChangeRequestSpecReqColl,Change request specification,,AidgoChangeMgmtReqColl,8.3.3.3
+AidgoChangeRequestAnalysisReqColl,Change request analysis,,AidgoChangeMgmtReqColl,8.3.3.4
+AidgoChangeRequestEvalReqColl,Change request evaluation,,AidgoChangeMgmtReqColl,8.3.3.5
+AidgoChangeDocumentationReqColl,Implementing and documenting change,,AidgoChangeMgmtReqColl,8.3.3.6
+AidgoRiskManagementReqColl,Risk management,,AidgoOperationReqColl,8.3.4
+AidgoDataProcessingToolsReqColl,Data processing tools,,,10
+AidgoDQDependenciesReqColl,Data quality dependencies,,,11
+AidgoProjectDQReqColl,Project-specific DQM,,,12

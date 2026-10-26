@@ -1,0 +1,20 @@
+# CQ-M7 (legal side): How are the alignments distributed across the paragraphs of Article 10?
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?articleRef (COUNT(?m) AS ?assertions)
+       (SUM(IF(?t = aidgo:CompletelySatisfies, 1, 0)) AS ?complete)
+       (SUM(IF(?t = aidgo:PartiallySatisfies, 1, 0)) AS ?partial)
+       (SUM(IF(?t = aidgo:NoAlignment, 1, 0)) AS ?none) WHERE {
+  ?m a aidgo:AlignmentAssertion ; aidgo:legalRequirement ?lr ; aidgo:alignmentType ?t .
+  ?lr aidgo:articleReference ?articleRef .
+} GROUP BY ?articleRef ORDER BY ?articleRef

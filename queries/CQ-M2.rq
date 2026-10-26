@@ -1,0 +1,25 @@
+# CQ-M2: Which technical requirements partially satisfy legal obligations, and what evidence supports the classification?
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?mappingID ?articleRef ?legalReqID ?techReqID ?basis ?justification ?gap WHERE {
+  ?m a aidgo:AlignmentAssertion ;
+     dct:identifier ?mappingID ;
+     aidgo:legalRequirement ?lr ;
+     aidgo:technicalRequirement ?tr ;
+     aidgo:alignmentType aidgo:PartiallySatisfies ;
+     aidgo:alignmentBasis ?basis ;
+     aidgo:alignmentJustification ?justification ;
+     aidgo:alignmentGap ?gap .
+  ?lr dct:identifier ?legalReqID ; aidgo:articleReference ?articleRef .
+  ?tr dct:identifier ?techReqID .
+} ORDER BY ?legalReqID ?mappingID

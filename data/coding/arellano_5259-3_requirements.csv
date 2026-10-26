@@ -1,0 +1,148 @@
+id,coded_clause,fdis_clause,norm_level,related_category,related_concepts
+5259-3-6.1-r1,6.1,,Requirement,QualityCriteria,DataQualityMeasure DataQualityCharacteristic SelectDataQualityCharacteristic
+5259-3-6.1-r2,6.1,,Requirement,,ProvideRationaleForChange DataQualityMeasure
+5259-3-6.2-r1,6.2,6.3.2,Requirement,,DataQualityRuleAndProcess DataQualityModel AchieveDataQuality
+5259-3-6.2-r2,6.2,6.3.2,Requirement,DataManagement,DataQualityManagementProcess DataQualityActivity DefineDataQualityManagementProcess
+5259-3-6.2-r3,6.2,6.3.2,Requirement,,DataQualityManagementProcess IntegrateDataQualityManagementProcess RiskManagement
+5259-3-6.2-r4,6.2,6.3.2,Requirement,,DocumentPerformedActivity DataQualityActivity
+5259-3-6.2-r5,6.2,6.3.2,Requirement,,ProvideResource
+5259-3-6.2-r6,6.2,6.3.2,Requirement,,MonitorDataQualityManagementProcess ReviewDataQualityManagementProcess ImproveDataQualityManagementProcess
+5259-3-6.2-r7,6.2,6.3.2,Requirement,,ProvideAuthority InvolvedPersonnel
+5259-3-6.2-r8,6.2,6.3.2,Requirement,,CommunicateDataQualityPolicy DataQualityPolicy
+5259-3-6.3.3-r1,6.3.3,6.3.3,Requirement,DataRequirement,DataQualityIssue DataQualityIssueManagementProcess ResolveDataQualityIssue CloseDataQualityIssue
+5259-3-6.3.3-r2,6.3.3,6.3.3,Requirement,,DocumentClosedIssue DataQualityIssue
+5259-3-6.3.3-r3,6.3.3,6.3.3,Requirement,,EscalateDataQualityIssue DelegateDataQualityIssue DataQualityIssue
+5259-3-6.3.4-r1,6.3.4,6.3.4,Requirement,Data,CompetenceManagement RequiredSkill DataProcessingTool DocumentRequiredSkill
+5259-3-6.3.4-r2,6.3.4,6.3.4,Requirement,,InvolvedPersonnel SufficientSkill CompetenceManagement
+5259-3-6.3.4-r3,6.3.4,6.3.4,Requirement,,ProficiencyRecord RequiredSkill MaintainProficiencyRecord
+5259-3-6.3.4-r4,6.3.4,6.3.4,Requirement,,TrainingAndExperienceRecord RequiredSkill
+5259-3-6.3.5-r1,6.3.5,6.3.5,Requirement,DataManagement,SoftwareApplication ProvideResource
+5259-3-6.3.5-r2,6.3.5,6.3.5,Requirement,DataManagement,ItInfrastructure ProvideResource
+5259-3-6.3.5-r3,6.3.5,6.3.5,Requirement,DataManagement,InvolvedPersonnel RequiredSkill
+5259-3-6.3.7-r1,6.3.7,6.3.7,Requirement,Document,IntelligibleDocumentation RelevantStakeholder
+5259-3-6.3.7-r2,6.3.7,6.3.7,Requirement,Document,AccessibleDocumentation RelevantStakeholder
+5259-3-6.3.8-r1,6.3.8,6.3.8,Requirement,,DataQualityAudit ImplementedProcess DataQualityPlan WorkProduct
+5259-3-6.3.8-r2,6.3.8,6.3.8,Requirement,Data,DataQualityAssessment AssessData
+5259-3-6.3.8-r3,6.3.8,6.3.8,Requirement,,DataQualityAssessmentPlan SpecificationStage
+5259-3-6.3.8-r4,6.3.8,6.3.8,Requirement,,DataQualityAssessment DataProvisioning
+5259-3-6.3.9-r1,6.3.9,6.3.9,Requirement,,ConfirmDataQuality DataQualityMeasure
+5259-3-6.3.9-r2,6.3.9,6.3.9,Requirement,,DataQualityReview ConfirmationReview WorkProduct DataQualityAudit DataQualityAssessment
+5259-3-6.3.9-r3,6.3.9,6.3.9,Requirement,,ConfirmationReview DataProvisioning
+5259-3-6.3.9-r4,6.3.9,6.3.9,Requirement,,WorkProduct ConfirmationReview
+5259-3-6.3.9-r5,6.3.9,6.3.9,Requirement,,InvolvedPersonnel ConfirmationReview
+5259-3-6.3.10-r1,6.3.10,6.3.10,Requirement,,ProjectSpecificDataQualityManagementProcess MlProject
+5259-3-6.3.10-r2,6.3.10,6.3.10,Requirement,,DataQualityMeasureBenchmark DocumentBenchmark
+5259-3-6.3.10-r3,6.3.10,6.3.10,Requirement,,DataQualityMeasure IdentifyDataQualityMeasure
+5259-3-6.3.10-r4,6.3.10,6.3.10,Requirement,,ProjectSpecificDataQualityManagementProcess
+5259-3-6.4-r1,6.4,6.4,Requirement,,WorkProduct DataQualityRuleAndProcess CompetenceManagement DataQualityManagementSystem DataQualityMeasure DataQualityMeasureBenchmark QualityAnomalyReport
+5259-3-7.2.1-r1,7.2.1,7.2.1,Requirement,,DataLifeCycle ManageDataQuality
+5259-3-7.2.1-r2,7.2.1,7.2.1,Requirement,DataManagement,DataQualityProcess DataLifeCycle
+5259-3-7.2.1-r3,7.2.1,7.2.1,Requirement,,DelegationOfResponsibility DocumentDelegation Traceability
+5259-3-7.2.4-r1,7.2.4,7.2.4,Requirement,,ValidationAndVerification ChangeManagement ConfigurationManagement ProjectIndependentTailoring RiskManagement
+5259-3-7.3.1-r1,7.3.1,7.3.1.1,Requirement,,DataNeedMotivation DataNeedOrigin DocumentDataNeed
+5259-3-7.3.1-r2,7.3.1,7.3.1.1,Requirement,IntendedPurpose,PurposeOfData SpecifyIntendedUseOfData
+5259-3-7.3.1-r3,7.3.1,7.3.1.1,Requirement,DataRequirement,DocumentDataQualityRequirement DataQualityRequirement
+5259-3-7.3.1.2-r1,7.3.1.2,7.3.1.2,Requirement,,StakeholderAnalysis RelevantStakeholder PerformStakeholderAnalysis
+5259-3-7.3.1.2-r2,7.3.1.2,7.3.1.2,Requirement,DataRequirement,ConflictingDataQualityRequirement IdentifyConflictingRequirement
+5259-3-7.3.2.1-r1,7.3.2.1,7.3.2.1,Requirement,DataRequirement IntendedPurpose,DataSpecification ValidateDataRequirement
+5259-3-7.3.2.1-r2,7.3.2.1,7.3.2.1,Requirement,IntendedPurpose,DataSpecification
+5259-3-7.3.2.2-r1,7.3.2.2,7.3.2.2,Requirement,,DataFormatInformation DetermineDataFormat
+5259-3-7.3.2.3-r1,7.3.2.3,7.3.2.3,Requirement,TrainingDataset ValidationDataset TestingDataset,DataSubsetDivision DataSpecification
+5259-3-7.3.2.3-r2,7.3.2.3,7.3.2.3,Requirement,DatasetStatisticalProperty,Representativeness AppropriateSize DataSubsetDivision
+5259-3-7.3.3.1-r1,7.3.3.1,7.3.3.1,Requirement,,DataQualityPlan EstablishDataQualityPlan DataSpecification DataLifeCycle
+5259-3-7.3.3.1-r2,7.3.3.1,7.3.3.1,Requirement,,DataQualityGoal ResourceAllocation LegalRequirement Traceability Reproducibility DataQualityPlan DataSpecification
+5259-3-7.3.3.2-r1,7.3.3.2,7.3.3.2,Requirement,,ProcessSpecification ResponsiblePerson DataAcquisitionPlan DataPreprocessingPlan DataAugmentationPlan DataProvisioningPlan DataDecommissioningPlan DataQualityPlan DataLifeCycle
+5259-3-7.3.4.1-r1,7.3.4.1,7.3.4.1,Requirement,,DataAcquisitionProcess SpecifyDataAcquisitionProcess DataSpecification DataQualityPlan
+5259-3-7.3.4.1-r2,7.3.4.1,7.3.4.1,Requirement,,DataIncompletenessRisk DocumentRisk MitigateRisk
+5259-3-7.3.4.1-r3,7.3.4.1,7.3.4.1,Requirement,,DataAcquisitionProcess MonitorDataAcquisition DocumentDeviation
+5259-3-7.3.4.1-r4,7.3.4.1,7.3.4.1,Requirement,Data DataManagement,ResponsibilityForData
+5259-3-7.3.4.2-r1,7.3.4.2,7.3.4.2,Requirement,Dataset,DataReuseCondition DataLicenseCondition
+5259-3-7.3.4.3-r1,7.3.4.3,7.3.4.3,Requirement,DataCollection,ReasonForDataCollection
+5259-3-7.3.4.3-r2,7.3.4.3,7.3.4.3,Requirement,DataCollection,DataCollectionMethod
+5259-3-7.3.4.3-r3,7.3.4.3,7.3.4.3,Requirement,DataCollection,DataCollectionSpecification
+5259-3-7.3.4.3-r4,7.3.4.3,7.3.4.3,Requirement,DataCollection,RequiredSkill ProvideResource
+5259-3-7.3.4.3-r5,7.3.4.3,7.3.4.3,Requirement,Pseudonymisation,AnonymisationMethod
+5259-3-7.3.4.3-r6,7.3.4.3,7.3.4.3,Requirement,,DataMeasurementScale MeasurementUnit
+5259-3-7.3.4.3-r7,7.3.4.3,7.3.4.3,Requirement,,ExpectedDeviationFromTargetDataQuality
+5259-3-7.3.4.4-r1,7.3.4.4,7.3.4.4,Requirement,,AcquiredData ManageAcquiredData
+5259-3-7.3.4.4-r2,7.3.4.4,7.3.4.4,Requirement,,AcquiredData DataSpecification
+5259-3-7.3.4.4-r3,7.3.4.4,7.3.4.4,Requirement,DataOrigin,AcquiredData QualityReview AccessControl Traceability VersionControl DataStorage DatasetOperation DataCorruption ResponsiblePerson
+5259-3-7.3.5.1-r1,7.3.5.1,7.3.5.1,Requirement,,DataPreprocessingProcess DataSpecification DataQualityPlan
+5259-3-7.3.5.2-r1,7.3.5.2,7.3.5.2,Requirement,CleanData,DataCleaning MissingData DataDuplication Outlier DataDrift NonStandardValue DataTransformation DataDeIdentification DataQualityMeasure
+5259-3-7.3.6.1-r1,7.3.6.1,7.3.6.1,Requirement,,DataAugmentationProcess DataSpecification DataQualityPlan
+5259-3-7.3.7.1-r1,7.3.7.1,7.3.7.1,Requirement,,DataProvisioningProcess DataSpecification DataQualityPlan
+5259-3-7.3.7.1-r2,7.3.7.1,7.3.7.1,Requirement,,AuditableEvidence ProvisionedData Metadata
+5259-3-7.3.7.1-r3,7.3.7.1,7.3.7.1,Requirement,,ProvisionedItem
+5259-3-7.3.7.1-r4,7.3.7.1,7.3.7.1,Requirement,Data,DataProvisioningProcess
+5259-3-7.3.7.1-r5,7.3.7.1,7.3.7.1,Requirement,,Authentication DataAccessProcess
+5259-3-7.3.7.1-r6,7.3.7.1,7.3.7.1,Requirement,,VersionControl ProvisionedItem
+5259-3-7.3.7.1-r7,7.3.7.1,7.3.7.1,Requirement,Data IntendedPurpose,PackageAndDeliverData DataUser
+5259-3-7.3.7.3-r1,7.3.7.3,7.3.7.3,Requirement,DatasetStatisticalProperty,ProvisionedDocumentation ScopeOfUse InstructionsForUse Metadata UseEnvironmentRequirement AcceptanceTestMethod CommunicationStrategy RelevantStakeholder
+5259-3-7.3.7.4-r1,7.3.7.4,7.3.7.4,Requirement,Data,DataUsageTracking EvaluateTrackingRequirement
+5259-3-7.3.7.4-r2,7.3.7.4,7.3.7.4,Requirement,,DataUsageTracking
+5259-3-7.3.7.4-r3,7.3.7.4,7.3.7.4,Requirement,IntendedPurpose,DataUsageTracking DataQualityManagementSystem ImproveData
+5259-3-7.3.7.4-r4,7.3.7.4,7.3.7.4,Requirement,,FeedbackChannel EvaluateFeedback ContinualImprovement DataQualityManagementSystem RelevantStakeholder
+5259-3-7.3.7.5-r1,7.3.7.5,7.3.7.5,Requirement,,DataOptimization DocumentDataOptimization
+5259-3-7.3.7.6-r1,7.3.7.6,7.3.7.6,Requirement,DataRequirement IntendedPurpose,SupportCommitment RelevantStakeholder
+5259-3-7.3.7.6-r2,7.3.7.6,7.3.7.6,Requirement,,RequiredSkill SupportDocumentation MaintenancePlan CommunicationChannel RelevantStakeholder
+5259-3-7.3.8.1-r1,7.3.8.1,7.3.8.1,Requirement,,DataDecommissioning DataDeletion DataTransfer
+5259-3-7.3.8.1-r2,7.3.8.1,7.3.8.1,Requirement,,DataDecommissioning DataQualityPlan
+5259-3-7.3.8.2-r1,7.3.8.2,7.3.8.2,Requirement,,DataTransfer DataRecipient LegalRequirement
+5259-3-7.3.8.2-r2,7.3.8.2,7.3.8.2,Requirement,,DataTransfer DataObligation
+5259-3-7.3.8.2-r3,7.3.8.2,7.3.8.2,Requirement,,DataRecipient DataObligation RecipientAgreement
+5259-3-7.3.8.2-r4,7.3.8.2,7.3.8.2,Requirement,,DataTransferReport IndependentValidation
+5259-3-7.3.8.3-r1,7.3.8.3,7.3.8.3,Requirement,,DataDeletion DataObligation DataRetentionObligation LegalRequirement
+5259-3-7.3.8.3-r2,7.3.8.3,7.3.8.3,Requirement,,DataUser DataDeletion
+5259-3-7.3.8.3-r3,7.3.8.3,7.3.8.3,Requirement,,DataDeletion DataDeletionMethod DataStorage
+5259-3-7.3.8.3-r4,7.3.8.3,7.3.8.3,Requirement,,DataRestorability MlModel
+5259-3-7.3.8.3-r5,7.3.8.3,7.3.8.3,Requirement,,DataDeletionReport IndependentValidation
+5259-3-7.3.8.4-r1,7.3.8.4,7.3.8.4,Requirement,,PartialDataDeletion PartialDataDeletionRequest
+5259-3-7.3.8.4-r2,7.3.8.4,7.3.8.4,Requirement,,PartialDataDeletion DataSpecification
+5259-3-7.3.8.4-r3,7.3.8.4,7.3.8.4,Requirement,,PartialDataDeletion MitigateRisk RelevantStakeholder
+5259-3-7.3.8.4-r4,7.3.8.4,7.3.8.4,Requirement,,DataDecommissioning PartialDataDeletion
+5259-3-7.3.8.4-r5,7.3.8.4,7.3.8.4,Requirement,,PartialDataDeletion DataStorage
+5259-3-7.3.8.4-r6,7.3.8.4,7.3.8.4,Requirement,,PartialDataDeletionReport IndependentValidation
+5259-3-8.2-r1,8.2,8.2,Requirement,,HorizontalProcess ApplyHorizontalProcess
+5259-3-8.3.1-r1,8.3.1,8.3.1.1,Requirement,,DocumentVerificationConstraint EvaluateImpactOnDataQuality ValidationAndVerification
+5259-3-8.3.1.2-r1,8.3.1.2,8.3.1.2,Requirement,,DataLifeCycle QualityTarget WorkProduct
+5259-3-8.3.1.2-r2,8.3.1.2,8.3.1.2,Requirement,,DataLifeCycle ValidationAndVerification
+5259-3-8.3.1.2-r3,8.3.1.2,8.3.1.2,Requirement,,DataLifeCycle VerifiedAndValidatedInput
+5259-3-8.3.1.2-r4,8.3.1.2,8.3.1.2,Requirement,,DocumentVerificationResult ValidationAndVerification
+5259-3-8.3.1.3-r1,8.3.1.3,8.3.1.3,Requirement,IntendedPurpose,EvaluateFeedback WorkProduct ValidationAndVerification
+5259-3-8.3.1.3-r2,8.3.1.3,8.3.1.3,Requirement,,ImproveDataQualityManagementProcess ValidationAndVerification
+5259-3-8.3.2-r1,8.3.2,8.3.2,Requirement,,DataQualityManagementLifeCycle ConfigurationManagement
+5259-3-8.3.2-r2,8.3.2,8.3.2,Requirement,,ConfigurationManagementStrategy Reproducibility WorkProduct DataQualityPlan ConfigurationManagement
+5259-3-8.3.2-r3,8.3.2,8.3.2,Requirement,DataRequirement,ValidConfiguration ConfigurationManagement
+5259-3-8.3.2-r4,8.3.2,8.3.2,Requirement,DataRequirement,ValidConfiguration ConfigurationManagement
+5259-3-8.3.3.2-r1,8.3.3.2,8.3.3.2,Requirement,,PlanChangeManagement ChangeManagement
+5259-3-8.3.3.2-r2,8.3.3.2,8.3.3.2,Requirement,,ChangeSchedule ItemSubjectToChange ChangeManagement
+5259-3-8.3.3.2-r3,8.3.3.2,8.3.3.2,Requirement,,ChangeRequest ChangeRequestSpecification ChangeRequestAnalysis ChangeRequestEvaluation ChangeManagement
+5259-3-8.3.3.3-r1,8.3.3.3,8.3.3.3,Requirement,,UniqueIdentifier ChangeRationale ChangeRequest
+5259-3-8.3.3.4-r1,8.3.3.4,8.3.3.4,Requirement,,ChangeRequestAnalysis ChangeImpact ChangeRequest
+5259-3-8.3.3.5-r1,8.3.3.5,8.3.3.5,Requirement,,ChangeRequestEvaluation AuthorizedPerson ChangeRequest
+5259-3-8.3.3.6-r1,8.3.3.6,8.3.3.6,Requirement,,ImplementChange VerifyChange
+5259-3-8.3.3.6-r2,8.3.3.6,8.3.3.6,Requirement,Data,UpdateAssessment
+5259-3-8.3.3.6-r3,8.3.3.6,8.3.3.6,Requirement,,ChangeDocumentation
+5259-3-8.3.4.2-r1,8.3.4.2,8.3.4.2,Requirement,,RiskAssessment ConductRiskAssessment RiskManagement
+5259-3-8.3.4.2-r2,8.3.4.2,8.3.4.2,Requirement,,MinimiseRisk RiskManagement
+5259-3-8.3.4.2-r3,8.3.4.2,8.3.4.2,Requirement,IntendedPurpose,DocumentRisk TreatRisk RiskManagement
+5259-3-8.3.4.2-r4,8.3.4.2,8.3.4.2,Requirement,,DataQualityManagementSystem DataQualityMeasure
+5259-3-8.3.4.2-r5,8.3.4.2,8.3.4.2,Requirement,,CommunicateRisk RelevantStakeholder
+5259-3-10.2-r1,10.2,10.2,Requirement,,DataProcessingTool IdentifyToolImpactOnDataQuality
+5259-3-11.2-r1,11.2,11.2,Requirement,,DataQualityDependency InternalDependency ExternalDependency DependencyMitigation
+5259-3-12.2.3-r1,12.2.3,12.2.3,Requirement,,ScopeOfProject
+5259-3-12.2.3-r2,12.2.3,12.2.3,Requirement,Data,DataUseMotivation
+5259-3-12.2.3-r3,12.2.3,12.2.3,Requirement,Data,DataUseCondition
+5259-3-12.2.3-r4,12.2.3,12.2.3,Requirement,Data IntendedPurpose,SpecifyIntendedUseOfData
+5259-3-12.2.3-r5,12.2.3,12.2.3,Requirement,Data,KnownLimitation
+5259-3-12.2.3-r6,12.2.3,12.2.3,Requirement,,KnownLimitation
+5259-3-12.3.2-r1,12.3.2,12.3.2,Requirement,DataRequirement,DataQualityRequirement
+5259-3-12.3.2-r2,12.3.2,12.3.2,Requirement,DataRequirement Data,DataQualityRequirement ConfigurationManagement
+5259-3-12.6.1-r1,12.6.1,12.6.1,Requirement,DataManagement,DataQualityActivity ResponsibilityAssignment DataQualityPlan
+5259-3-12.6.2-r1,12.6.2,12.6.2,Requirement,,MaintainDataQualityPlan DataQualityPlan
+5259-3-12.6.2-r2,12.6.2,12.6.2,Requirement,,ProjectPlan DataQualityActivity DataQualityPlan WorkProduct
+5259-3-12.6.2-r3,12.6.2,12.6.2,Requirement,,DataQualityActivity ProjectPlan
+5259-3-12.6.3-r1,12.6.3,12.6.3,Requirement,,DataQualityActivity ResponsiblePerson DataQualityMeasure WorkProduct
+5259-3-12.9-r1,12.9,12.9,Requirement,,DataQualityJustification SystemDeploymentStage
+5259-3-12.9-r2,12.9,12.9,Requirement,,ProvisionedItem
+5259-3-12.9-r3,12.9,12.9,Requirement,,DataDecommissioning

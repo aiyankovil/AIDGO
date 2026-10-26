@@ -1,0 +1,13 @@
+stage,stageLabel,alignmentType,assertions
+aidgo:OrganisationalStage,Overall data quality management,aidgo:CompletelySatisfies,1
+aidgo:MotivationStage,Data motivation and conceptualization,aidgo:CompletelySatisfies,2
+aidgo:MotivationStage,Data motivation and conceptualization,aidgo:PartiallySatisfies,2
+aidgo:SpecificationStage,Data specification,aidgo:CompletelySatisfies,1
+aidgo:SpecificationStage,Data specification,aidgo:PartiallySatisfies,5
+aidgo:PlanningStage,Data planning,aidgo:PartiallySatisfies,1
+aidgo:AcquisitionStage,Data acquisition,aidgo:PartiallySatisfies,2
+aidgo:PreprocessingStage,Data preprocessing,aidgo:CompletelySatisfies,1
+aidgo:PreprocessingStage,Data preprocessing,aidgo:PartiallySatisfies,2
+aidgo:AugmentationStage,Data augmentation,aidgo:CompletelySatisfies,1
+aidgo:DecommissioningStage,Data decommissioning,aidgo:PartiallySatisfies,1
+aidgo:HorizontalProcessStage,Horizontal processes,aidgo:PartiallySatisfies,2

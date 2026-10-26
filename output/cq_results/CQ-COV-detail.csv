@@ -1,0 +1,18 @@
+legalReqID,articleRef,status,assertions,types
+AiaPrReq_10.1,Art. 10(1),aidgo:PartiallyCovered,2,PartiallySatisfies
+AiaPrReq_10.2_1,Art. 10(2),aidgo:FullyCovered,2,CompletelySatisfies
+AiaPrReq_10.2_2,Art. 10(2)(a),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.2_3,Art. 10(2)(b),aidgo:PartiallyCovered,2,PartiallySatisfies
+AiaPrReq_10.2_4,Art. 10(2)(c),aidgo:PartiallyCovered,2,"CompletelySatisfies, PartiallySatisfies"
+AiaPrReq_10.2_5,Art. 10(2)(d),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.2_6,Art. 10(2)(e),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.2_7,Art. 10(2)(f),aidgo:PartiallyCovered,2,PartiallySatisfies
+AiaPrReq_10.2_8,Art. 10(2)(h),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.3_1,Art. 10(3),aidgo:FullyCovered,3,CompletelySatisfies
+AiaPrReq_10.3_2,Art. 10(3),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.4,Art. 10(4),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.5,Art. 10(5),aidgo:NotCovered,1,NoAlignment
+AiaPrReq_10.5_a,Art. 10(5)(a),aidgo:NotCovered,1,NoAlignment
+AiaPrReq_10.5_b,Art. 10(5)(b),aidgo:NotCovered,1,NoAlignment
+AiaPrReq_10.5_e,Art. 10(5)(e),aidgo:PartiallyCovered,1,PartiallySatisfies
+AiaPrReq_10.6,Art. 10(6),aidgo:PartiallyCovered,1,PartiallySatisfies

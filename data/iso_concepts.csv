@@ -1,0 +1,75 @@
+id,label,alt_label,definition,broader,source,clause
+dataLifeCycle,data life cycle,,All stages in the process of data usage from idea conception to its discontinuation.,,ISO/IEC 5259-1,3.1
+dataHolder,data holder,,Party that has legal control to authorize data processing of the data by other parties.,,ISO/IEC 5259-1,3.2
+dataUser,data user,,Party that is authorized to perform processing of data under the legal control of a data holder.,,ISO/IEC 5259-1,3.3
+dataQuality,data quality,,Degree to which a collection of characteristics of data fulfills requirements.,,ISO/IEC 5259-1,3.4
+dataQualityCharacteristic,data quality characteristic,,Category of data quality attributes that bears on data quality.,dataQuality,ISO/IEC 5259-1,3.5
+dataQualityModel,data quality model,,Defined set of characteristics with their sub-characteristics that provide a framework for specifying data quality requirements and evaluating data quality.,dataQuality,ISO/IEC 5259-1,3.6
+dataQualityMeasure,data quality measure,,Variable to which a value is assigned as the result of measurement of a data quality characteristic.,dataQualityCharacteristic,ISO/IEC 5259-1,3.7
+qualityRequirement,quality requirement,,"Requirement for quality properties or attributes of a product, data or service.",,ISO/IEC 5259-1,3.8
+measurement,measurement,,Set of operations having the object of determining a value of a measure.,,ISO/IEC 5259-1,3.9
+measurementScale,measurement scale,quantity-value scale,Ordered set of quantity values used in ranking quantities of a given kind according to magnitude.,measurement,ISO/IEC 5259-1,3.10
+analytics,analytics,data analytics,"Composite concept consisting of data acquisition, collection, validation, processing including quantification, visualisation, documentation and interpretation.",,ISO/IEC 5259-1,3.11
+attribute,attribute,,Property or characteristic of an object that can be distinguished quantitatively or qualitatively.,,ISO/IEC 5259-1,3.12
+feature,feature,,<machine learning> Measurable property of an object or event in the context of an analytics or ML task.,attribute,ISO/IEC 5259-1,3.13
+dataQualityManagement,data quality management,,Coordinated activities to direct and control an organisation with regard to data quality.,dataQuality,ISO/IEC 5259-1,3.14
+dataGovernance,data governance,,"Property or ability for coordinated management of data asset management strategy, including policies, procedures, standards, and guidelines.",,ISO/IEC 5259-1,3.15
+dataProvenance,data provenance,provenance,"Information on the place and time of origin, derivation or generation of a dataset.",,ISO/IEC 5259-1,3.16
+visualisation,visualisation,scientific visualisation,Representation of data in a visual form that enables a human to directly understand or interact with the data.,,ISO/IEC 5259-1,3.17
+mlProject,machine learning project,ML project,Project that utilizes analytics and machine learning and is responsible for the associated data throughout the data's entire life cycle.,,ISO/IEC 5259-1,3.18
+dataArchitecture,data architecture,,Design that describes the structure and arrangement of data and the processes for managing data at the organisation level.,,ISO/IEC 5259-1,3.19
+dataItem,data item,,Smallest identifiable unit of data within a certain context.,,ISO/IEC 5259-1,3.20
+dataRecord,data record,,Set of related data items treated as a unit.,dataItem,ISO/IEC 5259-1,3.21
+metadata,metadata,,Data that define and describe other data.,,ISO/IEC 5259-1,3.22
+boundingBox,bounding box,,Minimum n-dimensional rectangle aligned with the axes of a coordinate system that entirely contains an object.,,ISO/IEC 5259-2,3.1
+data,data,,"Re-interpretable representation of information in a formalized manner suitable for communication, interpretation, or processing.",,ISO/IEC 5259-2,3.2
+dataset,dataset,,Collection of data with a shared format.,data,ISO/IEC 5259-2,3.3
+dataType,data type,,"Categorisation of an abstract set of possible values, characteristics, and set of operations for an attribute.",dataItem,ISO/IEC 5259-2,3.5
+dataValue,data value,,Content of a data item.,dataItem,ISO/IEC 5259-2,3.6
+dataFrame,data frame,,"Set of data records with a specific domain or purpose and the same data items, used for analytics and ML.",dataRecord,ISO/IEC 5259-2,3.8
+cluster,cluster,,Group of data having similar properties or characteristics as determined by a clustering algorithm.,dataset,ISO/IEC 5259-2,3.9
+emptyDataItem,empty data item,,"Data item whose data value has no value, i.e. Null or None.",dataItem,ISO/IEC 5259-2,3.10
+measuredValue,measured value,,Value attributed to a data quality measure obtained by measurement.,dataQualityMeasure,ISO/IEC 5259-2,3.14
+measurementFunction,measurement function,,Algorithm or calculation performed to combine two or more quality measure elements.,measurement,ISO/IEC 5259-2,3.15
+overfitting,overfitting,,<machine learning> Creating a model which fits the training data too precisely and fails to generalise on new data.,,ISO/IEC 5259-2,3.16
+rawData,raw data,,"Data in its originally acquired form from its source, before subsequent processing.",data,ISO/IEC 5259-2,3.18
+targetData,target data,,Data used in an analytics or ML task whose quality is measured.,data,ISO/IEC 5259-2,3.19
+organization,organization,,"Person or group of people that has its own functions with responsibilities, authorities and relationships to achieve its objectives.",,ISO/IEC 5259-3,3-ref
+dataQualityManagementSystem,data quality management system,,"Part of an organisation's management system which addresses data quality planning, control, assurance and improvement.",dataQualityManagement,ISO/IEC 5259-3,3-dqms
+dataQualityManagementLifeCycle,data quality management life cycle,DQMLC,Life cycle model providing guidance towards meeting quality requirements of data for analytics and ML with discrete stages for managing data quality.,dataLifeCycle,ISO/IEC 5259-3,3-dqmlc
+dataSpecificationDoc,data specification,,"Document specifying data requirements, validated to be consistent and complete for the intended use.",,ISO/IEC 5259-3,3-ds
+dataQualityPlan,data quality plan,,"Document covering processes, activities and resources required to meet the data specification throughout the data life cycle.",,ISO/IEC 5259-3,3-dqp
+dataAcquisition,data acquisition,,"Process by which data are obtained, including collection, purchase, licensing, reuse or generation.",dataLifeCycle,ISO/IEC 5259-3,3-da
+dataPreprocessing,data preprocessing,,Processes applied to acquired data to improve its quality towards meeting the data specification.,dataLifeCycle,ISO/IEC 5259-3,3-dp
+dataAugmentation,data augmentation,,Processes that increase the diversity or quantity of data in a dataset in a controlled manner to meet the data specification.,dataLifeCycle,ISO/IEC 5259-3,3-daug
+dataProvisioning,data provisioning,,"Process by which auditable data and metadata are delivered to users, meeting all specified requirements.",dataLifeCycle,ISO/IEC 5259-3,3-dprov
+dataDecommissioning,data decommissioning,,Process of retiring data either through transfer to a qualified recipient or deletion.,dataLifeCycle,ISO/IEC 5259-3,3-ddecom
+qualityGate,data life cycle quality gate,,Objectively assessable quality target for work products at each stage of the DQMLC; a stage shall only be entered with verified and validated input.,,ISO/IEC 5259-3,3-qg
+configurationManagement,configuration management,,Planned and maintained activity defining requirements for uniquely identified and reproducible items produced or used during the data life cycle.,,ISO/IEC 5259-3,3-cm
+changeManagement,change management,,"Planned and initiated process before any change to data, requirements or processes to ensure all impacts are assessed and approved.",,ISO/IEC 5259-3,3-chm
+riskManagement,risk management (data quality),,"Coordinated activities to ensure all risks to data quality are accounted for, assessed and if necessary mitigated.",,ISO/IEC 5259-3,3-rm
+stakeholder,stakeholder,,"Person or organisation that can affect, be affected by, or perceive itself to be affected by a decision or activity related to data quality.",,ISO/IEC 5259-3,3-sh
+verificationAndValidation,verification and validation,V&V,Processes that monitor and assess data quality throughout all stages of the DQMLC using measurable quality criteria.,,ISO/IEC 5259-3,3-vv
+dataQualityImprovement,data quality improvement,,Application of data transformations to a dataset to improve its quality to the extent it meets the organisation's needs.,dataQualityManagement,ISO/IEC 5259-4,4-dqi
+dataQualityAssessment,data quality assessment,,Use of data quality measures to evaluate whether a dataset meets the organisation's needs.,dataQualityManagement,ISO/IEC 5259-4,4-dqa
+dataQualityReport,data quality report,,"Document expressing data quality requirements, measures, results of measurements, and an assessment of whether data meets requirements.",,ISO/IEC 5259-4,4-dqr
+dataLabelling,data labelling,data annotation,"Process of assigning values for target variables to training, validation and testing data for supervised ML.",dataPreprocessing,ISO/IEC 5259-4,4-dl
+dataTransformation,data transformation,,Converting data from one representation or space to another with minimal loss of content.,dataPreprocessing,ISO/IEC 5259-4,4-dt
+dataPrivacy,data privacy,,Protection of personally identifiable information (PII) in datasets during data quality processes.,,ISO/IEC 5259-4,4-dpriv
+dataInteroperability,data interoperability,,Ability of data from one system to be understood and used by another system without special effort.,,ISO/IEC 5259-4,4-di
+groundTruth,ground truth,,Data label or annotation that is assumed to be correct or accurate for use as training or testing data.,dataLabelling,ISO/IEC 5259-4,4-gt
+dataSampling,data sampling,,Process of selecting a subset of data from a dataset according to a defined method.,dataPreprocessing,ISO/IEC 5259-4,4-ds
+dataAnnotation,data annotation,annotation,Process of adding metadata or labels to raw data to make it meaningful for ML training.,dataLabelling,ISO/IEC 5259-4,4-dan
+trainingData,training data,,Data used to train an ML algorithm to produce a trained ML model.,targetData,ISO/IEC 5259-5,5-td
+validationData,validation data,,Data used to provide an evaluation of the trained ML model and for tuning its non-learnable parameters to prevent underfitting or overfitting.,targetData,ISO/IEC 5259-5,5-vd
+testData,test data,,Data used to evaluate the final performance of a trained ML model independently of training.,targetData,ISO/IEC 5259-5,5-testd
+productionData,production data,,Data provided to a deployed ML model in the operational environment.,targetData,ISO/IEC 5259-5,5-pd
+representativeness,representativeness,,Degree to which the statistical properties of a dataset reflect those of the target population for the intended use.,dataQualityCharacteristic,ISO/IEC 5259-5,5-rep
+dataBias,data bias,,"Systematic deviation in data from a true value or representation of the target population, potentially leading to unfair or inaccurate outcomes.",dataQualityCharacteristic,ISO/IEC 5259-5,5-db
+dataDrift,data drift,,Change over time in the statistical properties of data used in analytics or ML that can degrade model performance.,dataQualityCharacteristic,ISO/IEC 5259-5,5-dd
+dataCompleteness,data completeness,,"Degree to which all required data items are present in a dataset and have defined, non-empty values.",dataQualityCharacteristic,ISO/IEC 5259-5,5-dc
+dataAccuracy,data accuracy,,Degree to which data correctly represents the real-world values it is intended to model.,dataQualityCharacteristic,ISO/IEC 5259-5,5-acc
+dataConsistency,data consistency,,Degree to which data is free from contradictions and coherent within a dataset and across related datasets.,dataQualityCharacteristic,ISO/IEC 5259-5,5-con
+dataCurrentness,data currentness,timeliness,Degree to which data represents the current state of the phenomenon it models at a given point in time.,dataQualityCharacteristic,ISO/IEC 5259-5,5-cur
+dataRelevance,data relevance,,Degree to which data is applicable and useful for the specified analytics or ML purpose.,dataQualityCharacteristic,ISO/IEC 5259-5,5-rel
+dataBalance,data balance,,Degree to which the distribution of values across categories in a dataset reflects the intended distribution for the ML task.,dataQualityCharacteristic,ISO/IEC 5259-5,5-bal

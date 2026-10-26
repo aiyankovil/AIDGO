@@ -1,0 +1,19 @@
+# CQ-T2: How many ISO/IEC 5259-3 requirements (clause level and atomic) fall in each DQMLC stage?
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?stage ?stageLabel
+       (SUM(IF(?atomic, 0, 1)) AS ?clauseLevel) (SUM(IF(?atomic, 1, 0)) AS ?atomicLevel) WHERE {
+  ?r a aidgo:TechnicalRequirement ; aidgo:dqmlcStage ?stage .
+  ?stage skos:prefLabel ?stageLabel ; skos:notation ?n .
+  BIND(EXISTS { ?r a aidgo:ConjunctiveRequirement } AS ?atomic)
+} GROUP BY ?stage ?stageLabel ?n ORDER BY xsd:integer(STRBEFORE(CONCAT(?n, "."), ".")) ?n

@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use AIDGO, please cite it as below."
+title: "AIDGO: AI Data Governance Ontology"
+abstract: >-
+  An OWL 2 ontology and knowledge graph aligning EU AI Act Article 10 data-governance
+  obligations with ISO/IEC 5259 data-quality requirements through a five-type alignment
+  taxonomy with PROV-O provenance and an RDF-star annotation layer.
+type: dataset
+version: 2.0.0
+date-released: 2026-10-26
+license: CC-BY-4.0
+url: "https://w3id.org/aidgo"
+repository-code: "https://github.com/aiyankovil/AIDGO"
+authors:
+  - family-names: Aiyankovil
+    given-names: Kuruvilla George
+    affiliation: "ADAPT Centre, Trinity College Dublin"
+    email: kuruvilla.george@adaptcentre.ie
+  - family-names: Lewis
+    given-names: David
+    affiliation: "ADAPT Centre, Trinity College Dublin"
+keywords: [ontology, EU AI Act, ISO/IEC 5259, data governance, data quality, RDF-star, SHACL, PROV-O]

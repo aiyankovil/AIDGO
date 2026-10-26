@@ -1,0 +1,25 @@
+# CQ-M4: Do any technical requirements conflict with legal obligations?
+# An empty result is an answer: no ConflictsWith assertion exists in the v2 alignment set.
+PREFIX aidgo: <https://w3id.org/aidgo#>
+PREFIX iso5259: <https://w3id.org/aidgo/iso5259#>
+PREFIX aiapr: <https://w3id.org/euaiact/art10#>
+PREFIX tair: <https://w3id.org/tair#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?mappingID ?legalReqID ?techReqID ?justification ?conflict WHERE {
+  ?m a aidgo:AlignmentAssertion ;
+     dct:identifier ?mappingID ;
+     aidgo:legalRequirement ?lr ;
+     aidgo:technicalRequirement ?tr ;
+     aidgo:alignmentType aidgo:ConflictsWith ;
+     aidgo:alignmentJustification ?justification .
+  OPTIONAL { ?m aidgo:conflictDescription ?conflict }
+  ?lr dct:identifier ?legalReqID .
+  ?tr dct:identifier ?techReqID .
+}

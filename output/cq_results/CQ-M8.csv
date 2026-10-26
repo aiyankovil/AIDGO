@@ -1,0 +1,23 @@
+concept,conceptLabel,source,assertions
+iso5259:dataSpecificationDoc,data specification,ISO/IEC 5259-3,9
+iso5259:dataItem,data item,ISO/IEC 5259-1,6
+iso5259:dataQualityMeasure,data quality measure,ISO/IEC 5259-1,4
+iso5259:riskManagement,risk management (data quality),ISO/IEC 5259-3,3
+iso5259:dataQuality,data quality,ISO/IEC 5259-1,2
+iso5259:dataQualityPlan,data quality plan,ISO/IEC 5259-3,2
+iso5259:dataValue,data value,ISO/IEC 5259-2,2
+iso5259:representativeness,representativeness,ISO/IEC 5259-5,2
+iso5259:testData,test data,ISO/IEC 5259-5,2
+iso5259:dataAcquisition,data acquisition,ISO/IEC 5259-3,1
+iso5259:dataAugmentation,data augmentation,ISO/IEC 5259-3,1
+iso5259:dataLifeCycle,data life cycle,ISO/IEC 5259-1,1
+iso5259:dataProvenance,data provenance,ISO/IEC 5259-1,1
+iso5259:dataQualityManagement,data quality management,ISO/IEC 5259-1,1
+iso5259:dataQualityManagementLifeCycle,data quality management life cycle,ISO/IEC 5259-3,1
+iso5259:dataQualityModel,data quality model,ISO/IEC 5259-1,1
+iso5259:dataType,data type,ISO/IEC 5259-2,1
+iso5259:dataset,dataset,ISO/IEC 5259-2,1
+iso5259:measurement,measurement,ISO/IEC 5259-1,1
+iso5259:measurementScale,measurement scale,ISO/IEC 5259-1,1
+iso5259:metadata,metadata,ISO/IEC 5259-1,1
+iso5259:qualityRequirement,quality requirement,ISO/IEC 5259-1,1

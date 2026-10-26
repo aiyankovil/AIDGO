@@ -1,0 +1,24 @@
+name: AIDGO pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-validate-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Build, validate, query, analyse
+        run: python -m aidgo_tools all
+      - name: Committed outputs are up to date
+        run: |
+          git diff --exit-code -- output/ index.html aidgo_knowledge_graph.html \
+            || (echo "::error::Generated files are stale. Run 'make' and commit the result." && exit 1)
+      - name: Tests
+        run: python -m pytest -q

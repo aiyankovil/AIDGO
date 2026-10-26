@@ -1,0 +1,361 @@
+@prefix aidgo:   <https://w3id.org/aidgo#> .
+@prefix tair:    <https://w3id.org/tair#> .
+@prefix oslc_rm: <http://open-services.net/ns/rm#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+
+###############################################################################
+#  AIDGO - AI Data Governance Ontology (TBox)
+#  Aligns EU AI Act Article 10 data-governance obligations with ISO/IEC 5259
+#  data-quality requirements through a five-type alignment taxonomy.
+###############################################################################
+
+<https://w3id.org/aidgo>
+    a owl:Ontology ;
+    dct:title "AIDGO: AI Data Governance Ontology"@en ;
+    dct:description """An OWL 2 ontology for representing, querying and auditing the alignment
+between legal data-governance obligations (EU AI Act, Article 10) and technical data-quality
+requirements (ISO/IEC 5259 series). Each alignment is a first-class AlignmentAssertion typed by
+one of five alignment types and one of five alignment bases, justified in natural language and
+carrying PROV-O provenance. An RDF-star annotation layer (aidgo_kg_star.ttl) mirrors every
+assertion as an annotated triple for SPARQL-star queries."""@en ;
+    dct:creator "Kuruvilla George Aiyankovil" ;
+    dct:contributor "David Lewis" ;
+    dct:publisher "ADAPT Centre, Trinity College Dublin" ;
+    dct:created "2024-06-01"^^xsd:date ;
+    dct:modified "2026-10-26"^^xsd:date ;
+    owl:versionInfo "2.0.0" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionIRI <https://w3id.org/aidgo/2.0.0> ;
+    owl:priorVersion <https://w3id.org/aidgo/1.0> ;
+    vann:preferredNamespacePrefix "aidgo" ;
+    vann:preferredNamespaceUri "https://w3id.org/aidgo#" ;
+    dct:references <https://eur-lex.europa.eu/eli/reg/2024/1689/oj> ,
+                   "ISO/IEC 5259 series, Parts 1-5: Artificial intelligence - Data quality for analytics and machine learning (ML)" ;
+    rdfs:seeAlso <https://github.com/aiyankovil/AIDGO> .
+
+###############################################################################
+#  External terms used (declared so OWL tooling resolves them)
+###############################################################################
+
+tair:Requirement a owl:Class ;
+    rdfs:label "Requirement (TAIR)"@en ;
+    rdfs:isDefinedBy <https://w3id.org/tair> .
+
+tair:ConjuntiveRequirement a owl:Class ;
+    rdfs:label "Conjunctive requirement (TAIR)"@en ;
+    rdfs:subClassOf tair:Requirement ;
+    rdfs:comment "IRI spelled as published by TAIR (missing 't'). AIDGO reuses it unchanged for interoperability and provides the correctly spelled aidgo:ConjunctiveRequirement as an equivalent class."@en ;
+    rdfs:isDefinedBy <https://w3id.org/tair> .
+
+tair:decomposes a owl:ObjectProperty ;
+    rdfs:label "decomposes"@en ;
+    rdfs:comment "Links an atomic (conjunctive) requirement to the compound requirement it is extracted from."@en ;
+    rdfs:isDefinedBy <https://w3id.org/tair> .
+
+oslc_rm:RequirementCollection a owl:Class ;
+    rdfs:label "Requirement collection (OSLC RM)"@en .
+
+###############################################################################
+#  Classes
+###############################################################################
+
+aidgo:LegalRequirement a owl:Class ;
+    rdfs:subClassOf tair:Requirement ;
+    rdfs:label "Legal requirement"@en ;
+    skos:definition "An atomic normative obligation extracted from a legal instrument (here: EU AI Act, Regulation (EU) 2024/1689, Article 10)."@en .
+
+aidgo:TechnicalRequirement a owl:Class ;
+    rdfs:subClassOf tair:Requirement ;
+    rdfs:label "Technical requirement"@en ;
+    skos:definition "A normative (SHALL) requirement extracted from a technical standard (here: ISO/IEC 5259-3)."@en .
+
+aidgo:ConjunctiveRequirement a owl:Class ;
+    rdfs:subClassOf aidgo:TechnicalRequirement ;
+    owl:equivalentClass tair:ConjuntiveRequirement ;
+    rdfs:label "Conjunctive requirement"@en ;
+    skos:definition "An atomic requirement obtained by bracket-context decomposition of a compound requirement: the shared lead-in is kept in square brackets and each list item becomes one conjunct."@en .
+
+aidgo:RequirementCollection a owl:Class ;
+    rdfs:subClassOf oslc_rm:RequirementCollection ;
+    rdfs:label "Requirement collection"@en ;
+    skos:definition "A clause-level grouping of requirements that mirrors the structure of the source document."@en .
+
+aidgo:Concept a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Concept"@en ;
+    skos:definition "A term defined in the terms-and-definitions clause of an ISO/IEC 5259 part."@en .
+
+aidgo:AlignmentAssertion a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Alignment assertion"@en ;
+    skos:definition "A first-class, provenance-bearing statement that a technical requirement stands in a typed alignment relation to a legal requirement."@en .
+
+aidgo:AlignmentType a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Alignment type"@en .
+
+aidgo:AlignmentBasis a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Alignment basis"@en ;
+    skos:definition "The kind of evidence on which an alignment type is assigned."@en .
+
+aidgo:DQMLCStage a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Data quality management life cycle stage"@en .
+
+aidgo:CoverageStatus a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Obligation coverage status"@en ;
+    skos:definition "Obligation-level summary derived from all alignment assertions on a legal requirement."@en .
+
+aidgo:ValidationStatus a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Validation status"@en ;
+    skos:definition "Distinguishes expert-validated assertions from machine-generated candidates."@en .
+
+###############################################################################
+#  Object properties
+###############################################################################
+
+aidgo:legalRequirement a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "legal requirement"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ;
+    rdfs:range aidgo:LegalRequirement .
+
+aidgo:technicalRequirement a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "technical requirement"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ;
+    rdfs:comment "The aligned technical requirement, or rdf:nil for an aidgo:NoAlignment assertion. No rdfs:range is declared because rdf:nil is not a requirement; the SHACL shapes enforce the disjunction."@en .
+
+aidgo:alignmentType a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "alignment type"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ;
+    rdfs:range aidgo:AlignmentType .
+
+aidgo:alignmentBasis a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "alignment basis"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ;
+    rdfs:range aidgo:AlignmentBasis .
+
+aidgo:validationStatus a owl:ObjectProperty ;
+    rdfs:label "validation status"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ;
+    rdfs:range aidgo:ValidationStatus .
+
+aidgo:alignedWith a owl:ObjectProperty ;
+    rdfs:label "aligned with"@en ;
+    rdfs:domain aidgo:LegalRequirement ;
+    rdfs:range aidgo:TechnicalRequirement ;
+    rdfs:comment "Shortcut legal -> technical edge. Used as the annotated triple in the RDF-star layer; each occurrence is reified by exactly one aidgo:AlignmentAssertion."@en .
+
+aidgo:hasAssertion a owl:ObjectProperty ;
+    rdfs:label "has assertion"@en ;
+    rdfs:range aidgo:AlignmentAssertion ;
+    rdfs:comment "RDF-star layer: links an annotated (quoted) triple to the AlignmentAssertion that reifies it."@en .
+
+aidgo:coverageStatus a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "coverage status"@en ;
+    rdfs:domain aidgo:LegalRequirement ;
+    rdfs:range aidgo:CoverageStatus ;
+    rdfs:comment "Materialised by the aggregation rule documented on aidgo:CoverageStatusScheme; re-derivable with queries/CQ-COV.rq."@en .
+
+aidgo:dqmlcStage a owl:ObjectProperty ;
+    rdfs:label "DQMLC stage"@en ;
+    rdfs:range aidgo:DQMLCStage .
+
+aidgo:uses a owl:ObjectProperty ;
+    rdfs:label "uses"@en ;
+    rdfs:domain tair:Requirement ;
+    rdfs:range aidgo:Concept ;
+    rdfs:comment "A requirement whose text employs a defined concept. In v2.0 these links are derived by deterministic lexical matching (prov:wasGeneratedBy aidgo:LexicalConceptLinking_v1) and are not expert-validated."@en .
+
+###############################################################################
+#  Datatype properties
+###############################################################################
+
+aidgo:alignmentJustification a owl:DatatypeProperty ;
+    rdfs:label "alignment justification"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ; rdfs:range rdf:langString .
+
+aidgo:alignmentGap a owl:DatatypeProperty ;
+    rdfs:label "alignment gap"@en ;
+    rdfs:comment "What the technical requirement leaves unaddressed relative to the legal requirement."@en ;
+    rdfs:domain aidgo:AlignmentAssertion ; rdfs:range rdf:langString .
+
+aidgo:conflictDescription a owl:DatatypeProperty ;
+    rdfs:label "conflict description"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ; rdfs:range rdf:langString .
+
+aidgo:legalFocus a owl:DatatypeProperty ;
+    rdfs:label "legal focus"@en ;
+    rdfs:comment "When an assertion targets one element of a legal requirement (e.g. only 'enrichment and aggregation' within Art. 10(2)(c)), the element it targets. The alignment type is judged against this focus, not the whole obligation."@en ;
+    rdfs:domain aidgo:AlignmentAssertion ; rdfs:range rdf:langString .
+
+aidgo:coveredCQs a owl:DatatypeProperty ;
+    rdfs:label "covered competency questions"@en ;
+    rdfs:domain aidgo:AlignmentAssertion ; rdfs:range xsd:string .
+
+aidgo:articleReference a owl:DatatypeProperty ;
+    rdfs:label "article reference"@en ;
+    rdfs:domain aidgo:LegalRequirement ; rdfs:range xsd:string .
+
+aidgo:clauseNumber a owl:DatatypeProperty ;
+    rdfs:label "clause number"@en ;
+    rdfs:comment "Clause number in the source document (ISO/IEC FDIS numbering)."@en ;
+    rdfs:range xsd:string .
+
+###############################################################################
+#  Alignment types  (conditional-entailment semantics)
+#  Notation: Sat(S, R) - system state S satisfies requirement R;
+#            A - background assumptions shared by both instruments (scope, actor).
+###############################################################################
+
+aidgo:AlignmentTypeScheme a skos:ConceptScheme ;
+    skos:prefLabel "AIDGO alignment types"@en ;
+    skos:hasTopConcept aidgo:CompletelySatisfies , aidgo:PartiallySatisfies , aidgo:RelatedTo ,
+                       aidgo:ConflictsWith , aidgo:NoAlignment ;
+    dct:source "SKOS mapping properties; ISO 25964-2 equivalence types; SSSOM predicate model."@en .
+
+aidgo:CompletelySatisfies a aidgo:AlignmentType ;
+    skos:inScheme aidgo:AlignmentTypeScheme ; skos:topConceptOf aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Completely satisfies"@en ;
+    skos:definition "Fulfilling the technical requirement is sufficient to fulfil the legal requirement (or its stated legal focus)."@en ;
+    skos:scopeNote "For all S: Sat(S, R_iso) and A entail Sat(S, R_legal)."@en ;
+    rdfs:seeAlso skos:exactMatch .
+
+aidgo:PartiallySatisfies a aidgo:AlignmentType ;
+    skos:inScheme aidgo:AlignmentTypeScheme ; skos:topConceptOf aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Partially satisfies"@en ;
+    skos:definition "The technical requirement constrains at least one condition of the legal requirement but is not sufficient on its own; the residual is recorded in aidgo:alignmentGap."@en ;
+    skos:scopeNote "R_iso constrains a condition of R_legal, and there exists S with Sat(S, R_iso), A and not Sat(S, R_legal)."@en ;
+    rdfs:seeAlso skos:broadMatch .
+
+aidgo:RelatedTo a aidgo:AlignmentType ;
+    skos:inScheme aidgo:AlignmentTypeScheme ; skos:topConceptOf aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Related to"@en ;
+    skos:definition "The requirements share subject matter but fulfilling the technical requirement contributes to no condition of the legal requirement."@en ;
+    rdfs:seeAlso skos:relatedMatch .
+
+aidgo:ConflictsWith a aidgo:AlignmentType ;
+    skos:inScheme aidgo:AlignmentTypeScheme ; skos:topConceptOf aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "Conflicts with"@en ;
+    skos:definition "Fulfilling the technical requirement restricts or contradicts fulfilling the legal requirement."@en ;
+    skos:scopeNote "There exists a relevant S such that Sat(S, R_iso) and A entail not Sat(S, R_legal)."@en .
+
+aidgo:NoAlignment a aidgo:AlignmentType ;
+    skos:inScheme aidgo:AlignmentTypeScheme ; skos:topConceptOf aidgo:AlignmentTypeScheme ;
+    skos:prefLabel "No alignment"@en ;
+    skos:definition "No requirement of the standard in scope contributes to the legal requirement: a compliance gap. aidgo:technicalRequirement is rdf:nil."@en .
+
+# Deprecated v1 names - kept resolvable, replaced in v2.0
+aidgo:NoMatching a aidgo:AlignmentType ;
+    owl:deprecated true ; dct:isReplacedBy aidgo:NoAlignment ;
+    skos:prefLabel "No matching (deprecated)"@en ;
+    rdfs:comment "Used in the v1 ontology page. Replaced by aidgo:NoAlignment in v2.0."@en .
+aidgo:NoMapping a aidgo:AlignmentType ;
+    owl:deprecated true ; dct:isReplacedBy aidgo:NoAlignment ;
+    skos:prefLabel "No mapping (deprecated)"@en .
+aidgo:DefinitionDifference a aidgo:AlignmentType ;
+    owl:deprecated true ; dct:isReplacedBy aidgo:PartiallySatisfies ;
+    skos:prefLabel "Definition difference (deprecated)"@en ;
+    rdfs:comment "A v1 type. In v2.0 definitional divergence is recorded as a PartiallySatisfies assertion with basis aidgo:ScopeOverlap or aidgo:ConceptualCoverage."@en .
+
+###############################################################################
+#  Alignment bases
+###############################################################################
+
+aidgo:AlignmentBasisScheme a skos:ConceptScheme ;
+    skos:prefLabel "AIDGO alignment bases"@en .
+
+aidgo:SemanticEquivalence a aidgo:AlignmentBasis ; skos:inScheme aidgo:AlignmentBasisScheme ;
+    skos:prefLabel "Semantic equivalence"@en ;
+    skos:definition "Both requirements impose the same condition, expressed in equivalent terms."@en .
+aidgo:FunctionalEquivalence a aidgo:AlignmentBasis ; skos:inScheme aidgo:AlignmentBasisScheme ;
+    skos:prefLabel "Functional equivalence"@en ;
+    skos:definition "Different wording, but performing the technical requirement produces the outcome the legal requirement demands."@en .
+aidgo:ConceptualCoverage a aidgo:AlignmentBasis ; skos:inScheme aidgo:AlignmentBasisScheme ;
+    skos:prefLabel "Conceptual coverage"@en ;
+    skos:definition "The technical requirement addresses the concept underlying the legal requirement at a more general or more specific level."@en .
+aidgo:ScopeOverlap a aidgo:AlignmentBasis ; skos:inScheme aidgo:AlignmentBasisScheme ;
+    skos:prefLabel "Scope overlap"@en ;
+    skos:definition "The requirements overlap on part of their scope only."@en .
+aidgo:GapIdentified a aidgo:AlignmentBasis ; skos:inScheme aidgo:AlignmentBasisScheme ;
+    skos:prefLabel "Gap identified"@en ;
+    skos:definition "Examination of the standard found no requirement in scope."@en .
+
+###############################################################################
+#  Obligation coverage status
+#  Aggregation rule over all assertions A_1..A_n on one legal requirement L:
+#    FullyCovered    iff n >= 1 and every A_i is CompletelySatisfies
+#    NotCovered      iff every A_i is NoAlignment
+#    PartiallyCovered otherwise
+#  An obligation with a CompletelySatisfies assertion on one legal focus and a
+#  PartiallySatisfies assertion on another is therefore PartiallyCovered.
+###############################################################################
+
+aidgo:CoverageStatusScheme a skos:ConceptScheme ;
+    skos:prefLabel "Obligation coverage status"@en ;
+    skos:scopeNote "FullyCovered iff every assertion on the obligation is CompletelySatisfies; NotCovered iff every assertion is NoAlignment; PartiallyCovered otherwise."@en .
+aidgo:FullyCovered a aidgo:CoverageStatus ; skos:inScheme aidgo:CoverageStatusScheme ;
+    skos:prefLabel "Fully covered"@en .
+aidgo:PartiallyCovered a aidgo:CoverageStatus ; skos:inScheme aidgo:CoverageStatusScheme ;
+    skos:prefLabel "Partially covered"@en .
+aidgo:NotCovered a aidgo:CoverageStatus ; skos:inScheme aidgo:CoverageStatusScheme ;
+    skos:prefLabel "Not covered"@en .
+
+###############################################################################
+#  Validation status
+###############################################################################
+
+aidgo:ValidationStatusScheme a skos:ConceptScheme ;
+    skos:prefLabel "Validation status"@en .
+aidgo:ExpertValidated a aidgo:ValidationStatus ; skos:inScheme aidgo:ValidationStatusScheme ;
+    skos:prefLabel "Expert validated"@en .
+aidgo:AgentGenerated a aidgo:ValidationStatus ; skos:inScheme aidgo:ValidationStatusScheme ;
+    skos:prefLabel "Agent generated (unvalidated)"@en .
+
+###############################################################################
+#  ISO/IEC 5259-3 data quality management life cycle stages
+###############################################################################
+
+aidgo:DQMLCStageScheme a skos:ConceptScheme ;
+    skos:prefLabel "ISO/IEC 5259-3 DQMLC stages"@en ;
+    dct:source "ISO/IEC FDIS 5259-3, clauses 6-12"@en .
+
+aidgo:OrganisationalStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Overall data quality management"@en ; skos:notation "6" .
+aidgo:LifeCycleGeneralStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Life cycle (general)"@en ; skos:notation "7.2" .
+aidgo:MotivationStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data motivation and conceptualization"@en ; skos:notation "7.3.1" .
+aidgo:SpecificationStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data specification"@en ; skos:notation "7.3.2" .
+aidgo:PlanningStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data planning"@en ; skos:notation "7.3.3" .
+aidgo:AcquisitionStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data acquisition"@en ; skos:notation "7.3.4" .
+aidgo:PreprocessingStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data preprocessing"@en ; skos:notation "7.3.5" .
+aidgo:AugmentationStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data augmentation"@en ; skos:notation "7.3.6" .
+aidgo:ProvisioningStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data provisioning"@en ; skos:notation "7.3.7" .
+aidgo:DecommissioningStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data decommissioning"@en ; skos:notation "7.3.8" .
+aidgo:HorizontalProcessStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Horizontal processes"@en ; skos:notation "8" .
+aidgo:SupplyChainStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Data quality in supply chains"@en ; skos:notation "9" .
+aidgo:ToolManagementStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Management of data processing tools"@en ; skos:notation "10" .
+aidgo:DependencyManagementStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Management of data quality dependencies"@en ; skos:notation "11" .
+aidgo:ProjectSpecificStage a aidgo:DQMLCStage ; skos:inScheme aidgo:DQMLCStageScheme ;
+    skos:prefLabel "Project-specific data quality management"@en ; skos:notation "12" .

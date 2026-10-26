@@ -1,0 +1,140 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix aidgo: <https://w3id.org/aidgo#> .
+@prefix aidgosh: <https://w3id.org/aidgo/shapes#> .
+@prefix tair:  <https://w3id.org/tair#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+
+#  SHACL shapes for the AIDGO knowledge graph (output/aidgo_kg.ttl).
+#  Run:  python -m aidgo_tools validate
+
+aidgosh: sh:declare [ sh:prefix "aidgo" ; sh:namespace "https://w3id.org/aidgo#"^^xsd:anyURI ] ,
+                    [ sh:prefix "rdf" ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] .
+
+# ---------------------------------------------------------------- alignment assertions
+aidgosh:AlignmentAssertionShape a sh:NodeShape ;
+    sh:targetClass aidgo:AlignmentAssertion ;
+    sh:property [ sh:path dct:identifier ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path aidgo:legalRequirement ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class aidgo:LegalRequirement ] ;
+    sh:property [ sh:path aidgo:technicalRequirement ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:or ( [ sh:class aidgo:TechnicalRequirement ] [ sh:hasValue rdf:nil ] ) ] ;
+    sh:property [ sh:path aidgo:alignmentType ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( aidgo:CompletelySatisfies aidgo:PartiallySatisfies aidgo:RelatedTo
+                          aidgo:ConflictsWith aidgo:NoAlignment ) ;
+                  sh:message "alignmentType must be one of the five v2 types (deprecated v1 names are not allowed)" ] ;
+    sh:property [ sh:path aidgo:alignmentBasis ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( aidgo:SemanticEquivalence aidgo:FunctionalEquivalence aidgo:ConceptualCoverage
+                          aidgo:ScopeOverlap aidgo:GapIdentified ) ] ;
+    sh:property [ sh:path aidgo:validationStatus ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( aidgo:ExpertValidated aidgo:AgentGenerated ) ] ;
+    sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class prov:Activity ] ;
+    sh:property [ sh:path prov:generatedAtTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:minCount 1 ] ;
+    sh:property [ sh:path aidgo:alignmentJustification ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path aidgo:alignmentGap ; sh:datatype rdf:langString ] .
+
+aidgosh:NoAlignmentConsistency a sh:NodeShape ;
+    sh:targetClass aidgo:AlignmentAssertion ;
+    sh:sparql [
+        sh:message "NoAlignment iff technicalRequirement is rdf:nil; NoAlignment requires basis GapIdentified and a recorded gap" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            SELECT $this WHERE {
+              $this aidgo:alignmentType ?t ; aidgo:technicalRequirement ?tr ; aidgo:alignmentBasis ?b .
+              FILTER (
+                   (?t = aidgo:NoAlignment && (?tr != rdf:nil || ?b != aidgo:GapIdentified))
+                || (?t != aidgo:NoAlignment && ?tr = rdf:nil)
+                || (?t = aidgo:NoAlignment && NOT EXISTS { $this aidgo:alignmentGap ?g })
+              )
+            }""" ] .
+
+aidgosh:PartialNeedsGap a sh:NodeShape ;
+    sh:targetClass aidgo:AlignmentAssertion ;
+    sh:sparql [
+        sh:message "A PartiallySatisfies assertion must record what is left unaddressed (aidgo:alignmentGap)" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            SELECT $this WHERE {
+              $this aidgo:alignmentType aidgo:PartiallySatisfies .
+              FILTER NOT EXISTS { $this aidgo:alignmentGap ?g }
+            }""" ] .
+
+aidgosh:PositiveNeedsJustification a sh:NodeShape ;
+    sh:targetClass aidgo:AlignmentAssertion ;
+    sh:sparql [
+        sh:message "Every assertion other than NoAlignment must carry an alignmentJustification" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            SELECT $this WHERE {
+              $this aidgo:alignmentType ?t .
+              FILTER (?t != aidgo:NoAlignment)
+              FILTER NOT EXISTS { $this aidgo:alignmentJustification ?j }
+            }""" ] .
+
+aidgosh:ConflictNeedsDescription a sh:NodeShape ;
+    sh:targetClass aidgo:AlignmentAssertion ;
+    sh:sparql [
+        sh:message "A ConflictsWith assertion must carry aidgo:conflictDescription" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            SELECT $this WHERE {
+              $this aidgo:alignmentType aidgo:ConflictsWith .
+              FILTER NOT EXISTS { $this aidgo:conflictDescription ?d }
+            }""" ] .
+
+# ---------------------------------------------------------------- requirements
+aidgosh:LegalRequirementShape a sh:NodeShape ;
+    sh:targetClass aidgo:LegalRequirement ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ] ;
+    sh:property [ sh:path aidgo:articleReference ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:pattern "^Art\\. 10\\([1-6]\\)(\\([a-h]\\))?$" ] ;
+    sh:property [ sh:path aidgo:coverageStatus ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "Every Article 10 obligation must be covered by at least one alignment assertion" ] .
+
+aidgosh:TechnicalRequirementShape a sh:NodeShape ;
+    sh:targetClass aidgo:TechnicalRequirement ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ] ;
+    sh:property [ sh:path aidgo:clauseNumber ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:pattern "^[0-9]+(\\.[0-9]+)*$" ] ;
+    sh:property [ sh:path aidgo:dqmlcStage ; sh:minCount 1 ; sh:maxCount 1 ; sh:class aidgo:DQMLCStage ] .
+
+aidgosh:ConjunctiveRequirementShape a sh:NodeShape ;
+    sh:targetClass aidgo:ConjunctiveRequirement ;
+    sh:property [ sh:path tair:decomposes ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class aidgo:TechnicalRequirement ;
+                  sh:not [ sh:class aidgo:ConjunctiveRequirement ] ;
+                  sh:message "An atomic requirement decomposes exactly one clause-level requirement" ] ;
+    sh:property [ sh:path skos:definition ; sh:severity sh:Warning ;
+                  sh:pattern "^\\[" ;
+                  sh:message "Bracket-context pattern expected: definition should start with the bracketed lead-in" ] .
+
+aidgosh:ConjunctSameClause a sh:NodeShape ;
+    sh:targetClass aidgo:ConjunctiveRequirement ;
+    sh:sparql [
+        sh:message "An atomic requirement must share its clause number with the requirement it decomposes" ;
+        sh:prefixes aidgosh: ;
+        sh:select """
+            PREFIX tair: <https://w3id.org/tair#>
+            SELECT $this WHERE {
+              $this tair:decomposes ?p ; aidgo:clauseNumber ?c1 . ?p aidgo:clauseNumber ?c2 .
+              FILTER (?c1 != ?c2)
+            }""" ] .
+
+aidgosh:ConceptShape a sh:NodeShape ;
+    sh:targetClass aidgo:Concept ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dct:source ; sh:minCount 1 ;
+                  sh:pattern "^ISO/IEC 5259-[1-5]$" ] .
+
+aidgosh:BroaderResolves a sh:NodeShape ;
+    sh:targetSubjectsOf skos:broader ;
+    sh:property [ sh:path skos:broader ;
+                  sh:or ( [ sh:class aidgo:Concept ] [ sh:class aidgo:RequirementCollection ] ) ;
+                  sh:message "skos:broader must point to a defined concept or requirement collection" ] .
