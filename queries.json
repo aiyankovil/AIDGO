@@ -1,0 +1,38 @@
+[
+ {
+  "id": "Q1",
+  "title": "Coverage of each Article 10 obligation",
+  "question": "For every obligation, how many standard requirements satisfy it completely or partially?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?obligation (SUM(IF(?t = aidgo:CompletelySatisfies, 1, 0)) AS ?complete) (SUM(IF(?t = aidgo:PartiallySatisfies, 1, 0)) AS ?partial) (SUM(IF(?t = aidgo:NoAlignment, 1, 0)) AS ?gap)\nWHERE {\n  ?o a aidgo:LegalRequirement ; aidgo:articleReference ?article ; skos:prefLabel ?obligation .\n  OPTIONAL { ?a a aidgo:AlignmentAssertion ; aidgo:legalRequirement ?o ; aidgo:alignmentType ?t . }\n}\nGROUP BY ?article ?obligation\nORDER BY ?article"
+ },
+ {
+  "id": "Q2",
+  "title": "Gaps: obligations no requirement addresses",
+  "question": "Which obligations are not satisfied, even partially, by any requirement of the standard?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?obligation ?justification\nWHERE {\n  ?o a aidgo:LegalRequirement ; aidgo:articleReference ?article ; skos:prefLabel ?obligation .\n  FILTER NOT EXISTS { ?x aidgo:legalRequirement ?o ; aidgo:alignmentType ?t . FILTER(?t IN (aidgo:CompletelySatisfies, aidgo:PartiallySatisfies)) }\n  OPTIONAL { ?g aidgo:legalRequirement ?o ; aidgo:alignmentType aidgo:NoAlignment ; aidgo:alignmentJustification ?justification . }\n}\nORDER BY ?article"
+ },
+ {
+  "id": "Q3",
+  "title": "Partial alignments and what is missing",
+  "question": "Where a requirement only partially satisfies an obligation, what is the documented gap?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?article ?clause ?basis ?gap\nWHERE {\n  ?a aidgo:alignmentType aidgo:PartiallySatisfies ; aidgo:legalRequirement ?o ; aidgo:technicalRequirement ?r ; aidgo:alignmentBasis ?b .\n  OPTIONAL { ?a aidgo:alignmentGap ?gap }\n  ?o aidgo:articleReference ?article . ?r dct:source ?clause .\n  BIND(STRAFTER(STR(?b), \"#\") AS ?basis)\n}\nORDER BY ?article ?clause"
+ },
+ {
+  "id": "Q4",
+  "title": "Most load-bearing requirements",
+  "question": "Which standard clauses support the largest number of distinct obligations?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX tair: <https://w3id.org/tair#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?clause (COUNT(DISTINCT ?o) AS ?obligations)\nWHERE {\n  ?a aidgo:legalRequirement ?o ; aidgo:technicalRequirement ?r ; aidgo:alignmentType ?t .\n  FILTER(?t IN (aidgo:CompletelySatisfies, aidgo:PartiallySatisfies))\n  { ?r dct:source ?clause } \n}\nGROUP BY ?clause\nORDER BY DESC(?obligations) ?clause\nLIMIT 10"
+ },
+ {
+  "id": "Q5",
+  "title": "Provenance of every assertion for one obligation",
+  "question": "Who asserted each alignment for Art. 10(2)(f), by which activity, and on what basis?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?assertion ?type ?clause ?by ?activity ?basis\nWHERE {\n  ?o aidgo:articleReference \"Art. 10(2)(f)\" .\n  ?a aidgo:legalRequirement ?o ; aidgo:alignmentType ?t ; dct:identifier ?assertion ; prov:wasAttributedTo ?by ; aidgo:alignmentBasis ?b ; prov:wasGeneratedBy ?act .\n  OPTIONAL { ?a aidgo:technicalRequirement ?r . ?r dct:source ?clause }\n  BIND(STRAFTER(STR(?t), \"#\") AS ?type) BIND(STRAFTER(STR(?b), \"#\") AS ?basis) BIND(STRAFTER(STR(?act), \"#\") AS ?activity)\n}"
+ },
+ {
+  "id": "Q6",
+  "title": "Obligation elements a requirement must guarantee",
+  "question": "Into which elements is each obligation decomposed, and which is the core element?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?role ?core ?element\nWHERE {\n  ?o aidgo:articleReference ?article ; aidgo:hasElement ?e .\n  ?e aidgo:elementRole ?role ; aidgo:isCoreElement ?core ; skos:definition ?element .\n}\nORDER BY ?article DESC(?core) ?role"
+ }
+]

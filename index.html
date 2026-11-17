@@ -1,0 +1,3767 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIDGO Compliance Explorer</title>
+<style>
+:root{
+  --bg:#f7f7f5; --panel:#ffffff; --ink:#1b1f24; --muted:#5d6670; --line:#e2e4e7; --accent:#1f5f8b;
+  --cs:#1d7a46; --ps:#c98a12; --rt:#6b7fa8; --cw:#b3372f; --gap:#b3372f; --none:#eceef0; --chip:#f0f3f6;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#14171a; --panel:#1c2024; --ink:#e7e9ec; --muted:#9aa3ad; --line:#2c3238; --accent:#6fb1e0;
+  --cs:#3fae6f; --ps:#e0a53a; --rt:#8d9fc6; --cw:#e06a60; --gap:#e06a60; --none:#262b30; --chip:#252a30; }}
+:root[data-theme="dark"]{ --bg:#14171a; --panel:#1c2024; --ink:#e7e9ec; --muted:#9aa3ad; --line:#2c3238; --accent:#6fb1e0;
+  --cs:#3fae6f; --ps:#e0a53a; --rt:#8d9fc6; --cw:#e06a60; --gap:#e06a60; --none:#262b30; --chip:#252a30; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px 24px 10px;border-bottom:1px solid var(--line);background:var(--panel)}
+h1{font-size:19px;margin:0 0 2px} .sub{color:var(--muted);font-size:13px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--muted)} .stats b{color:var(--ink);font-size:15px}
+nav{display:flex;gap:4px;padding:0 24px;background:var(--panel);border-bottom:1px solid var(--line);overflow-x:auto}
+nav button{border:0;background:none;color:var(--muted);padding:10px 12px;font:inherit;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+main{padding:18px 24px;max-width:1280px} section{display:none} section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.card h3{margin:0 0 8px;font-size:15px}
+table{border-collapse:collapse;width:100%} th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600}
+.matrix{overflow-x:auto} .matrix table{width:auto} .matrix td.c{width:46px;height:30px;text-align:center;padding:0;border:2px solid var(--panel);border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;color:#fff}
+.matrix th.col{writing-mode:vertical-rl;transform:rotate(180deg);height:140px;font-weight:500;font-size:12px;padding:4px}
+.matrix td.ob{white-space:nowrap;cursor:pointer} .matrix td.ob:hover{color:var(--accent)}
+.k-CompletelySatisfies{background:var(--cs)} .k-PartiallySatisfies{background:var(--ps)} .k-RelatedTo{background:var(--rt)} .k-ConflictsWith{background:var(--cw)} .k-none{background:var(--none)}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:600;color:#fff}
+.badge.gap{background:var(--gap)} .badge.cov{background:var(--cs)} .badge.part{background:var(--ps)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:8px 0 0}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px;background:var(--sw)}
+select,textarea,button.act{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+button.act{cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent)} button.ghost{cursor:pointer}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chip{display:inline-block;background:var(--chip);border-radius:4px;padding:1px 6px;margin:2px 4px 2px 0;font-size:12px}
+.el{display:flex;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line)} .el .role{min-width:84px;color:var(--muted);font-size:12px} .core{font-weight:600}
+.assert{border-left:4px solid var(--line);padding:6px 10px;margin:8px 0;background:var(--bg);border-radius:4px}
+.assert.CompletelySatisfies{border-color:var(--cs)} .assert.PartiallySatisfies{border-color:var(--ps)} .assert.NoAlignment{border-color:var(--gap)}
+.meta{color:var(--muted);font-size:12px} .gaptxt{margin-top:4px} .gaptxt b{color:var(--gap)}
+textarea{width:100%;min-height:210px;font-family:var(--mono);font-size:12.5px}
+.presets button{margin:0 6px 6px 0}
+pre{font-family:var(--mono);font-size:12px;white-space:pre-wrap}
+.note{font-size:12px;color:var(--muted)} a{color:var(--accent)}
+.status{font-size:12px;color:var(--muted)} .err{color:var(--gap)}
+@media (max-width:700px){ header,nav,main{padding-left:16px;padding-right:16px} }
+</style>
+</head>
+<body>
+<header>
+  <h1>AIDGO Compliance Explorer</h1>
+  <div class="sub">EU AI Act Article 10 data-governance obligations aligned with ISO/IEC 5259-3, as a queryable knowledge graph. Every view below is computed by SPARQL over the graph, in your browser.</div>
+  <div class="stats" id="stats"><span>Loading graph…</span></div>
+  <div class="note" style="margin-top:6px">Alignments are expert judgments recorded with their provenance. They are not legal advice and not evidence of conformity.</div>
+</header>
+<nav id="tabs">
+  <button data-t="coverage" class="on">Coverage</button>
+  <button data-t="obligation">Obligation</button>
+  <button data-t="standard">Standard clause</button>
+  <button data-t="sparql">SPARQL</button>
+  <button data-t="about">About the data</button>
+</nav>
+<main>
+<section id="coverage" class="on">
+  <div class="card"><h3>Which Article 10 obligations does ISO/IEC 5259-3 cover, and where?</h3>
+    <div class="note">Rows: Article 10 obligations. Columns: life-cycle stages of the standard's data quality management life cycle. A cell shows the strongest alignment found in that stage; the number is how many requirements in that stage align. Click a row for detail.</div>
+    <div class="matrix" id="matrix"></div>
+    <div class="legend"><span style="--sw:var(--cs)">Completely satisfies</span><span style="--sw:var(--ps)">Partially satisfies</span><span style="--sw:var(--rt)">Related to</span><span style="--sw:var(--none)">No alignment in this stage</span></div>
+  </div>
+  <div class="card"><h3>Gaps</h3><div id="gaps"></div></div>
+</section>
+<section id="obligation">
+  <div class="card"><div class="row"><label for="osel"><b>Obligation</b></label><select id="osel"></select></div></div>
+  <div id="odetail"></div>
+</section>
+<section id="standard">
+  <div class="card"><div class="row"><label for="rsel"><b>ISO/IEC 5259-3 requirement</b></label><select id="rsel"></select></div>
+  <div class="note" style="margin-top:6px">Requirement text is not shown: ISO/IEC standards are copyrighted. The graph publishes identifiers, clause numbers, labels and structure only.</div></div>
+  <div id="rdetail"></div>
+</section>
+<section id="sparql">
+  <div class="card"><h3>Ask the graph</h3>
+    <div class="presets" id="presets"></div>
+    <div class="note" id="qquestion"></div>
+    <textarea id="q" spellcheck="false" aria-label="SPARQL query"></textarea>
+    <div class="row" style="margin-top:8px"><button class="act" id="run">Run query</button><span class="status" id="qstatus"></span>
+      <span style="flex:1"></span><button class="ghost" id="dl">Download graph (Turtle)</button></div>
+  </div>
+  <div class="card"><div id="qres" class="note">Results appear here.</div></div>
+</section>
+<section id="about">
+  <div class="card"><h3>About the data</h3><div id="aboutbox"></div></div>
+</section>
+</main>
+<script type="text/turtle" id="graph">@prefix aiapr: <https://w3id.org/euaiact/art10#> .
+@prefix aidgo: <https://w3id.org/aidgo#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix iso5259: <https://w3id.org/aidgo/iso5259#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix tair: <https://w3id.org/tair#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aidgo:ConflictsWith a owl:Class ;
+    rdfs:label "Conflicts With"@en ;
+    rdfs:subClassOf aidgo:AlignmentType .
+
+aidgo:Map_10.1_7.3.2.1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.1_7.3.2.1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
+    aidgo:alignmentGap "ISO 5259-3 does not reference the high-risk AI regulatory classification or the specific quality criteria in Art 10(2)-(5)."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.1 requires a data specification validated as consistent and complete for intended use, functionally aligning with Art 10(1). Gap: ISO 5259 is sector-neutral and does not specifically address high-risk AI systems under regulatory oversight."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.1 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_1 .
+
+aidgo:Map_10.1_7.3.3.1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.1_7.3.3.1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ConceptualCoverage ;
+    aidgo:alignmentGap "The DQ plan is not required to reference regulatory compliance or demonstrate that datasets satisfy a legal standard."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.3.1 requires a DQ plan covering processes throughout the data life cycle, supporting Art 10(1). Gap: ISO does not require the plan to demonstrate compliance with a regulation."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.1 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_3_1 .
+
+aidgo:Map_10.2.1_6.3.2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.1_6.3.2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §6.3.2 directly requires rules and processes to achieve data quality, DQM implementation, integration into management processes, and communication of policies (sub-items a-h). This completely satisfies Art 10(2) data governance and management practices."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_1 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_6_3_2 .
+
+aidgo:Map_10.2.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.1_7.3.1.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.1.1(b) directly requires documenting scope, purpose and intended use. This completely satisfies the 'appropriate for intended purpose' element of Art 10(2)."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_1 ;
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Rb .
+
+aidgo:Map_10.2.2_7.3.2.2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.2_7.3.2.2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "AI model architecture and algorithm selection — the AI system design choices sense — are outside ISO 5259 scope."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.2 requires specifying dataset design parameters, partially covering Art 10(2)(a) design choices. Gap: Art 10(2)(a) includes AI model and algorithm design choices beyond dataset format specification."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_2 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_2 .
+
+aidgo:Map_10.2.3_7.3.4.2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.3_7.3.4.2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "Provenance of personal data at the individual collection purpose level is not addressed by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.4.2 requires taking into account licensing and reuse conditions, partially covering data origin. Gap: ISO does not require documenting provenance at the individual-collection-purpose level for personal data."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_3 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_4_2 .
+
+aidgo:Map_10.2.3_7.3.4.3 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.3_7.3.4.3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "The original purpose of personal data collection as a GDPR-grounded requirement is not addressed by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.4.3 requires documenting reasons for collection, method and specification, covering collection processes and origin. Gap: ISO does not require the original purpose of personal data collection (GDPR framing)."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_3 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_4_3 .
+
+aidgo:Map_10.2.4_7.3.5.2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.4_7.3.5.2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "Annotation and labelling as formally documented data-preparation operations are not explicitly required by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.5.2 comprehensively covers data cleaning operations. Gap: Art 10(2)(c) requires documentation of annotation and labelling processes, which ISO 5259-3 does not explicitly mandate."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_4 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_5_2 .
+
+aidgo:Map_10.2.4_7.3.6.1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.4_7.3.6.1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.6.1 directly requires specifying data augmentation processes (covering enrichment and aggregation), completely satisfying Art 10(2)(c)'s enrichment/aggregation sub-element."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_4 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_6_1 .
+
+aidgo:Map_10.2.5_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.5_7.3.2.3_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ConceptualCoverage ;
+    aidgo:alignmentGap "Explicit documentation of measurement assumptions (what the data is supposed to measure and represent) is not a distinct ISO 5259-3 requirement."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.3 requires specifying statistical properties and representativeness, implicitly addressing what data represents. Gap: ISO does not require explicitly documenting measurement assumptions as a distinct governance obligation."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_5 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_3_R2 .
+
+aidgo:Map_10.2.6_7.3.1.1_Ra a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.6_7.3.1.1_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "A formal documented assessment of dataset availability, quantity and suitability before acquisition is not explicitly required by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.1.1(a) requires documenting the motivation and origin of the data need, partially covering Art 10(2)(e). Gap: ISO does not require a formal prior assessment of availability, quantity and suitability before data acquisition."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_6 ;
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Ra .
+
+aidgo:Map_10.2.7_7.3.5.2_Rd a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.7_7.3.5.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "Fundamental rights and anti-discrimination framing of bias examination is outside ISO 5259 scope."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.5.2(d) requires bias and drift detection/mitigation measures. Gap: Art 10(2)(f) frames bias examination around health, safety, fundamental rights and anti-discrimination — legal-rights framing structurally absent from ISO 5259."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_7 ;
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.5.2_Rd .
+
+aidgo:Map_10.2.7_8.3.4_R1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.7_8.3.4_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ConceptualCoverage ;
+    aidgo:alignmentGap "ISO 5259-3 risk management does not address risks to fundamental rights or discrimination under Union law."@en ;
+    aidgo:alignmentJustification "Gap: ISO risk management does not address risks to fundamental rights or anti-discrimination under Union law."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_7 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_8_3_4_R1 .
+
+aidgo:Map_10.2.8_8.3.4_R2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.2.8_8.3.4_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
+    aidgo:alignmentGap "The gap-documentation obligation (document gaps and the plan to address them) as a distinct governance item is not explicit in ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §8.3.4 requires identifying and mitigating data quality risks, functionally covering data gap identification. Gap: Art 10(2)(g/h) requires explicitly documenting gaps and HOW they will be addressed as a governance obligation."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.2_8 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_8_3_4_R2 .
+
+aidgo:Map_10.3.1_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.3.1_7.3.1.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.1.1(b) requires specifying scope, purpose and intended use, directly ensuring relevance. This completely satisfies Art 10(3)'s relevance requirement."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.3_1 ;
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Rb .
+
+aidgo:Map_10.3.1_7.3.2.3_R2 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.3.1_7.3.2.3_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.3 directly requires maintaining representativeness with respect to the target population for each subset. This completely satisfies Art 10(3)'s representativeness requirement."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.3_1 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_3_R2 .
+
+aidgo:Map_10.3.1_7.3.5.2_Ra_Rb a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.3.1_7.3.5.2_Ra_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:SemanticEquivalence ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.5.2(a)-(c) requires measures for missing data (completeness), duplication and outliers (error-freeness). This completely satisfies Art 10(3)'s error-free and completeness requirements."@en ;
+    aidgo:alignmentType aidgo:CompletelySatisfies ;
+    aidgo:coveredCQs "CQ-M1, CQ-M5, CQ-M7" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.3_1 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_5_2 .
+
+aidgo:Map_10.3.2_7.3.2.3_R1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.3.2_7.3.2.3_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "The fairness/demographic dimension — statistical properties adequate for specific persons/groups the AI system is used on — is absent from ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.3 covers statistical properties per subset. Gap: ISO does not specifically require properties to account for the specific persons/groups the AI system is used on."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.3_2 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_3_R1 .
+
+aidgo:Map_10.4_7.3.1.1_Rb a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.4_7.3.1.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ConceptualCoverage ;
+    aidgo:alignmentGap "Explicit characterisation of geographical, contextual, behavioural and functional deployment setting is not required by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.1.1(b) requires specifying scope and intended use, implicitly encompassing deployment setting. Gap: ISO does not explicitly require characterising geographical, behavioural or functional deployment context as distinct quality parameters."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.4 ;
+    aidgo:technicalRequirement iso5259:AidgoConjReq_7.3.1.1_Rb .
+
+aidgo:Map_10.5.a_NoAlignment a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.5.a_NoAlignment" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:GapIdentified ;
+    aidgo:alignmentGap "GDPR proportionality principle — necessity test for personal data over synthetic alternatives — is outside ISO 5259 scope. Recommended: GDPR Art.9; AI Act Art.10(5)(a)."@en ;
+    aidgo:alignmentJustification "ISO 5259 does not require demonstrating necessity of processing personal data over synthetic alternatives. This is a legal necessity test specific to data protection law."@en ;
+    aidgo:alignmentType aidgo:NoAlignment ;
+    aidgo:coveredCQs "CQ-M3, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.5_a ;
+    aidgo:technicalRequirement () .
+
+aidgo:Map_10.5.b_NoAlignment a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.5.b_NoAlignment" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:GapIdentified ;
+    aidgo:alignmentGap "Pseudonymisation, state-of-art security, strict GDPR access controls outside ISO 5259 scope. Recommended: ISO/IEC 27001; ISO/IEC 27701; ENISA AI Cybersecurity Guidelines."@en ;
+    aidgo:alignmentJustification "ISO 5259 does not impose pseudonymisation or state-of-art security measures as normative requirements. ISO 5259-4 mentions data privacy conceptually but not at the normative level Art 10(5)(b) requires."@en ;
+    aidgo:alignmentType aidgo:NoAlignment ;
+    aidgo:coveredCQs "CQ-M3, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.5_b ;
+    aidgo:technicalRequirement () .
+
+aidgo:Map_10.5.e_7.3.8.3 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.5.e_7.3.8.3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:FunctionalEquivalence ;
+    aidgo:alignmentGap "The legal deletion trigger — bias corrected OR retention period ended — is not addressed by ISO 5259-3."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.8.3 requires deletion from all storage locations. Gap: ISO does not tie deletion to the legal trigger (bias corrected OR retention period ended)."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.5_e ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_8_3_R1 .
+
+aidgo:Map_10.5_NoAlignment a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.5_NoAlignment" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:GapIdentified ;
+    aidgo:alignmentGap "Requires GDPR Art.9 + ISO/IEC 27701 compliance. ISO 5259 cannot satisfy this obligation."@en ;
+    aidgo:alignmentJustification "ISO 5259 has no provision for special categories of personal data processing. This is a legal obligation under GDPR Article 9 — structurally outside ISO 5259 scope."@en ;
+    aidgo:alignmentType aidgo:NoAlignment ;
+    aidgo:coveredCQs "CQ-M3, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.5 ;
+    aidgo:technicalRequirement () .
+
+aidgo:Map_10.6_7.3.2.3_R1 a aidgo:AlignmentAssertion ;
+    dct:identifier "Map_10.6_7.3.2.3_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    prov:wasAttributedTo "AIDGO Project, ADAPT Centre" ;
+    prov:wasGeneratedBy aidgo:MappingProcess_v2 ;
+    aidgo:alignmentBasis aidgo:ScopeOverlap ;
+    aidgo:alignmentGap "No ISO 5259-3 provision scopes requirements to testing datasets only for non-training AI systems."@en ;
+    aidgo:alignmentJustification "ISO 5259-3 §7.3.2.3 covers subset specification including test data. Gap: ISO has no scoping provision limiting requirements to testing datasets only for non-training AI systems."@en ;
+    aidgo:alignmentType aidgo:PartiallySatisfies ;
+    aidgo:coveredCQs "CQ-M2, CQ-M5" ;
+    aidgo:legalRequirement aiapr:AiaPrReq_10.6 ;
+    aidgo:technicalRequirement iso5259:AidgoReq_7_3_2_3_R1 .
+
+aidgo:RelatedTo a owl:Class ;
+    rdfs:label "Related To"@en ;
+    rdfs:subClassOf aidgo:AlignmentType .
+
+iso5259:AidgoChangeDocumentationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoChangeDocumentationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.6" ;
+    skos:broader iso5259:AidgoChangeMgmtReqColl ;
+    skos:prefLabel "Implementing and documenting change"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoConfigMgmtReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoConfigMgmtReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.2" ;
+    skos:broader iso5259:AidgoOperationReqColl ;
+    skos:prefLabel "Configuration management"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoConjReq_10.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — a"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — b"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — c"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — d"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — e"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — f"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_10.2_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_10.2_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:broader iso5259:AidgoDataProcessingToolsReqColl ;
+    skos:prefLabel "DQ tools — g"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_10_2 .
+
+iso5259:AidgoConjReq_11.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_11.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "11.2" ;
+    skos:broader iso5259:AidgoDQDependenciesReqColl ;
+    skos:prefLabel "DQ dependencies — a"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_11_2 .
+
+iso5259:AidgoConjReq_11.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_11.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "11.2" ;
+    skos:broader iso5259:AidgoDQDependenciesReqColl ;
+    skos:prefLabel "DQ dependencies — b"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_11_2 .
+
+iso5259:AidgoConjReq_11.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_11.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "11.2" ;
+    skos:broader iso5259:AidgoDQDependenciesReqColl ;
+    skos:prefLabel "DQ dependencies — c"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_11_2 .
+
+iso5259:AidgoConjReq_6.3.10_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.10_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.10" ;
+    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
+    skos:prefLabel "Project-specific DQM — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_10 .
+
+iso5259:AidgoConjReq_6.3.10_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.10_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.10" ;
+    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
+    skos:prefLabel "Project-specific DQM — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_10 .
+
+iso5259:AidgoConjReq_6.3.10_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.10_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.10" ;
+    skos:broader iso5259:AidgoProjectSpecificDQReqColl ;
+    skos:prefLabel "Project-specific DQM — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_10 .
+
+iso5259:AidgoConjReq_6.3.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — d"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — e"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — f"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — g"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.2_Rh a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.2_Rh" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoDataQualityCultureReqColl ;
+    skos:prefLabel "Data quality culture — h"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_2 .
+
+iso5259:AidgoConjReq_6.3.3_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.3_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.3" ;
+    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
+    skos:prefLabel "DQ issues management — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_3 .
+
+iso5259:AidgoConjReq_6.3.3_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.3_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.3" ;
+    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
+    skos:prefLabel "DQ issues management — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_3 .
+
+iso5259:AidgoConjReq_6.3.3_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.3_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.3" ;
+    skos:broader iso5259:AidgoDataQualityIssuesMgmtReqColl ;
+    skos:prefLabel "DQ issues management — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_3 .
+
+iso5259:AidgoConjReq_6.3.4_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.4_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
+    skos:prefLabel "Competence management — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_4 .
+
+iso5259:AidgoConjReq_6.3.4_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.4_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
+    skos:prefLabel "Competence management — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_4 .
+
+iso5259:AidgoConjReq_6.3.4_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.4_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
+    skos:prefLabel "Competence management — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_4 .
+
+iso5259:AidgoConjReq_6.3.4_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.4_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:broader iso5259:AidgoCompetenceMgmtReqColl ;
+    skos:prefLabel "Competence management — d"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_4 .
+
+iso5259:AidgoConjReq_6.3.5_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.5_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.5" ;
+    skos:broader iso5259:AidgoResourceMgmtReqColl ;
+    skos:prefLabel "Resource management — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_5 .
+
+iso5259:AidgoConjReq_6.3.5_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.5_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.5" ;
+    skos:broader iso5259:AidgoResourceMgmtReqColl ;
+    skos:prefLabel "Resource management — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_5 .
+
+iso5259:AidgoConjReq_6.3.5_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.5_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.5" ;
+    skos:broader iso5259:AidgoResourceMgmtReqColl ;
+    skos:prefLabel "Resource management — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_5 .
+
+iso5259:AidgoConjReq_6.3.8_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.8_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
+    skos:prefLabel "DQ audit — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_8 .
+
+iso5259:AidgoConjReq_6.3.8_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.8_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
+    skos:prefLabel "DQ audit — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_8 .
+
+iso5259:AidgoConjReq_6.3.8_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.8_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
+    skos:prefLabel "DQ audit — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_8 .
+
+iso5259:AidgoConjReq_6.3.8_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.8_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
+    skos:prefLabel "DQ audit — d"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_8 .
+
+iso5259:AidgoConjReq_6.3.8_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.8_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoDataQualityAuditReqColl ;
+    skos:prefLabel "DQ audit — e"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_8 .
+
+iso5259:AidgoConjReq_6.3.9_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.9_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
+    skos:prefLabel "Confirmation review — a"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_9 .
+
+iso5259:AidgoConjReq_6.3.9_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.9_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
+    skos:prefLabel "Confirmation review — b"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_9 .
+
+iso5259:AidgoConjReq_6.3.9_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.9_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
+    skos:prefLabel "Confirmation review — c"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_9 .
+
+iso5259:AidgoConjReq_6.3.9_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_6.3.9_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:broader iso5259:AidgoConfirmationReviewReqColl ;
+    skos:prefLabel "Confirmation review — d"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage ;
+    tair:decomposes iso5259:AidgoReq_6_3_9 .
+
+iso5259:AidgoConjReq_7.3.1.1_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.1.1_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.1" ;
+    skos:broader iso5259:AidgoDataMotivationReqColl ;
+    skos:prefLabel "Data motivation — c"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_1_1 .
+
+iso5259:AidgoConjReq_7.3.1.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.1.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.2" ;
+    skos:broader iso5259:AidgoStakeholderAnalysisReqColl ;
+    skos:prefLabel "Stakeholder analysis — a"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_1_2 .
+
+iso5259:AidgoConjReq_7.3.1.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.1.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.2" ;
+    skos:broader iso5259:AidgoStakeholderAnalysisReqColl ;
+    skos:prefLabel "Stakeholder analysis — b"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_1_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — a"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — b"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — c"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — d"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — e"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — f"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — g"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rh a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rh" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — h"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Ri a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Ri" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — i"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.2.2_Rj a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.2.2_Rj" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataFormatReqColl ;
+    skos:prefLabel "Data format — j"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_2_2 .
+
+iso5259:AidgoConjReq_7.3.3.1_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.1_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data planning — a"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_1 .
+
+iso5259:AidgoConjReq_7.3.3.1_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data planning — b"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_1 .
+
+iso5259:AidgoConjReq_7.3.3.1_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.1_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data planning — c"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_1 .
+
+iso5259:AidgoConjReq_7.3.3.1_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.1_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data planning — d"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_1 .
+
+iso5259:AidgoConjReq_7.3.3.1_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.1_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data planning — e"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_1 .
+
+iso5259:AidgoConjReq_7.3.3.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
+    skos:prefLabel "Life cycle plans — a"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_2 .
+
+iso5259:AidgoConjReq_7.3.3.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
+    skos:prefLabel "Life cycle plans — b"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_2 .
+
+iso5259:AidgoConjReq_7.3.3.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
+    skos:prefLabel "Life cycle plans — c"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_2 .
+
+iso5259:AidgoConjReq_7.3.3.2_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
+    skos:prefLabel "Life cycle plans — d"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_2 .
+
+iso5259:AidgoConjReq_7.3.3.2_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.3.2_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataLifeCyclePlansReqColl ;
+    skos:prefLabel "Life cycle plans — e"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_3_2 .
+
+iso5259:AidgoConjReq_7.3.4.3_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — a"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — b"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — c"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — d"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — e"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — f"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.4.3_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.4.3_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataCollectionReqColl ;
+    skos:prefLabel "Data collection — g"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_4_3 .
+
+iso5259:AidgoConjReq_7.3.5.2_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — a"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — b"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — c"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — e"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — f"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — g"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rh a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rh" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — h"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.5.2_Ri a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Ri" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — i"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoConjReq_7.3.7.1_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — a"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — b"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — c"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — d"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — e"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — f"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.1_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.1_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning — g"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_1 .
+
+iso5259:AidgoConjReq_7.3.7.3_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — a"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — b"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — c"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — d"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — e"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — f"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rg a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rg" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — g"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rh a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rh" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — h"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Ri a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Ri" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — i"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.3_Rj a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.3_Rj" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningDocReqColl ;
+    skos:prefLabel "Provisioning docs — j"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_3 .
+
+iso5259:AidgoConjReq_7.3.7.5_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.5_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:broader iso5259:AidgoDataOptimizationReqColl ;
+    skos:prefLabel "Data optimization — a"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_5 .
+
+iso5259:AidgoConjReq_7.3.7.5_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.5_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:broader iso5259:AidgoDataOptimizationReqColl ;
+    skos:prefLabel "Data optimization — b"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_5 .
+
+iso5259:AidgoConjReq_7.3.7.5_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.5_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:broader iso5259:AidgoDataOptimizationReqColl ;
+    skos:prefLabel "Data optimization — c"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_5 .
+
+iso5259:AidgoConjReq_7.3.7.5_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.5_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:broader iso5259:AidgoDataOptimizationReqColl ;
+    skos:prefLabel "Data optimization — d"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_5 .
+
+iso5259:AidgoConjReq_7.3.7.6_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.6_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
+    skos:prefLabel "Support commitment — a"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
+
+iso5259:AidgoConjReq_7.3.7.6_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.6_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
+    skos:prefLabel "Support commitment — b"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
+
+iso5259:AidgoConjReq_7.3.7.6_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.6_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
+    skos:prefLabel "Support commitment — c"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
+
+iso5259:AidgoConjReq_7.3.7.6_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.7.6_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:broader iso5259:AidgoSupportCommitmentReqColl ;
+    skos:prefLabel "Support commitment — d"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_7_6_R2 .
+
+iso5259:AidgoConjReq_8.3.3.3_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.3_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
+    skos:prefLabel "Change request spec — a"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_3 .
+
+iso5259:AidgoConjReq_8.3.3.3_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.3_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
+    skos:prefLabel "Change request spec — b"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_3 .
+
+iso5259:AidgoConjReq_8.3.3.3_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.3_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
+    skos:prefLabel "Change request spec — c"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_3 .
+
+iso5259:AidgoConjReq_8.3.3.3_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.3_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:broader iso5259:AidgoChangeRequestSpecReqColl ;
+    skos:prefLabel "Change request spec — d"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_3 .
+
+iso5259:AidgoConjReq_8.3.3.4_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — a"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.4_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — b"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.4_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — c"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.4_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — d"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.4_Re a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Re" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — e"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.4_Rf a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.4_Rf" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeRequestAnalysisReqColl ;
+    skos:prefLabel "Change request analysis — f"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_4 .
+
+iso5259:AidgoConjReq_8.3.3.5_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.5_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.5" ;
+    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
+    skos:prefLabel "Change request eval — a"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_5 .
+
+iso5259:AidgoConjReq_8.3.3.5_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.5_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.5" ;
+    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
+    skos:prefLabel "Change request eval — b"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_5 .
+
+iso5259:AidgoConjReq_8.3.3.5_Rc a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_8.3.3.5_Rc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.5" ;
+    skos:broader iso5259:AidgoChangeRequestEvalReqColl ;
+    skos:prefLabel "Change request eval — c"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage ;
+    tair:decomposes iso5259:AidgoReq_8_3_3_5 .
+
+iso5259:AidgoContextOfOrganizationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoContextOfOrganizationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "4" ;
+    skos:prefLabel "Context of the organization"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoDQLCReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDQLCReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.2.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data quality management life cycle General"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoDataAugmentationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataAugmentationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.6.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data augmentation General"@en ;
+    aidgo:dqmlcStage aidgo:DataAugmentationStage .
+
+iso5259:AidgoDataDeletionReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataDeletionReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.3" ;
+    skos:broader iso5259:AidgoDataDecommissioningReqColl ;
+    skos:prefLabel "Data deletion"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoDataHandlingReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataHandlingReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.4" ;
+    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
+    skos:prefLabel "Data handling"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoDataSourceReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataSourceReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.2" ;
+    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
+    skos:prefLabel "Data source delegation"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoDataTransferReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataTransferReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.2" ;
+    skos:broader iso5259:AidgoDataDecommissioningReqColl ;
+    skos:prefLabel "Data transfer"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoDocumentationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDocumentationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.7" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Documentation"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoHorizontalGeneralReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoHorizontalGeneralReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.2" ;
+    skos:broader iso5259:AidgoOperationReqColl ;
+    skos:prefLabel "Horizontal processes General"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoLeadershipReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoLeadershipReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "5" ;
+    skos:prefLabel "Leadership"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoPartialDeletionReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoPartialDeletionReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.4" ;
+    skos:broader iso5259:AidgoDataDecommissioningReqColl ;
+    skos:prefLabel "Partial data deletion on request"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoProjectDQReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoProjectDQReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "12" ;
+    skos:prefLabel "Project-specific DQM"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoQualityGatesReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoQualityGatesReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.2" ;
+    skos:broader iso5259:AidgoVVReqColl ;
+    skos:prefLabel "Data life cycle quality gates"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_6_3_7_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_7_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.7" ;
+    skos:prefLabel "Documentation — intelligibility"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_6_3_7_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_7_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.7" ;
+    skos:prefLabel "Documentation — accessibility"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_6_3_9_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_9_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:prefLabel "Confirmation review — independent personnel"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_7_2_1_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_2_1_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.2.1" ;
+    skos:prefLabel "DQMLC — specify processes"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_7_2_1_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_2_1_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.2.1" ;
+    skos:prefLabel "DQMLC — quality gates"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_7_2_1_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_2_1_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.2.1" ;
+    skos:prefLabel "DQMLC — document deviations"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_7_3_4_1_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_1_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.1" ;
+    skos:prefLabel "Data acquisition — specify processes"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_4_1_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_1_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.1" ;
+    skos:prefLabel "Data acquisition — monitoring"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_4_1_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_1_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.1" ;
+    skos:prefLabel "Data acquisition — risk documentation"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_4_4_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_4_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.4" ;
+    skos:prefLabel "Data handling — meets specification"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_4_4_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_4_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.4" ;
+    skos:prefLabel "Data handling — processes"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_5_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_5_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.1" ;
+    skos:prefLabel "Data preprocessing — specify processes"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage .
+
+iso5259:AidgoReq_7_3_7_4_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_4_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.4" ;
+    skos:prefLabel "Tracking — data usage monitoring"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_7_4_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_4_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.4" ;
+    skos:prefLabel "Tracking — corrective actions"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_7_4_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_4_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.4" ;
+    skos:prefLabel "Tracking — improvement feedback"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_7_6_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_6_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:prefLabel "Support commitment — specify"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_8_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.1" ;
+    skos:prefLabel "Data decommissioning — choose method"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_1_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_1_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.1" ;
+    skos:prefLabel "Data decommissioning — specify processes"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.2" ;
+    skos:prefLabel "Data transfer — conditions"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_3_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_3_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.3" ;
+    skos:prefLabel "Data deletion — legal obligations"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_3_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_3_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.3" ;
+    skos:prefLabel "Data deletion — confirmation"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_4_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_4_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.4" ;
+    skos:prefLabel "Partial deletion — identify scope"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_4_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_4_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.4" ;
+    skos:prefLabel "Partial deletion — impact assessment"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_7_3_8_4_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_4_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.4" ;
+    skos:prefLabel "Partial deletion — execute and confirm"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_8_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.2" ;
+    skos:prefLabel "Horizontal processes General"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_1_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_1_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.1" ;
+    skos:prefLabel "V&V — apply throughout"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_1_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_1_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.1" ;
+    skos:prefLabel "V&V — independent personnel"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_2_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_2_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.2" ;
+    skos:prefLabel "Quality gates — define criteria"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_2_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_2_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.2" ;
+    skos:prefLabel "Quality gates — enforce progression"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_2_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_2_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.2" ;
+    skos:prefLabel "Quality gates — deviations"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_1_2_R4 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_1_2_R4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.2" ;
+    skos:prefLabel "Quality gates — objectively measurable"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_2_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_2_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.2" ;
+    skos:prefLabel "Configuration management — identify items"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_2_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_2_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.2" ;
+    skos:prefLabel "Configuration management — version control"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_2_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_2_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.2" ;
+    skos:prefLabel "Configuration management — baseline"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_2_R4 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_2_R4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.2" ;
+    skos:prefLabel "Configuration management — status accounting"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_3_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.2" ;
+    skos:prefLabel "Change management planning"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_3_6_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_6_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.6" ;
+    skos:prefLabel "Change implementation — implement"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_3_6_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_6_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.6" ;
+    skos:prefLabel "Change implementation — verify"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_4_R3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_4_R3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.4.2" ;
+    skos:prefLabel "Risk management — monitor"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_4_R4 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_4_R4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.4.2" ;
+    skos:prefLabel "Risk management — communicate"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoRiskManagementReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoRiskManagementReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.4" ;
+    skos:broader iso5259:AidgoOperationReqColl ;
+    skos:prefLabel "Risk management"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoStatisticalPropertiesReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoStatisticalPropertiesReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.3" ;
+    skos:broader iso5259:AidgoDataSpecificationReqColl ;
+    skos:prefLabel "Statistical properties and divisibility"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoTrackingImprovementReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoTrackingImprovementReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.4" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Tracking and improvement"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoVVImprovementReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoVVImprovementReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.3" ;
+    skos:broader iso5259:AidgoVVReqColl ;
+    skos:prefLabel "V&V improvement"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:analytics a aidgo:Concept ;
+    dct:identifier "analytics" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "analytics"@en .
+
+iso5259:boundingBox a aidgo:Concept ;
+    dct:identifier "boundingBox" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:prefLabel "bounding box"@en .
+
+iso5259:changeManagement a aidgo:Concept ;
+    dct:identifier "changeManagement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "change management"@en .
+
+iso5259:cluster a aidgo:Concept ;
+    dct:identifier "cluster" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataset ;
+    skos:prefLabel "cluster"@en .
+
+iso5259:configurationManagement a aidgo:Concept ;
+    dct:identifier "configurationManagement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "configuration management"@en .
+
+iso5259:dataAccuracy a aidgo:Concept ;
+    dct:identifier "dataAccuracy" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data accuracy"@en .
+
+iso5259:dataAcquisition a aidgo:Concept ;
+    dct:identifier "dataAcquisition" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data acquisition"@en .
+
+iso5259:dataAnnotation a aidgo:Concept ;
+    dct:identifier "dataAnnotation" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataLabelling ;
+    skos:prefLabel "data annotation"@en .
+
+iso5259:dataArchitecture a aidgo:Concept ;
+    dct:identifier "dataArchitecture" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data architecture"@en .
+
+iso5259:dataAugmentation a aidgo:Concept ;
+    dct:identifier "dataAugmentation" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data augmentation"@en .
+
+iso5259:dataBalance a aidgo:Concept ;
+    dct:identifier "dataBalance" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data balance"@en .
+
+iso5259:dataBias a aidgo:Concept ;
+    dct:identifier "dataBias" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data bias"@en .
+
+iso5259:dataCompleteness a aidgo:Concept ;
+    dct:identifier "dataCompleteness" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data completeness"@en .
+
+iso5259:dataConsistency a aidgo:Concept ;
+    dct:identifier "dataConsistency" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data consistency"@en .
+
+iso5259:dataCurrentness a aidgo:Concept ;
+    dct:identifier "dataCurrentness" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data currentness"@en .
+
+iso5259:dataDecommissioning a aidgo:Concept ;
+    dct:identifier "dataDecommissioning" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data decommissioning"@en .
+
+iso5259:dataDrift a aidgo:Concept ;
+    dct:identifier "dataDrift" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data drift"@en .
+
+iso5259:dataFrame a aidgo:Concept ;
+    dct:identifier "dataFrame" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataRecord ;
+    skos:prefLabel "data frame"@en .
+
+iso5259:dataGovernance a aidgo:Concept ;
+    dct:identifier "dataGovernance" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data governance"@en .
+
+iso5259:dataHolder a aidgo:Concept ;
+    dct:identifier "dataHolder" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data holder"@en .
+
+iso5259:dataInteroperability a aidgo:Concept ;
+    dct:identifier "dataInteroperability" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:prefLabel "data interoperability"@en .
+
+iso5259:dataPrivacy a aidgo:Concept ;
+    dct:identifier "dataPrivacy" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:prefLabel "data privacy"@en .
+
+iso5259:dataProvenance a aidgo:Concept ;
+    dct:identifier "dataProvenance" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data provenance"@en .
+
+iso5259:dataProvisioning a aidgo:Concept ;
+    dct:identifier "dataProvisioning" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data provisioning"@en .
+
+iso5259:dataQualityAssessment a aidgo:Concept ;
+    dct:identifier "dataQualityAssessment" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataQualityManagement ;
+    skos:prefLabel "data quality assessment"@en .
+
+iso5259:dataQualityImprovement a aidgo:Concept ;
+    dct:identifier "dataQualityImprovement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataQualityManagement ;
+    skos:prefLabel "data quality improvement"@en .
+
+iso5259:dataQualityManagementLifeCycle a aidgo:Concept ;
+    dct:identifier "dataQualityManagementLifeCycle" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data quality management life cycle"@en .
+
+iso5259:dataQualityManagementSystem a aidgo:Concept ;
+    dct:identifier "dataQualityManagementSystem" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataQualityManagement ;
+    skos:prefLabel "data quality management system"@en .
+
+iso5259:dataQualityModel a aidgo:Concept ;
+    dct:identifier "dataQualityModel" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:dataQuality ;
+    skos:prefLabel "data quality model"@en .
+
+iso5259:dataQualityPlan a aidgo:Concept ;
+    dct:identifier "dataQualityPlan" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "data quality plan"@en .
+
+iso5259:dataQualityReport a aidgo:Concept ;
+    dct:identifier "dataQualityReport" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:prefLabel "data quality report"@en .
+
+iso5259:dataRelevance a aidgo:Concept ;
+    dct:identifier "dataRelevance" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data relevance"@en .
+
+iso5259:dataSampling a aidgo:Concept ;
+    dct:identifier "dataSampling" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataPreprocessing ;
+    skos:prefLabel "data sampling"@en .
+
+iso5259:dataSpecificationDoc a aidgo:Concept ;
+    dct:identifier "dataSpecificationDoc" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "data specification"@en .
+
+iso5259:dataTransformation a aidgo:Concept ;
+    dct:identifier "dataTransformation" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataPreprocessing ;
+    skos:prefLabel "data transformation"@en .
+
+iso5259:dataType a aidgo:Concept ;
+    dct:identifier "dataType" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataItem ;
+    skos:prefLabel "data type"@en .
+
+iso5259:dataUser a aidgo:Concept ;
+    dct:identifier "dataUser" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data user"@en .
+
+iso5259:dataValue a aidgo:Concept ;
+    dct:identifier "dataValue" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataItem ;
+    skos:prefLabel "data value"@en .
+
+iso5259:emptyDataItem a aidgo:Concept ;
+    dct:identifier "emptyDataItem" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataItem ;
+    skos:prefLabel "empty data item"@en .
+
+iso5259:feature a aidgo:Concept ;
+    dct:identifier "feature" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:attribute ;
+    skos:prefLabel "feature"@en .
+
+iso5259:groundTruth a aidgo:Concept ;
+    dct:identifier "groundTruth" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataLabelling ;
+    skos:prefLabel "ground truth"@en .
+
+iso5259:measuredValue a aidgo:Concept ;
+    dct:identifier "measuredValue" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:dataQualityMeasure ;
+    skos:prefLabel "measured value"@en .
+
+iso5259:measurementFunction a aidgo:Concept ;
+    dct:identifier "measurementFunction" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:measurement ;
+    skos:prefLabel "measurement function"@en .
+
+iso5259:measurementScale a aidgo:Concept ;
+    dct:identifier "measurementScale" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:measurement ;
+    skos:prefLabel "measurement scale"@en .
+
+iso5259:metadata a aidgo:Concept ;
+    dct:identifier "metadata" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "metadata"@en .
+
+iso5259:mlProject a aidgo:Concept ;
+    dct:identifier "mlProject" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "machine learning project"@en .
+
+iso5259:organization a aidgo:Concept ;
+    dct:identifier "organization" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "organization"@en .
+
+iso5259:overfitting a aidgo:Concept ;
+    dct:identifier "overfitting" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:prefLabel "overfitting"@en .
+
+iso5259:productionData a aidgo:Concept ;
+    dct:identifier "productionData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:targetData ;
+    skos:prefLabel "production data"@en .
+
+iso5259:qualityGate a aidgo:Concept ;
+    dct:identifier "qualityGate" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "data life cycle quality gate"@en .
+
+iso5259:qualityRequirement a aidgo:Concept ;
+    dct:identifier "qualityRequirement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "quality requirement"@en .
+
+iso5259:rawData a aidgo:Concept ;
+    dct:identifier "rawData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:data ;
+    skos:prefLabel "raw data"@en .
+
+iso5259:representativeness a aidgo:Concept ;
+    dct:identifier "representativeness" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "representativeness"@en .
+
+iso5259:riskManagement a aidgo:Concept ;
+    dct:identifier "riskManagement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "risk management (data quality)"@en .
+
+iso5259:stakeholder a aidgo:Concept ;
+    dct:identifier "stakeholder" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "stakeholder"@en .
+
+iso5259:testData a aidgo:Concept ;
+    dct:identifier "testData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:targetData ;
+    skos:prefLabel "test data"@en .
+
+iso5259:trainingData a aidgo:Concept ;
+    dct:identifier "trainingData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:targetData ;
+    skos:prefLabel "training data"@en .
+
+iso5259:validationData a aidgo:Concept ;
+    dct:identifier "validationData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-5" ;
+    skos:broader iso5259:targetData ;
+    skos:prefLabel "validation data"@en .
+
+iso5259:verificationAndValidation a aidgo:Concept ;
+    dct:identifier "verificationAndValidation" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:prefLabel "verification and validation"@en .
+
+iso5259:visualisation a aidgo:Concept ;
+    dct:identifier "visualisation" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "visualisation"@en .
+
+aidgo:AIDGOProject a prov:Agent ;
+    rdfs:label "AIDGO Project"@en .
+
+aidgo:LegalSource_EUAIAct_Art10 a prov:Entity ;
+    dct:identifier "CELEX:32024R1689" ;
+    dct:title "EU AI Act Article 10, Regulation (EU) 2024/1689"@en ;
+    owl:versionIRI <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> .
+
+aidgo:TechSource_ISO5259_3 a prov:Entity ;
+    dct:identifier "ISO/IEC 5259-3:2025" ;
+    dct:title "ISO/IEC 5259-3:2025 Data quality management requirements"@en .
+
+iso5259:AidgoConjReq_7.3.1.1_Ra a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.1.1_Ra" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.1" ;
+    skos:broader iso5259:AidgoDataMotivationReqColl ;
+    skos:prefLabel "Data motivation — a"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_1_1 .
+
+iso5259:AidgoConjReq_7.3.5.2_Rd a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.5.2_Rd" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataCleaningReqColl ;
+    skos:prefLabel "Data cleaning — d"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_5_2 .
+
+iso5259:AidgoDataPreprocessingReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataPreprocessingReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data preprocessing General"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage .
+
+iso5259:AidgoReq_7_3_2_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_2_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.1" ;
+    skos:prefLabel "Data specification General"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoReq_7_3_4_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.2" ;
+    skos:prefLabel "Data source — delegation responsibility"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoReq_7_3_6_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_6_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.6.1" ;
+    skos:prefLabel "Data augmentation — specify processes"@en ;
+    aidgo:dqmlcStage aidgo:DataAugmentationStage .
+
+iso5259:AidgoReq_7_3_8_3_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_8_3_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.3" ;
+    skos:prefLabel "Data deletion — from all storage"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoReq_8_3_4_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_4_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.4.2" ;
+    skos:prefLabel "Risk management — conduct assessment"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_8_3_4_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_4_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.4.2" ;
+    skos:prefLabel "Risk management — minimise risks"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:attribute a aidgo:Concept ;
+    dct:identifier "attribute" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "attribute"@en .
+
+iso5259:dataQualityMeasure a aidgo:Concept ;
+    dct:identifier "dataQualityMeasure" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:dataQualityCharacteristic ;
+    skos:prefLabel "data quality measure"@en .
+
+iso5259:dataRecord a aidgo:Concept ;
+    dct:identifier "dataRecord" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:dataItem ;
+    skos:prefLabel "data record"@en .
+
+iso5259:dataset a aidgo:Concept ;
+    dct:identifier "dataset" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:data ;
+    skos:prefLabel "dataset"@en .
+
+aiapr:AiaPrReq_10.1_e1 a aidgo:ObligationElement ;
+    skos:definition "the training, validation and testing data sets of a high-risk AI system"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.1_e2 a aidgo:ObligationElement ;
+    skos:definition "the data sets used for development meet defined quality criteria"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.1_e3 a aidgo:ObligationElement ;
+    skos:definition "the quality criteria are those of Article 10(2) to 10(5) (governance, representativeness, statistical properties, context of use, special-category safeguards)"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_1_e1 a aidgo:ObligationElement ;
+    skos:definition "training, validation and testing data sets"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_1_e2 a aidgo:ObligationElement ;
+    skos:definition "the data sets are subject to data governance and management practices"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_1_e3 a aidgo:ObligationElement ;
+    skos:definition "the practices are appropriate for the intended purpose of the high-risk AI system"@en ;
+    aidgo:elementRole "purpose" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_2 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] the relevant design choices."@en ;
+    skos:prefLabel "Governance shall concern relevant design choices"@en ;
+    aidgo:articleReference "Art. 10(2)(a)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_2_e1,
+        aiapr:AiaPrReq_10.2_2_e2 .
+
+aiapr:AiaPrReq_10.2_2_e1 a aidgo:ObligationElement ;
+    skos:definition "data governance and management practices address the relevant design choices"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_2_e2 a aidgo:ObligationElement ;
+    skos:definition "design choices of the high-risk AI system that bear on its data (not only the format of the data set)"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_3_e1 a aidgo:ObligationElement ;
+    skos:definition "data governance practices address the data collection processes"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_3_e2 a aidgo:ObligationElement ;
+    skos:definition "the origin (provenance) of the data is recorded and governed"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_3_e3 a aidgo:ObligationElement ;
+    skos:definition "for personal data, the original purpose of the data collection is identified"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_4_e1 a aidgo:ObligationElement ;
+    skos:definition "data governance practices address data-preparation processing operations"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_4_e2 a aidgo:ObligationElement ;
+    skos:definition "the operations covered include annotation and labelling"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_4_e3 a aidgo:ObligationElement ;
+    skos:definition "the operations covered include cleaning, updating, enrichment and aggregation"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_5 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_5" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] the formulation of assumptions, in particular with respect to the information that the data is supposed to measure and represent."@en ;
+    skos:prefLabel "Governance shall concern formulation of assumptions"@en ;
+    aidgo:articleReference "Art. 10(2)(d)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_5_e1,
+        aiapr:AiaPrReq_10.2_5_e2 .
+
+aiapr:AiaPrReq_10.2_5_e1 a aidgo:ObligationElement ;
+    skos:definition "assumptions about the data are explicitly formulated"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_5_e2 a aidgo:ObligationElement ;
+    skos:definition "the assumptions concern the information the data is supposed to measure and represent"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_6 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_6" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] an assessment of the availability, quantity and suitability of the data sets that are needed."@en ;
+    skos:prefLabel "Governance shall concern assessment of dataset availability and suitability"@en ;
+    aidgo:articleReference "Art. 10(2)(e)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_6_e1,
+        aiapr:AiaPrReq_10.2_6_e2 .
+
+aiapr:AiaPrReq_10.2_6_e1 a aidgo:ObligationElement ;
+    skos:definition "an assessment of the data sets that are needed is carried out"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_6_e2 a aidgo:ObligationElement ;
+    skos:definition "the assessment covers availability, quantity and suitability of the needed data sets"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_7_e1 a aidgo:ObligationElement ;
+    skos:definition "the data sets are examined for possible biases"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_7_e2 a aidgo:ObligationElement ;
+    skos:definition "the examination targets biases likely to affect the health and safety of persons or to have a negative impact on fundamental rights"@en ;
+    aidgo:elementRole "purpose" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_7_e3 a aidgo:ObligationElement ;
+    skos:definition "the examination targets biases that could lead to discrimination prohibited under Union law"@en ;
+    aidgo:elementRole "purpose" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_7_e4 a aidgo:ObligationElement ;
+    skos:definition "the examination pays particular attention where outputs influence inputs for future operations (feedback loops)"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_8 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_8" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] the identification of any data gaps or shortcomings, and how those gaps and shortcomings can be addressed."@en ;
+    skos:prefLabel "Governance shall concern identification of data gaps and shortcomings"@en ;
+    aidgo:articleReference "Art. 10(2)(h)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_8_e1,
+        aiapr:AiaPrReq_10.2_8_e2,
+        aiapr:AiaPrReq_10.2_8_e3 .
+
+aiapr:AiaPrReq_10.2_8_e1 a aidgo:ObligationElement ;
+    skos:definition "data gaps or shortcomings are identified"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.2_8_e2 a aidgo:ObligationElement ;
+    skos:definition "the gaps or shortcomings are those that prevent compliance with the Regulation"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.2_8_e3 a aidgo:ObligationElement ;
+    skos:definition "it is determined how the gaps and shortcomings can be addressed"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.3_1_e1 a aidgo:ObligationElement ;
+    skos:definition "the data sets are relevant and sufficiently representative"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.3_1_e2 a aidgo:ObligationElement ;
+    skos:definition "the data sets are, to the best extent possible, free of errors and complete"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.3_1_e3 a aidgo:ObligationElement ;
+    skos:definition "these properties are judged in view of the intended purpose of the high-risk AI system"@en ;
+    aidgo:elementRole "purpose" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.3_2 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.3_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Datasets shall have the appropriate statistical properties, including as regards the persons or groups of persons on which the high-risk AI system is intended to be used."@en ;
+    skos:prefLabel "Datasets shall have appropriate statistical properties for persons/groups"@en ;
+    aidgo:articleReference "Art. 10(3), 2nd sentence" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.3_2_e1,
+        aiapr:AiaPrReq_10.3_2_e2 .
+
+aiapr:AiaPrReq_10.3_2_e1 a aidgo:ObligationElement ;
+    skos:definition "the data sets have appropriate statistical properties"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.3_2_e2 a aidgo:ObligationElement ;
+    skos:definition "the statistical properties are appropriate as regards the persons or groups of persons on whom the system is intended to be used"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.4 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Datasets shall take into account the characteristics particular to the geographical, contextual, behavioural or functional setting of intended use."@en ;
+    skos:prefLabel "Datasets shall account for characteristics of the deployment setting"@en ;
+    aidgo:articleReference "Art. 10(4)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.4_e1,
+        aiapr:AiaPrReq_10.4_e2,
+        aiapr:AiaPrReq_10.4_e3 .
+
+aiapr:AiaPrReq_10.4_e1 a aidgo:ObligationElement ;
+    skos:definition "the data sets take into account characteristics of the setting of intended use"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.4_e2 a aidgo:ObligationElement ;
+    skos:definition "the characteristics are specific to the geographical, contextual, behavioural or functional setting"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.4_e3 a aidgo:ObligationElement ;
+    skos:definition "the extent is that required by the intended purpose"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.5" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Providers may process special categories of personal data strictly necessary for bias detection, subject to appropriate safeguards."@en ;
+    skos:prefLabel "Special categories personal data may be processed for bias detection"@en ;
+    aidgo:articleReference "Art. 10(5)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.5_e1,
+        aiapr:AiaPrReq_10.5_e2,
+        aiapr:AiaPrReq_10.5_e3,
+        aiapr:AiaPrReq_10.5_e4 .
+
+aiapr:AiaPrReq_10.5_a a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.5_a" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Ensuring bias detection cannot effectively be fulfilled by processing other categories of data, including synthetic or anonymised data."@en ;
+    skos:prefLabel "Bias cannot be fulfilled by synthetic/anonymised data alternatives"@en ;
+    aidgo:articleReference "Art. 10(5)(a)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.5_a_e1,
+        aiapr:AiaPrReq_10.5_a_e2 .
+
+aiapr:AiaPrReq_10.5_a_e1 a aidgo:ObligationElement ;
+    skos:definition "it is established that bias detection and correction cannot be effectively fulfilled by processing other data"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.5_a_e2 a aidgo:ObligationElement ;
+    skos:definition "the alternatives considered include synthetic or anonymised data"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_b a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.5_b" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Special categories data subject to technical limitations on re-use and state-of-the-art security and privacy-preserving measures."@en ;
+    skos:prefLabel "Special data subject to technical limitations and state-of-art security measures"@en ;
+    aidgo:articleReference "Art. 10(5)(b)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.5_b_e1,
+        aiapr:AiaPrReq_10.5_b_e2,
+        aiapr:AiaPrReq_10.5_b_e3 .
+
+aiapr:AiaPrReq_10.5_b_e1 a aidgo:ObligationElement ;
+    skos:definition "special categories of personal data used for bias detection"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_b_e2 a aidgo:ObligationElement ;
+    skos:definition "technical limitations on the re-use of the personal data are applied"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.5_b_e3 a aidgo:ObligationElement ;
+    skos:definition "state-of-the-art security and privacy-preserving measures, including pseudonymisation, are applied"@en ;
+    aidgo:elementRole "constraint" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_e a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.5_e" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "The data shall be deleted once the bias has been corrected or the retention period has expired."@en ;
+    skos:prefLabel "Special data deleted when bias corrected or retention period ends"@en ;
+    aidgo:articleReference "Art. 10(5)(e)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.5_e_e1,
+        aiapr:AiaPrReq_10.5_e_e2,
+        aiapr:AiaPrReq_10.5_e_e3 .
+
+aiapr:AiaPrReq_10.5_e1 a aidgo:ObligationElement ;
+    skos:definition "special categories of personal data (GDPR Art. 9(1))"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_e2 a aidgo:ObligationElement ;
+    skos:definition "special-category personal data is processed for the purpose of bias detection and correction"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.5_e3 a aidgo:ObligationElement ;
+    skos:definition "the processing is strictly necessary and exceptional"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_e4 a aidgo:ObligationElement ;
+    skos:definition "appropriate safeguards for the fundamental rights and freedoms of natural persons apply"@en ;
+    aidgo:elementRole "constraint" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_e_e1 a aidgo:ObligationElement ;
+    skos:definition "special categories of personal data used for bias detection"@en ;
+    aidgo:elementRole "object" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.5_e_e2 a aidgo:ObligationElement ;
+    skos:definition "the personal data is deleted"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aiapr:AiaPrReq_10.5_e_e3 a aidgo:ObligationElement ;
+    skos:definition "deletion occurs once the bias has been corrected or the personal data has reached the end of its retention period, whichever comes first"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.6 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.6" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "For high-risk AI not using training techniques, paragraphs 2-5 apply only to the testing data sets."@en ;
+    skos:prefLabel "For non-training AI, paragraphs 2-5 apply only to testing datasets"@en ;
+    aidgo:articleReference "Art. 10(6)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.6_e1,
+        aiapr:AiaPrReq_10.6_e2 .
+
+aiapr:AiaPrReq_10.6_e1 a aidgo:ObligationElement ;
+    skos:definition "the high-risk AI system is not developed using techniques involving the training of AI models"@en ;
+    aidgo:elementRole "condition" ;
+    aidgo:isCoreElement false .
+
+aiapr:AiaPrReq_10.6_e2 a aidgo:ObligationElement ;
+    skos:definition "the data quality obligations of paragraphs 2 to 5 are applied to the testing data sets"@en ;
+    aidgo:elementRole "action" ;
+    aidgo:isCoreElement true .
+
+aidgo:DataAugmentationStage a owl:NamedIndividual ;
+    rdfs:label "Data Augmentation (§7.3.6)"@en .
+
+iso5259:AidgoDataSpecificationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataSpecificationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data specification General"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoReq_7_3_1_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_1_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.2" ;
+    skos:prefLabel "Stakeholder analysis"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage .
+
+iso5259:AidgoReq_7_3_2_3_R1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_2_3_R1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.3" ;
+    skos:prefLabel "Statistical properties — subset divisions"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoReq_7_3_2_3_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_2_3_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.3" ;
+    skos:prefLabel "Statistical properties — representativeness"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoStakeholderAnalysisReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoStakeholderAnalysisReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.2" ;
+    skos:broader iso5259:AidgoDataMotivationReqColl ;
+    skos:prefLabel "Stakeholder analysis"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage .
+
+iso5259:AidgoVVReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoVVReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.1.1" ;
+    skos:broader iso5259:AidgoOperationReqColl ;
+    skos:prefLabel "Verification and validation General"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:dataLabelling a aidgo:Concept ;
+    dct:identifier "dataLabelling" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-4" ;
+    skos:broader iso5259:dataPreprocessing ;
+    skos:prefLabel "data labelling"@en .
+
+iso5259:measurement a aidgo:Concept ;
+    dct:identifier "measurement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "measurement"@en .
+
+aiapr:AiaPrReq_10.1 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "High-risk AI systems shall be developed on the basis of training, validation and testing data sets that meet the quality criteria referred to in paragraphs 2 to 5."@en ;
+    skos:prefLabel "High-risk AI systems shall use datasets meeting quality criteria"@en ;
+    aidgo:articleReference "Art. 10(1)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.1_e1,
+        aiapr:AiaPrReq_10.1_e2,
+        aiapr:AiaPrReq_10.1_e3 .
+
+aiapr:AiaPrReq_10.2_1 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Training, validation and testing data sets shall be subject to data governance and management practices appropriate for the intended purpose."@en ;
+    skos:prefLabel "Datasets shall be subject to appropriate data governance practices"@en ;
+    aidgo:articleReference "Art. 10(2)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_1_e1,
+        aiapr:AiaPrReq_10.2_1_e2,
+        aiapr:AiaPrReq_10.2_1_e3 .
+
+aiapr:AiaPrReq_10.2_3 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] data collection processes and the origin of data, and in the case of personal data, the original purpose of the data collection."@en ;
+    skos:prefLabel "Governance shall concern data collection processes and origin"@en ;
+    aidgo:articleReference "Art. 10(2)(b)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_3_e1,
+        aiapr:AiaPrReq_10.2_3_e2,
+        aiapr:AiaPrReq_10.2_3_e3 .
+
+aiapr:AiaPrReq_10.2_4 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation."@en ;
+    skos:prefLabel "Governance shall concern data-preparation operations"@en ;
+    aidgo:articleReference "Art. 10(2)(c)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_4_e1,
+        aiapr:AiaPrReq_10.2_4_e2,
+        aiapr:AiaPrReq_10.2_4_e3 .
+
+aiapr:AiaPrReq_10.2_7 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.2_7" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "[Data governance and management practices shall concern in particular] examination in view of possible biases that are likely to affect the health and safety of persons, have a negative impact on fundamental rights or lead to discrimination prohibited under Union law, especially where data outputs influence inputs for future operations."@en ;
+    skos:prefLabel "Governance shall concern examination for biases affecting health, safety, rights"@en ;
+    aidgo:articleReference "Art. 10(2)(f)" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.2_7_e1,
+        aiapr:AiaPrReq_10.2_7_e2,
+        aiapr:AiaPrReq_10.2_7_e3,
+        aiapr:AiaPrReq_10.2_7_e4 .
+
+aidgo:NoAlignment a owl:Class ;
+    rdfs:label "No Alignment"@en ;
+    rdfs:subClassOf aidgo:AlignmentType .
+
+iso5259:AidgoChangeRequestEvalReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoChangeRequestEvalReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.5" ;
+    skos:broader iso5259:AidgoChangeMgmtReqColl ;
+    skos:prefLabel "Change request evaluation"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoConjReq_7.3.1.1_Rb a aidgo:TechnicalRequirement,
+        tair:ConjuntiveRequirement ;
+    dct:identifier "AidgoConjReq_7.3.1.1_Rb" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.1" ;
+    skos:broader iso5259:AidgoDataMotivationReqColl ;
+    skos:prefLabel "Data motivation — b"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage ;
+    tair:decomposes iso5259:AidgoReq_7_3_1_1 .
+
+iso5259:AidgoDQDependenciesReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDQDependenciesReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "11" ;
+    skos:prefLabel "Data quality dependencies"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoDataAcquisitionReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataAcquisitionReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data acquisition General"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoDataDecommissioningReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataDecommissioningReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.8.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data decommissioning General"@en ;
+    aidgo:dqmlcStage aidgo:DataDecommissioningStage .
+
+iso5259:AidgoDataQualityIssuesMgmtReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataQualityIssuesMgmtReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.3" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Management of data quality issues"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoProjectSpecificDQReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoProjectSpecificDQReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.10" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Project-specific DQM"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_11_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_11_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "11.2" ;
+    skos:prefLabel "Data quality dependencies — management"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_6_3_10 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_10" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.10" ;
+    skos:prefLabel "Project-specific DQM"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_6_3_3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.3" ;
+    skos:prefLabel "Management of data quality issues"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_6_3_5 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_5" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.5" ;
+    skos:prefLabel "Resource management"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_7_3_1_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_1_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.1" ;
+    skos:prefLabel "Data motivation and conceptualization"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage .
+
+iso5259:AidgoReq_8_3_3_5 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_5" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.5" ;
+    skos:prefLabel "Change request evaluation and approval"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoResourceMgmtReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoResourceMgmtReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.5" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Resource management"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:data a aidgo:Concept ;
+    dct:identifier "data" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:prefLabel "data"@en .
+
+iso5259:dataPreprocessing a aidgo:Concept ;
+    dct:identifier "dataPreprocessing" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-3" ;
+    skos:broader iso5259:dataLifeCycle ;
+    skos:prefLabel "data preprocessing"@en .
+
+iso5259:dataQuality a aidgo:Concept ;
+    dct:identifier "dataQuality" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data quality"@en .
+
+iso5259:dataQualityManagement a aidgo:Concept ;
+    dct:identifier "dataQualityManagement" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:dataQuality ;
+    skos:prefLabel "data quality management"@en .
+
+aiapr:AiaPrReq_10.3_1 a aidgo:LegalRequirement ;
+    dct:identifier "AiaPrReq_10.3_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source <https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689> ;
+    skos:definition "Training, validation and testing data sets shall be sufficiently representative for the intended purpose."@en ;
+    skos:prefLabel "Datasets shall be sufficiently representative"@en ;
+    aidgo:articleReference "Art. 10(3), 1st sentence" ;
+    aidgo:hasElement aiapr:AiaPrReq_10.3_1_e1,
+        aiapr:AiaPrReq_10.3_1_e2,
+        aiapr:AiaPrReq_10.3_1_e3 .
+
+iso5259:AidgoChangeMgmtReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoChangeMgmtReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3" ;
+    skos:broader iso5259:AidgoOperationReqColl ;
+    skos:prefLabel "Change management"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoChangeRequestSpecReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoChangeRequestSpecReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:broader iso5259:AidgoChangeMgmtReqColl ;
+    skos:prefLabel "Change request specification"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoCompetenceMgmtReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoCompetenceMgmtReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Competence management"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoConfirmationReviewReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoConfirmationReviewReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Confirmation review and DQ measures"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoDataMotivationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataMotivationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.1.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data motivation and conceptualization"@en ;
+    aidgo:dqmlcStage aidgo:DataMotivationStage .
+
+iso5259:AidgoDataOptimizationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataOptimizationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data optimization"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_6_3_4 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.4" ;
+    skos:prefLabel "Competence management"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_6_3_9 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_9" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.9" ;
+    skos:prefLabel "Confirmation review and DQ measures"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_7_3_7_5 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_5" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.5" ;
+    skos:prefLabel "Data optimization"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_7_6_R2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_6_R2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:prefLabel "Support commitment — documentation"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_8_3_3_3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.3" ;
+    skos:prefLabel "Change request specification"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoSupportCommitmentReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoSupportCommitmentReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.6" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Support commitment"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:dataItem a aidgo:Concept ;
+    dct:identifier "dataItem" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data item"@en .
+
+iso5259:targetData a aidgo:Concept ;
+    dct:identifier "targetData" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-2" ;
+    skos:broader iso5259:data ;
+    skos:prefLabel "target data"@en .
+
+aidgo:AlignmentType a owl:Class ;
+    rdfs:label "Alignment Type"@en .
+
+iso5259:AidgoDataLifeCyclePlansReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataLifeCyclePlansReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:broader iso5259:AidgoDataPlanningReqColl ;
+    skos:prefLabel "Data life cycle specific plans"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage .
+
+iso5259:AidgoDataQualityAuditReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataQualityAuditReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Data quality audit and assessment"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoOperationReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoOperationReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8" ;
+    skos:prefLabel "Operation (horizontal processes)"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_6_3_8 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_8" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.8" ;
+    skos:prefLabel "Data quality audit and assessment"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_7_3_3_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_3_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.2" ;
+    skos:prefLabel "Data life cycle specific plans"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage .
+
+aidgo:CompletelySatisfies a owl:Class ;
+    rdfs:label "Completely Satisfies"@en ;
+    rdfs:subClassOf aidgo:AlignmentType .
+
+iso5259:AidgoChangeRequestAnalysisReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoChangeRequestAnalysisReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:broader iso5259:AidgoChangeMgmtReqColl ;
+    skos:prefLabel "Change request analysis"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoDataPlanningReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataPlanningReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data planning General"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage .
+
+iso5259:AidgoReq_7_3_3_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_3_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.3.1" ;
+    skos:prefLabel "Data planning General"@en ;
+    aidgo:dqmlcStage aidgo:DataPlanningStage .
+
+iso5259:AidgoReq_8_3_3_4 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_8_3_3_4" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "8.3.3.4" ;
+    skos:prefLabel "Change request analysis"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:dataLifeCycle a aidgo:Concept ;
+    dct:identifier "dataLifeCycle" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:prefLabel "data life cycle"@en .
+
+iso5259:AidgoDataCollectionReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataCollectionReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:broader iso5259:AidgoDataAcquisitionReqColl ;
+    skos:prefLabel "Data collection"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+iso5259:AidgoDataProcessingToolsReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataProcessingToolsReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10" ;
+    skos:prefLabel "Data processing tools"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_10_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_10_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "10.2" ;
+    skos:prefLabel "Data processing tools — management"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoReq_7_3_7_1 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_1" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:prefLabel "Data provisioning General"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoDataQualityCultureReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataQualityCultureReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:broader iso5259:AidgoPlanningReqColl ;
+    skos:prefLabel "Data quality culture"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoPlanningReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoPlanningReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6" ;
+    skos:prefLabel "Planning (DQM System)"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoReq_7_3_4_3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_4_3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.4.3" ;
+    skos:prefLabel "Data collection"@en ;
+    aidgo:dqmlcStage aidgo:DataAcquisitionStage .
+
+aidgo:DataMotivationStage a owl:NamedIndividual ;
+    rdfs:label "Data Motivation (§7.3.1)"@en .
+
+iso5259:AidgoDataCleaningReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataCleaningReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:broader iso5259:AidgoDataPreprocessingReqColl ;
+    skos:prefLabel "Data cleaning"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage .
+
+iso5259:AidgoReq_6_3_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_6_3_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "6.3.2" ;
+    skos:prefLabel "Data quality culture"@en ;
+    aidgo:dqmlcStage aidgo:PlanningStage .
+
+iso5259:AidgoSupportReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoSupportReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7" ;
+    skos:prefLabel "Support (DQMLC)"@en ;
+    aidgo:dqmlcStage aidgo:HorizontalProcessesStage .
+
+iso5259:AidgoDataFormatReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataFormatReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:broader iso5259:AidgoDataSpecificationReqColl ;
+    skos:prefLabel "Data format"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoDataProvisioningDocReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataProvisioningDocReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:broader iso5259:AidgoDataProvisioningReqColl ;
+    skos:prefLabel "Data provisioning documentation"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_7_3 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_7_3" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.3" ;
+    skos:prefLabel "Data provisioning documentation"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:dataQualityCharacteristic a aidgo:Concept ;
+    dct:identifier "dataQualityCharacteristic" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "ISO/IEC 5259-1" ;
+    skos:broader iso5259:dataQuality ;
+    skos:prefLabel "data quality characteristic"@en .
+
+iso5259:AidgoDataProvisioningReqColl a aidgo:RequirementCollection ;
+    dct:identifier "AidgoDataProvisioningReqColl" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.7.1" ;
+    skos:broader iso5259:AidgoSupportReqColl ;
+    skos:prefLabel "Data provisioning General"@en ;
+    aidgo:dqmlcStage aidgo:DataProvisioningStage .
+
+iso5259:AidgoReq_7_3_2_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_2_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.2.2" ;
+    skos:prefLabel "Data format specification"@en ;
+    aidgo:dqmlcStage aidgo:DataSpecificationStage .
+
+iso5259:AidgoReq_7_3_5_2 a aidgo:TechnicalRequirement,
+        tair:Requirement ;
+    dct:identifier "AidgoReq_7_3_5_2" ;
+    dct:isPartOf aidgo:AIDGO_KG ;
+    dct:source "7.3.5.2" ;
+    skos:prefLabel "Data cleaning"@en ;
+    aidgo:dqmlcStage aidgo:DataPreprocessingStage .
+
+aidgo:DataDecommissioningStage a owl:NamedIndividual ;
+    rdfs:label "Data Decommissioning (§7.3.8)"@en .
+
+aidgo:DataPreprocessingStage a owl:NamedIndividual ;
+    rdfs:label "Data Preprocessing (§7.3.5)"@en .
+
+aidgo:DataPlanningStage a owl:NamedIndividual ;
+    rdfs:label "Data Planning (§7.3.3)"@en .
+
+aidgo:PartiallySatisfies a owl:Class ;
+    rdfs:label "Partially Satisfies"@en ;
+    rdfs:subClassOf aidgo:AlignmentType .
+
+aidgo:DataSpecificationStage a owl:NamedIndividual ;
+    rdfs:label "Data Specification (§7.3.2)"@en .
+
+aidgo:LegalRequirement a owl:Class ;
+    rdfs:label "Legal Requirement"@en .
+
+aidgo:DataAcquisitionStage a owl:NamedIndividual ;
+    rdfs:label "Data Acquisition (§7.3.4)"@en .
+
+aidgo:AlignmentAssertion a owl:Class ;
+    rdfs:label "Alignment Assertion"@en .
+
+aidgo:MappingProcess_v2 a prov:Activity ;
+    rdfs:label "AIDGO Legal-Technical Mapping v2.0.0"@en ;
+    prov:endedAtTime "2026-10-25"^^xsd:date ;
+    prov:startedAtTime "2026-10-25"^^xsd:date ;
+    prov:used aidgo:LegalSource_EUAIAct_Art10,
+        aidgo:TechSource_ISO5259_3 ;
+    prov:wasAssociatedWith aidgo:AIDGOProject .
+
+aidgo:DataProvisioningStage a owl:NamedIndividual ;
+    rdfs:label "Data Provisioning (§7.3.7)"@en .
+
+aidgo:ObligationElement a owl:Class ;
+    rdfs:label "Obligation element"@en .
+
+aidgo:PlanningStage a owl:NamedIndividual ;
+    rdfs:label "Planning (§6)"@en .
+
+aidgo:RequirementCollection a owl:Class ;
+    rdfs:label "Requirement Collection"@en .
+
+aidgo:HorizontalProcessesStage a owl:NamedIndividual ;
+    rdfs:label "Horizontal Processes (§8+)"@en .
+
+aidgo:Concept a owl:Class ;
+    rdfs:label "Concept"@en .
+
+aidgo:TechnicalRequirement a owl:Class ;
+    rdfs:label "Technical Requirement"@en .
+
+aidgo:AIDGO_KG a owl:Ontology ;
+    dct:created "2026-10-25"^^xsd:date ;
+    dct:creator "AIDGO Project, ADAPT Centre" ;
+    dct:description "Public release: ISO/IEC requirement text is not included (copyright); identifiers, clause numbers, labels and structure only."@en ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dct:title "AIDGO — AI Data Governance Ontology"@en ;
+    owl:versionInfo "2.0.0" .
+
+</script>
+<script type="application/json" id="queries">[
+ {
+  "id": "Q1",
+  "title": "Coverage of each Article 10 obligation",
+  "question": "For every obligation, how many standard requirements satisfy it completely or partially?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?obligation (SUM(IF(?t = aidgo:CompletelySatisfies, 1, 0)) AS ?complete) (SUM(IF(?t = aidgo:PartiallySatisfies, 1, 0)) AS ?partial) (SUM(IF(?t = aidgo:NoAlignment, 1, 0)) AS ?gap)\nWHERE {\n  ?o a aidgo:LegalRequirement ; aidgo:articleReference ?article ; skos:prefLabel ?obligation .\n  OPTIONAL { ?a a aidgo:AlignmentAssertion ; aidgo:legalRequirement ?o ; aidgo:alignmentType ?t . }\n}\nGROUP BY ?article ?obligation\nORDER BY ?article"
+ },
+ {
+  "id": "Q2",
+  "title": "Gaps: obligations no requirement addresses",
+  "question": "Which obligations are not satisfied, even partially, by any requirement of the standard?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?obligation ?justification\nWHERE {\n  ?o a aidgo:LegalRequirement ; aidgo:articleReference ?article ; skos:prefLabel ?obligation .\n  FILTER NOT EXISTS { ?x aidgo:legalRequirement ?o ; aidgo:alignmentType ?t . FILTER(?t IN (aidgo:CompletelySatisfies, aidgo:PartiallySatisfies)) }\n  OPTIONAL { ?g aidgo:legalRequirement ?o ; aidgo:alignmentType aidgo:NoAlignment ; aidgo:alignmentJustification ?justification . }\n}\nORDER BY ?article"
+ },
+ {
+  "id": "Q3",
+  "title": "Partial alignments and what is missing",
+  "question": "Where a requirement only partially satisfies an obligation, what is the documented gap?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?article ?clause ?basis ?gap\nWHERE {\n  ?a aidgo:alignmentType aidgo:PartiallySatisfies ; aidgo:legalRequirement ?o ; aidgo:technicalRequirement ?r ; aidgo:alignmentBasis ?b .\n  OPTIONAL { ?a aidgo:alignmentGap ?gap }\n  ?o aidgo:articleReference ?article . ?r dct:source ?clause .\n  BIND(STRAFTER(STR(?b), \"#\") AS ?basis)\n}\nORDER BY ?article ?clause"
+ },
+ {
+  "id": "Q4",
+  "title": "Most load-bearing requirements",
+  "question": "Which standard clauses support the largest number of distinct obligations?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX tair: <https://w3id.org/tair#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?clause (COUNT(DISTINCT ?o) AS ?obligations)\nWHERE {\n  ?a aidgo:legalRequirement ?o ; aidgo:technicalRequirement ?r ; aidgo:alignmentType ?t .\n  FILTER(?t IN (aidgo:CompletelySatisfies, aidgo:PartiallySatisfies))\n  { ?r dct:source ?clause } \n}\nGROUP BY ?clause\nORDER BY DESC(?obligations) ?clause\nLIMIT 10"
+ },
+ {
+  "id": "Q5",
+  "title": "Provenance of every assertion for one obligation",
+  "question": "Who asserted each alignment for Art. 10(2)(f), by which activity, and on what basis?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX dct: <http://purl.org/dc/terms/>\nSELECT ?assertion ?type ?clause ?by ?activity ?basis\nWHERE {\n  ?o aidgo:articleReference \"Art. 10(2)(f)\" .\n  ?a aidgo:legalRequirement ?o ; aidgo:alignmentType ?t ; dct:identifier ?assertion ; prov:wasAttributedTo ?by ; aidgo:alignmentBasis ?b ; prov:wasGeneratedBy ?act .\n  OPTIONAL { ?a aidgo:technicalRequirement ?r . ?r dct:source ?clause }\n  BIND(STRAFTER(STR(?t), \"#\") AS ?type) BIND(STRAFTER(STR(?b), \"#\") AS ?basis) BIND(STRAFTER(STR(?act), \"#\") AS ?activity)\n}"
+ },
+ {
+  "id": "Q6",
+  "title": "Obligation elements a requirement must guarantee",
+  "question": "Into which elements is each obligation decomposed, and which is the core element?",
+  "sparql": "PREFIX aidgo: <https://w3id.org/aidgo#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nSELECT ?article ?role ?core ?element\nWHERE {\n  ?o aidgo:articleReference ?article ; aidgo:hasElement ?e .\n  ?e aidgo:elementRole ?role ; aidgo:isCoreElement ?core ; skos:definition ?element .\n}\nORDER BY ?article DESC(?core) ?role"
+ }
+]</script>
+<script type="module">
+import init, * as ox from "https://cdn.jsdelivr.net/npm/oxigraph@0.5.9/web.js";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const loc = iri => String(iri).split(/[#\/]/).pop();
+const P = `PREFIX aidgo:<https://w3id.org/aidgo#> PREFIX tair:<https://w3id.org/tair#> PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:<http://purl.org/dc/terms/> PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> PREFIX prov:<http://www.w3.org/ns/prov#>\n`;
+const RANK = {CompletelySatisfies:4, PartiallySatisfies:3, RelatedTo:2, ConflictsWith:1};
+const NAME = {CompletelySatisfies:"Completely satisfies", PartiallySatisfies:"Partially satisfies", RelatedTo:"Related to", ConflictsWith:"Conflicts with", NoAlignment:"No alignment"};
+let store;
+function sel(q){ const t0 = performance.now(); const r = store.query(P + q); return {rows: r.map(m => Object.fromEntries([...m].map(([k,v]) => [k, v.value]))), ms: performance.now() - t0}; }
+
+async function boot(){
+  await init();
+  store = new ox.Store();
+  const ttl = $("#graph").textContent;
+  store.load(ttl, {format: "text/turtle", base_iri: "https://w3id.org/aidgo#"});
+  window.__aidgo = {ready: true, size: store.size};
+  stats(); coverage(); obligations(); requirements(); sparqlUI(); about();
+  document.body.dataset.ready = "1";
+}
+function stats(){
+  const c = (q) => sel(q).rows[0].n;
+  const s = [
+    ["triples", store.size],
+    ["Article 10 obligations", c(`SELECT (COUNT(?o) AS ?n) WHERE { ?o a aidgo:LegalRequirement }`)],
+    ["ISO requirements", c(`SELECT (COUNT(?r) AS ?n) WHERE { ?r a tair:Requirement }`)],
+    ["atomic requirements", c(`SELECT (COUNT(?r) AS ?n) WHERE { ?r a tair:ConjuntiveRequirement }`)],
+    ["alignment assertions", c(`SELECT (COUNT(?a) AS ?n) WHERE { ?a a aidgo:AlignmentAssertion }`)],
+  ];
+  $("#stats").innerHTML = s.map(([k,v]) => `<span><b>${esc(v)}</b> ${k}</span>`).join("");
+}
+let OBL = [], STAGES = [];
+function coverage(){
+  OBL = sel(`SELECT ?o ?art WHERE { ?o a aidgo:LegalRequirement ; aidgo:articleReference ?art } ORDER BY ?art`).rows;
+  STAGES = sel(`SELECT ?s ?l WHERE { ?r a tair:Requirement ; aidgo:dqmlcStage ?s . ?s rdfs:label ?l } GROUP BY ?s ?l ORDER BY ?l`).rows;
+  const order = ["Planning","Data Motivation","Data Specification","Data Planning","Data Acquisition","Data Preprocessing","Data Augmentation","Data Provisioning","Data Decommissioning","Horizontal"];
+  STAGES.sort((a,b) => order.findIndex(x => a.l.startsWith(x)) - order.findIndex(x => b.l.startsWith(x)));
+  const cells = sel(`SELECT ?o ?s ?t (COUNT(DISTINCT ?r) AS ?n) WHERE {
+      ?a a aidgo:AlignmentAssertion ; aidgo:legalRequirement ?o ; aidgo:technicalRequirement ?x ; aidgo:alignmentType ?t .
+      { ?x a tair:Requirement . BIND(?x AS ?r) } UNION { ?x tair:decomposes ?r }
+      ?r aidgo:dqmlcStage ?s } GROUP BY ?o ?s ?t`).rows;
+  const best = {};
+  for (const c of cells){ const k = c.o + "|" + c.s, t = loc(c.t);
+    if (!best[k] || RANK[t] > RANK[best[k].t]) best[k] = {t, n: +c.n}; else if (best[k].t === t) best[k].n += +c.n; }
+  const status = statusByObligation();
+  let h = `<table><tr><th></th><th>Status</th>${STAGES.map(s => `<th class="col">${esc(s.l.replace(/\s*\(§([^)]*)\)/, " · cl. $1"))}</th>`).join("")}</tr>`;
+  for (const o of OBL){
+    const st = status[o.o];
+    h += `<tr><td class="ob" data-o="${esc(o.o)}">${esc(o.art)}</td><td>${badge(st)}</td>` + STAGES.map(s => {
+      const b = best[o.o + "|" + s.s];
+      return b ? `<td class="c k-${b.t}" title="${esc(o.art)} · ${esc(s.l)}: ${NAME[b.t]} (${b.n})" data-o="${esc(o.o)}">${b.n}</td>` : `<td class="c k-none" data-o="${esc(o.o)}"></td>`;
+    }).join("") + `</tr>`;
+  }
+  $("#matrix").innerHTML = h + "</table>";
+  $("#matrix").onclick = e => { const o = e.target.closest("[data-o]")?.dataset.o; if (o) showObligation(o, true); };
+  const gaps = sel(`SELECT ?art ?j WHERE { ?o a aidgo:LegalRequirement ; aidgo:articleReference ?art .
+      FILTER NOT EXISTS { ?x aidgo:legalRequirement ?o ; aidgo:alignmentType ?t . FILTER(?t IN (aidgo:CompletelySatisfies, aidgo:PartiallySatisfies)) }
+      OPTIONAL { ?g aidgo:legalRequirement ?o ; aidgo:alignmentType aidgo:NoAlignment ; aidgo:alignmentJustification ?j } } ORDER BY ?art`).rows;
+  $("#gaps").innerHTML = gaps.length ? `<table><tr><th>Obligation</th><th>Why no requirement covers it</th></tr>` +
+    gaps.map(g => `<tr><td><span class="badge gap">gap</span> ${esc(g.art)}</td><td>${esc(g.j || "")}</td></tr>`).join("") + "</table>" : "None.";
+}
+function statusByObligation(){
+  const r = sel(`SELECT ?o ?t WHERE { ?a aidgo:legalRequirement ?o ; aidgo:alignmentType ?t }`).rows, st = {};
+  for (const x of r){ const t = loc(x.t); const cur = st[x.o];
+    if (t === "CompletelySatisfies") st[x.o] = "cov"; else if (t === "PartiallySatisfies" && cur !== "cov") st[x.o] = "part"; else if (!cur) st[x.o] = "gap"; }
+  for (const o of OBL) if (!st[o.o]) st[o.o] = "gap";
+  return st;
+}
+const badge = s => s === "cov" ? `<span class="badge cov">covered</span>` : s === "part" ? `<span class="badge part">partial</span>` : `<span class="badge gap">gap</span>`;
+function obligations(){
+  $("#osel").innerHTML = OBL.map(o => `<option value="${esc(o.o)}">${esc(o.art)}</option>`).join("");
+  $("#osel").onchange = e => showObligation(e.target.value);
+  const f = OBL.find(o => o.art === "Art. 10(2)(f)") || OBL[0]; $("#osel").value = f.o; showObligation(f.o);
+}
+function showObligation(o, jump){
+  if (jump){ tab("obligation"); $("#osel").value = o; }
+  const ob = sel(`SELECT ?art ?txt ?src WHERE { <${o}> aidgo:articleReference ?art ; skos:definition ?txt . OPTIONAL { <${o}> dct:source ?src } }`).rows[0];
+  const els = sel(`SELECT ?role ?core ?txt WHERE { <${o}> aidgo:hasElement ?e . ?e aidgo:elementRole ?role ; aidgo:isCoreElement ?core ; skos:definition ?txt } ORDER BY DESC(?core) ?role`).rows;
+  const as = sel(`SELECT ?id ?t ?b ?j ?g ?by ?when ?clause ?lab ?r WHERE {
+      ?a aidgo:legalRequirement <${o}> ; aidgo:alignmentType ?t ; dct:identifier ?id .
+      OPTIONAL { ?a aidgo:alignmentBasis ?b } OPTIONAL { ?a aidgo:alignmentJustification ?j } OPTIONAL { ?a aidgo:alignmentGap ?g }
+      OPTIONAL { ?a prov:wasAttributedTo ?by } OPTIONAL { ?a prov:generatedAtTime ?when }
+      OPTIONAL { ?a aidgo:technicalRequirement ?r . ?r dct:source ?clause ; skos:prefLabel ?lab } }`).rows
+      .sort((a,b) => (RANK[loc(b.t)]||0) - (RANK[loc(a.t)]||0));
+  const st = statusByObligation()[o];
+  $("#odetail").innerHTML = `<div class="card"><h3>${esc(ob.art)} ${badge(st)}</h3><div>${esc(ob.txt)}</div>
+    <div class="meta" style="margin-top:6px">Source: Regulation (EU) 2024/1689 (public law).</div></div>
+    <div class="card"><h3>What a requirement must guarantee</h3>${els.length ? els.map(e => `<div class="el"><span class="role">${esc(e.role)}${e.core === "true" ? " · core" : ""}</span><span class="${e.core === "true" ? "core" : ""}">${esc(e.txt)}</span></div>`).join("") : '<div class="note">No decomposition recorded.</div>'}</div>
+    <div class="card"><h3>Alignment assertions (${as.length})</h3>${as.map(a => `<div class="assert ${loc(a.t)}">
+      <div><b>${NAME[loc(a.t)] || loc(a.t)}</b>${a.clause ? ` · ISO/IEC 5259-3 §${esc(a.clause)} <span class="chip">${esc(a.lab)}</span>` : ""}${a.b ? ` <span class="chip">basis: ${esc(loc(a.b))}</span>` : ""}</div>
+      ${a.j ? `<div>${esc(a.j)}</div>` : ""}${a.g ? `<div class="gaptxt"><b>Not guaranteed:</b> ${esc(a.g)}</div>` : ""}
+      <div class="meta">${esc(a.id)} · ${esc(a.by || "")}${a.when ? " · " + esc(a.when) : ""}</div></div>`).join("")}</div>`;
+}
+function requirements(){
+  const rs = sel(`SELECT ?r ?src ?lab WHERE { ?r a tair:Requirement ; dct:source ?src ; skos:prefLabel ?lab }`).rows
+    .sort((a,b) => a.src.localeCompare(b.src, undefined, {numeric:true}) || a.lab.localeCompare(b.lab));
+  $("#rsel").innerHTML = rs.map(r => `<option value="${esc(r.r)}">§${esc(r.src)} · ${esc(r.lab)}</option>`).join("");
+  $("#rsel").onchange = e => showRequirement(e.target.value);
+  const f = rs.find(r => r.src === "7.3.5.2") || rs[0]; $("#rsel").value = f.r; showRequirement(f.r);
+}
+function showRequirement(r){
+  const h = sel(`SELECT ?src ?lab ?stl WHERE { <${r}> dct:source ?src ; skos:prefLabel ?lab . OPTIONAL { <${r}> aidgo:dqmlcStage ?st . ?st rdfs:label ?stl } }`).rows[0];
+  const kids = sel(`SELECT ?k ?lab ?cl WHERE { ?k tair:decomposes <${r}> ; skos:prefLabel ?lab . OPTIONAL { ?k skos:broader ?c . ?c skos:prefLabel ?cl } } ORDER BY ?lab`).rows;
+  const ob = sel(`SELECT ?o ?art ?t ?g WHERE { ?a aidgo:legalRequirement ?o ; aidgo:alignmentType ?t ; aidgo:technicalRequirement ?x .
+      FILTER(?x = <${r}> || EXISTS { ?x tair:decomposes <${r}> }) ?o aidgo:articleReference ?art . OPTIONAL { ?a aidgo:alignmentGap ?g } } ORDER BY ?art`).rows;
+  const colls = [...new Set(kids.map(k => k.cl).filter(Boolean))];
+  $("#rdetail").innerHTML = `<div class="card"><h3>§${esc(h.src)} · ${esc(h.lab)}</h3><div class="meta">Life-cycle stage: ${esc(h.stl || "unspecified")}</div>
+      ${colls.length ? `<div style="margin-top:6px">Requirement collection: ${colls.map(c => `<span class="chip">${esc(c)}</span>`).join("")}</div>` : ""}</div>
+    <div class="card"><h3>Atomic requirements (${kids.length || 1})</h3>${kids.length ? kids.map(k => `<div class="el"><span>${esc(k.lab)}</span></div>`).join("") : '<div class="note">Not decomposed further: the clause is itself atomic.</div>'}</div>
+    <div class="card"><h3>Article 10 obligations this requirement supports (${ob.length})</h3>${ob.length ? `<table><tr><th>Obligation</th><th>Alignment</th><th>Not guaranteed</th></tr>${ob.map(x => `<tr><td><a href="#" data-o="${esc(x.o)}">${esc(x.art)}</a></td><td>${NAME[loc(x.t)]}</td><td>${esc(x.g || "")}</td></tr>`).join("")}</table>` : '<div class="note">No alignment asserted.</div>'}</div>`;
+  $("#rdetail").querySelectorAll("a[data-o]").forEach(a => a.onclick = e => { e.preventDefault(); showObligation(a.dataset.o, true); });
+}
+function sparqlUI(){
+  const Q = JSON.parse($("#queries").textContent);
+  $("#presets").innerHTML = Q.map((q,i) => `<button class="ghost" data-i="${i}" title="${esc(q.question)}">${esc(q.id)} · ${esc(q.title)}</button>`).join("");
+  const load = i => { $("#q").value = Q[i].sparql; $("#qquestion").textContent = Q[i].question; };
+  $("#presets").onclick = e => { const i = e.target.dataset.i; if (i !== undefined){ load(+i); runQ(); } };
+  load(0);
+  $("#run").onclick = runQ;
+  $("#dl").onclick = () => { const b = new Blob([$("#graph").textContent], {type: "text/turtle"}); const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "aidgo_public.ttl"; a.click(); };
+}
+function runQ(){
+  try{
+    const t0 = performance.now(); const res = store.query($("#q").value); const ms = performance.now() - t0;
+    if (typeof res === "boolean"){ $("#qres").innerHTML = `<b>${res}</b>`; $("#qstatus").textContent = `ASK in ${ms.toFixed(1)} ms`; return; }
+    if (!Array.isArray(res) || !res.length){ $("#qres").innerHTML = "No results."; $("#qstatus").textContent = `0 rows in ${ms.toFixed(1)} ms`; return; }
+    if (!(res[0] instanceof Map)){ $("#qres").innerHTML = `<pre>${esc(res.map(q => q.toString()).join("\n"))}</pre>`; $("#qstatus").textContent = `${res.length} triples in ${ms.toFixed(1)} ms`; return; }
+    const vars = [...new Set(res.flatMap(m => [...m.keys()]))];
+    $("#qres").innerHTML = `<table><tr>${vars.map(v => `<th>?${esc(v)}</th>`).join("")}</tr>${res.map(m => `<tr>${vars.map(v => `<td>${esc(m.get(v)?.value ?? "")}</td>`).join("")}</tr>`).join("")}</table>`;
+    $("#qstatus").textContent = `${res.length} rows in ${ms.toFixed(1)} ms`;
+  } catch(err){ $("#qres").innerHTML = `<span class="err">${esc(err.message || err)}</span>`; $("#qstatus").textContent = "error"; }
+}
+function about(){
+  const d = sel(`SELECT ?k ?v WHERE { VALUES ?k { "src_law" "src_iso" } OPTIONAL { aidgo:LegalSource_EUAIAct_Art10 dct:title ?law } OPTIONAL { aidgo:TechSource_ISO5259_3 dct:title ?iso } BIND(IF(?k = "src_law", ?law, ?iso) AS ?v) }`).rows;
+  $("#aboutbox").innerHTML = `<p>Legal source: ${esc(d.find(x => x.k === "src_law")?.v || "Regulation (EU) 2024/1689")}. Technical source: ${esc(d.find(x => x.k === "src_iso")?.v || "ISO/IEC 5259-3")}.</p>
+    <p>The graph models obligations and requirements with the TAIR requirements pattern (OSLC-RM), SKOS collections and concepts, and a five-type alignment taxonomy (completely satisfies, partially satisfies, related to, conflicts with, no alignment). Each alignment is a resource with a type, a basis, a justification, the documented gap, and PROV-O provenance.</p>
+    <p><b>Status of the assertions:</b> alignments are expert judgments, not legal advice or evidence of conformity. "Covered" means at least one requirement was judged to satisfy the obligation completely.</p>
+    <p><b>What is not here:</b> ISO/IEC standards are copyrighted, so the text of ISO requirements and ISO term definitions is removed from this public graph. Article 10 is public law and is included in full. Alignment justifications are the annotators' own words.</p>
+    <p>Licence: the public graph is released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source and build scripts: <a href="https://github.com/aiyankovil/aidgo">github.com/aiyankovil/aidgo</a>.</p>
+    <p>Engine: <a href="https://github.com/oxigraph/oxigraph">Oxigraph</a> 0.5.9 compiled to WebAssembly; SPARQL 1.1; no server.</p>`;
+}
+function tab(t){ document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.t === t)); document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === t)); }
+$("#tabs").onclick = e => { const t = e.target.dataset.t; if (t) tab(t); };
+boot().catch(err => { $("#stats").innerHTML = `<span class="err">Could not load the SPARQL engine: ${esc(err.message || err)}</span>`; document.body.dataset.ready = "error"; });
+</script>
+</body>
+</html>
